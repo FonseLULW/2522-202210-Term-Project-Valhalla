@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
  * @author FonseLULW
  * @version 1.0
  */
-public abstract class Entity implements Slayable{
+public abstract class Entity implements Slayable {
     // should all be protected
     private ImageView sprite;
     private Hitbox hitbox;
