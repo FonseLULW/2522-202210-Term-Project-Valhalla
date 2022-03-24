@@ -8,9 +8,8 @@ import javafx.scene.image.ImageView;
  * @version 1.0
  */
 public abstract class Entity implements Slayable {
-    // should all be protected
-    private ImageView sprite;
-    private Hitbox hitbox;
+    // should be protected
+    private final ImageView sprite;
 
     // could maybe be decomposed?
     private int maxHP;
@@ -22,9 +21,25 @@ public abstract class Entity implements Slayable {
     private double speed;
     private String name;
 
+    public Entity(final String filename, final int x, final int y) {
+        sprite = new ImageView("file:assets/img/" + filename);
+        sprite.setPreserveRatio(true);
+    }
+
     public Entity(final String filename) {
-        this.sprite = new ImageView("file:assets/img/" + filename);
-        this.hitbox = new Hitbox(0, 0, 15, 15);
+        this(filename, 0, 0);
+    }
+
+    public ImageView getSprite() {
+        return sprite;
+    }
+
+    public void setWidth(final int width) {
+        sprite.setFitWidth(width);
+    }
+
+    public void setHeight(final int height) {
+        sprite.setFitHeight(height);
     }
 
     // maybe a new interface??

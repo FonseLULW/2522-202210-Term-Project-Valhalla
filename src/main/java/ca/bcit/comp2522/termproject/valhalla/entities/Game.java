@@ -19,6 +19,7 @@ public class Game extends Application {
 
         // game
         Hero hero = new Hero();
+        hero.setHeight(500);
         root.getChildren().add(hero.getSprite());
 
 
