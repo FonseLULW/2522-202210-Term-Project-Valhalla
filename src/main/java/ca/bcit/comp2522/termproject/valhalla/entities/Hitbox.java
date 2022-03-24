@@ -1,5 +1,7 @@
 package ca.bcit.comp2522.termproject.valhalla.entities;
 
+import java.util.Objects;
+
 /**
  * Hitbox class.
  * @author FonseLULW
@@ -92,5 +94,43 @@ public final class Hitbox {
         return intersectsX && intersectsY;
     }
 
-    //toString, hashCode, equals
+    /**
+     * Returns a String representation of this Hitbox.
+     * @return a String representation of this Hitbox
+     */
+    @Override
+    public String toString() {
+        return "Hitbox{"
+                + "x=" + x
+                + ", y=" + y
+                + ", width=" + width
+                + ", height=" + height
+                + '}';
+    }
+
+    /**
+     * Returns true if Object o is equal to this Hitbox.
+     * @param o an Object
+     * @return a boolean true if Object o is equal to this Hitbox, else false
+     */
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Hitbox hitbox = (Hitbox) o;
+        return x == hitbox.x && y == hitbox.y && width == hitbox.width && height == hitbox.height;
+    }
+
+    /**
+     * Returns an int representing the hash code of this Hitbox.
+     * @return an int representing the hash code of this Hitbox
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, width, height);
+    }
 }
