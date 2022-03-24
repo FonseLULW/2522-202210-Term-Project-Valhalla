@@ -22,6 +22,11 @@ public abstract class Entity implements Slayable {
     private double speed;
     private String name;
 
+    public Entity(final String filename) {
+        this.sprite = new ImageView("file:assets/img/" + filename);
+        this.hitbox = new Hitbox(0, 0, 15, 15);
+    }
+
     // maybe a new interface??
     public abstract void attack();
     public abstract void move();
