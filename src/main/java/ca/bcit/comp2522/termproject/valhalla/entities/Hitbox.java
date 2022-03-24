@@ -7,6 +7,7 @@ import java.util.Objects;
  * @author FonseLULW
  * @version 1.0
  */
+@Deprecated
 public final class Hitbox {
     // x and y values represent the top-left point of the hitbox
     private int x;
