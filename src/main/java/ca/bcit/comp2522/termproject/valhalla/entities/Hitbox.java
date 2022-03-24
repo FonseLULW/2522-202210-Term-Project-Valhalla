@@ -26,30 +26,60 @@ public final class Hitbox {
         this.height = height;
     }
 
+    /**
+     * Returns an int representing the x-coordinate of this Hitbox's left edge.
+     * @return an int representing the x-coordinate of this Hitbox's left edge
+     */
     public int x() {
         return x;
     }
 
+    /**
+     * Returns an int representing the y-coordinate of this Hitbox's top edge.
+     * @return an int representing the y-coordinate of this Hitbox's top edge
+     */
     public int y() {
         return y;
     }
 
+    /**
+     * Returns the width of this Hitbox as an int.
+     * @return the width of this Hitbox as an int
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Returns the height of this Hitbox as an int.
+     * @return the height of this Hitbox as an int
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Sets the x-coordinate of this Hitbox's left edge.
+     * @param x the new x-coordinate of this Hitbox's left edge
+     */
     public void setX(final int x) {
         this.x = x;
     }
 
+    /**
+     * Sets the y-coordinate of this Hitbox's top edge.
+     * @param y the new y-coordinate of this Hitbox's top edge
+     */
     public void setY(final int y) {
         this.y = y;
     }
 
+    /**
+     * Returns true if a collision happens between this Hitbox and another Hitbox.
+     * A collision happens when two hitboxes intersect at any point including their boundaries
+     * @param other a Hitbox object
+     * @return true if there is a collision, else false
+     */
     public boolean collision(final Hitbox other) {
         /* collision if
          * 1) x intersects:
