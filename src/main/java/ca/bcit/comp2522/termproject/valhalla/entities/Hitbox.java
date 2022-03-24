@@ -8,7 +8,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public final class Hitbox {
-    // x and y values represent the topleft point of the hitbox
+    // x and y values represent the top-left point of the hitbox
     private int x;
     private int y;
     private final int width;
@@ -90,7 +90,7 @@ public final class Hitbox {
          * and 2) y intersects: just like x intersects but for y and height
          */
         boolean intersectsX = false;
-        boolean intersectsY = false;
+        boolean intersectsY = true;
         return intersectsX && intersectsY;
     }
 
