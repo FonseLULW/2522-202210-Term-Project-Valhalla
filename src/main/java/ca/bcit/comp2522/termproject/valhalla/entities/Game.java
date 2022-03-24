@@ -19,7 +19,8 @@ public class Game extends Application {
 
         // game
         Hero hero = new Hero();
-        root.getChildren().add(hero);
+        root.getChildren().add(hero.getSprite());
+
 
         stage.setTitle(APP_TITLE);
         stage.setScene(scene);
