@@ -7,31 +7,35 @@ import javafx.scene.image.ImageView;
  * @author FonseLULW
  * @version 1.0
  */
-public abstract class Entity implements Slayable {
+public abstract class Entity implements Slayable, Dynamic {
     /**
      * An Entity's display representation as an ImageView.
      */
     protected final ImageView sprite;
 
-    // could maybe be decomposed?
-    protected int maxHP;
-    protected int currentHP;
-    protected int level;
-    protected int damage;
-    protected int defence;
-    protected double range;
-    protected double speed;
-    protected String name;
+//    /**
+//     * An Entity's name.
+//     */
+//    protected String name;
+//
+//    /**
+//     * An Entity's Stats.
+//     */
+//    class Stats {
+//        private int maxHP;
+//        private int currentHP;
+//        private int level;
+//        private int damage;
+//        private int defence;
+//        private double range;
+//        private double speed;
+//    }
 
     public Entity(final String filename, final int x, final int y) {
         sprite = new ImageView("file:assets/img/" + filename);
         sprite.setX(x);
         sprite.setY(y);
         sprite.setPreserveRatio(true);
-    }
-
-    public ImageView getSprite() {
-        return sprite;
     }
 
     public void setWidth(final int width) {
@@ -44,14 +48,17 @@ public abstract class Entity implements Slayable {
         sprite.setFitHeight(height);
     }
 
-    public void setX(final int x) {
-        sprite.setX(x);
+    @Override
+    public void move() {
+
     }
 
-    public void setY(final int y) {
-        sprite.setY(y);
+    @Override
+    public boolean collision(final Entity entity) {
+        final ImageView box = entity.sprite;
+        return this.sprite.intersects(box.getX(), box.getY(), box.getFitWidth(), box.getFitHeight());
     }
 
-    // maybe a new interface??
-    public abstract void attack();
+// maybe a new interface??
+//    public abstract void attack();
 }
