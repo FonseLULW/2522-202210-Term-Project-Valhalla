@@ -3,6 +3,7 @@ package ca.bcit.comp2522.termproject.valhalla.entities;
 /**
  * A Slayable interface for all things that can be slain.
  * @author FonseLULW
+ * @author kaioh08
  * @version 1.0
  */
 public interface Slayable {

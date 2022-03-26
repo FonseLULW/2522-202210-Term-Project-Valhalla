@@ -5,6 +5,7 @@ import javafx.scene.Node;
 /**
  * A Tangible interface for all that can be touched.
  * @author FonseLULW
+ * @author kaioh08
  * @version 1.0
  */
 public interface Tangible {

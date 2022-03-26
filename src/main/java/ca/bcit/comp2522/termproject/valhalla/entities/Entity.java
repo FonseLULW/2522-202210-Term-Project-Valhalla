@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 /**
  * An abstract Entity class for all things that exist.
  * @author FonseLULW
+ * @author kaioh08
  * @version 1.0
  */
 public abstract class Entity implements Slayable, Tangible, Dynamic {
