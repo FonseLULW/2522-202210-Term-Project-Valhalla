@@ -1,11 +1,11 @@
-package ca.bcit.comp2522.termproject.valhalla.entities;
+package ca.bcit.comp2522.termproject.valhalla.game;
 
+import ca.bcit.comp2522.termproject.valhalla.entities.Hero;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 
 public class Game extends Application {
     public static final int APP_WIDTH = 1000;
@@ -22,17 +22,11 @@ public class Game extends Application {
         // game setup
         Hero hero = new Hero("baymax.jpg");
         root.getChildren().add(hero.getSprite());
-
-        // event listeners
-        scene.setOnKeyPressed(this::handleKeyPress);
+        root.getChildren();
 
         // display the screen
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void handleKeyPress(final KeyEvent event) {
-        System.out.println(event);
     }
 
     /**

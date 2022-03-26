@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.termproject.valhalla.entities;
+package ca.bcit.comp2522.termproject.valhalla.game;
 
 /**
  * A Player class.

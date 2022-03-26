@@ -7,4 +7,6 @@ module ca.bcit.comp2522.termproject.valhalla {
     exports ca.bcit.comp2522.termproject.valhalla;
     exports ca.bcit.comp2522.termproject.valhalla.entities;
     opens ca.bcit.comp2522.termproject.valhalla.entities to javafx.fxml;
+    exports ca.bcit.comp2522.termproject.valhalla.game;
+    opens ca.bcit.comp2522.termproject.valhalla.game to javafx.fxml;
 }
