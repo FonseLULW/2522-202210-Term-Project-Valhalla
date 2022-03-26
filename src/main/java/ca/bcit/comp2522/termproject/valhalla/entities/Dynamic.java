@@ -1,20 +1,12 @@
 package ca.bcit.comp2522.termproject.valhalla.entities;
 
 /**
- * A Dynamic interface for all that can move.
+ * A Dynamic interface for all moving things.
  * @author FonseLULW
  * @version 1.0
  */
 public interface Dynamic {
-    /**
-     * Moves itself.
-     */
+    void movingAtX(boolean enabled);
+    void movingAtY(boolean enabled);
     void move();
-
-    /**
-     * Checks collision to entity.
-     * @param entity an entity
-     * @return true if there is a collision, else false
-     */
-    boolean collision(Entity entity);
 }
