@@ -13,11 +13,6 @@ public class Hero extends Entity {
     }
 
     @Override
-    public void attack() {
-
-    }
-
-    @Override
     public boolean isAlive() {
         return false;
     }

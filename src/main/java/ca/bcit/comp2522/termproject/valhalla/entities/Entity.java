@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.valhalla.entities;
 
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
 /**
@@ -7,11 +8,15 @@ import javafx.scene.image.ImageView;
  * @author FonseLULW
  * @version 1.0
  */
-public abstract class Entity implements Slayable, Dynamic {
+public abstract class Entity implements Slayable, Tangible, Dynamic {
+    private static final double SPEED = 10.0;
+
     /**
      * An Entity's display representation as an ImageView.
      */
     protected final ImageView sprite;
+    protected double speedX;
+    protected double speedY;
 
 //    /**
 //     * An Entity's name.
@@ -28,7 +33,7 @@ public abstract class Entity implements Slayable, Dynamic {
 //        private int damage;
 //        private int defence;
 //        private double range;
-//        private double speed;
+//
 //    }
 
     public Entity(final String filename, final int x, final int y) {
@@ -36,6 +41,12 @@ public abstract class Entity implements Slayable, Dynamic {
         sprite.setX(x);
         sprite.setY(y);
         sprite.setPreserveRatio(true);
+        speedX = 0;
+        speedY = 0;
+    }
+
+    public Node getSprite() {
+        return sprite;
     }
 
     public void setWidth(final int width) {
@@ -49,16 +60,32 @@ public abstract class Entity implements Slayable, Dynamic {
     }
 
     @Override
-    public void move() {
-
-    }
-
-    @Override
     public boolean collision(final Entity entity) {
         final ImageView box = entity.sprite;
         return this.sprite.intersects(box.getX(), box.getY(), box.getFitWidth(), box.getFitHeight());
     }
 
-// maybe a new interface??
-//    public abstract void attack();
+    @Override
+    public void move() {
+        // might not be working, need clock to see
+        sprite.setTranslateX(speedX);
+        sprite.setTranslateY(speedY);
+    }
+    @Override
+    public void movingAtX(final boolean enabled) {
+        if (enabled) {
+            speedX = SPEED;
+        } else {
+            speedX = 0;
+        }
+    }
+
+    @Override
+    public void movingAtY(final boolean enabled) {
+        if (enabled) {
+            speedY = SPEED;
+        } else {
+            speedY = 0;
+        }
+    }
 }
