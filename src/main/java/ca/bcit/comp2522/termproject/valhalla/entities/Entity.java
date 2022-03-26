@@ -10,14 +10,14 @@ import javafx.scene.image.ImageView;
  * @version 1.0
  */
 public abstract class Entity implements Slayable, Tangible, Dynamic {
-    private static final double SPEED = 10.0;
 
     /**
      * An Entity's display representation as an ImageView.
      */
     protected final ImageView sprite;
-    protected double speedX;
-    protected double speedY;
+    protected double velocityX;
+    protected double velocityY;
+    protected double speed = 10.0;
 
 //    /**
 //     * An Entity's name.
@@ -42,8 +42,8 @@ public abstract class Entity implements Slayable, Tangible, Dynamic {
         sprite.setX(x);
         sprite.setY(y);
         sprite.setPreserveRatio(true);
-        speedX = 0;
-        speedY = 0;
+        velocityX = 0;
+        velocityY = 0;
     }
 
     public Node getSprite() {
@@ -69,24 +69,24 @@ public abstract class Entity implements Slayable, Tangible, Dynamic {
     @Override
     public void move() {
         // might not be working, need clock to see
-        sprite.setTranslateX(speedX);
-        sprite.setTranslateY(speedY);
+        sprite.setTranslateX(velocityX);
+        sprite.setTranslateY(velocityY);
     }
     @Override
     public void movingAtX(final boolean enabled) {
         if (enabled) {
-            speedX = SPEED;
+            velocityX = speed;
         } else {
-            speedX = 0;
+            velocityX = 0;
         }
     }
 
     @Override
     public void movingAtY(final boolean enabled) {
         if (enabled) {
-            speedY = SPEED;
+            velocityY = speed;
         } else {
-            speedY = 0;
+            velocityY = 0;
         }
     }
 }
