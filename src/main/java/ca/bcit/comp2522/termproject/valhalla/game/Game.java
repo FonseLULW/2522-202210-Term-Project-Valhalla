@@ -29,6 +29,55 @@ public class Game extends Application {
         Hero hero = new Hero("baymax.jpg");
         root.getChildren().add(hero.getSprite());
         root.getChildren();
+        hero.setHeight(60);
+
+        final Clock clock = new Clock() {
+            @Override
+            public void handle(final long timestamp) {
+                hero.move();
+            }
+        };
+        clock.start();
+
+        scene.setOnKeyPressed((event) -> {
+            switch (event.getCode()) {
+                case A:
+                    hero.setVelocityX(-10);
+                    break;
+                case D:
+                    hero.setVelocityX(10);
+                    break;
+                case W:
+                    hero.setVelocityY(-10);
+                    break;
+                case S:
+                    hero.setVelocityY(10);
+                    break;
+                default:
+                    break;
+            }
+
+        });
+
+        scene.setOnKeyReleased((event) -> {
+            switch (event.getCode()) {
+                case A:
+                    hero.setVelocityX(0);
+                    break;
+                case D:
+                    hero.setVelocityX(0);
+                    break;
+                case W:
+                    hero.setVelocityY(0);
+                    break;
+                case S:
+                    hero.setVelocityY(0);
+                    break;
+                default:
+                    break;
+            }
+
+        });
 
         // display the screen
         stage.setScene(scene);
