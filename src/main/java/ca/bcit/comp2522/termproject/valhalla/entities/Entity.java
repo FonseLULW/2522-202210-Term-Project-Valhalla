@@ -68,25 +68,17 @@ public abstract class Entity implements Slayable, Tangible, Dynamic {
 
     @Override
     public void move() {
-        // might not be working, need clock to see
-        sprite.setTranslateX(velocityX);
-        sprite.setTranslateY(velocityY);
-    }
-    @Override
-    public void movingAtX(final boolean enabled) {
-        if (enabled) {
-            velocityX = speed;
-        } else {
-            velocityX = 0;
-        }
+        sprite.setX(sprite.getX() + velocityX);
+        sprite.setY(sprite.getY() + velocityY);
     }
 
     @Override
-    public void movingAtY(final boolean enabled) {
-        if (enabled) {
-            velocityY = speed;
-        } else {
-            velocityY = 0;
-        }
+    public void setVelocityX(double velocityX) {
+        this.velocityX = velocityX;
+    }
+
+    @Override
+    public void setVelocityY(double velocityY) {
+        this.velocityY = velocityY;
     }
 }

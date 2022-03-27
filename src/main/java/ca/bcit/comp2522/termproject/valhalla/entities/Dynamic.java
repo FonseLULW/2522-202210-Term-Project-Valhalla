@@ -7,7 +7,7 @@ package ca.bcit.comp2522.termproject.valhalla.entities;
  * @version 1.0
  */
 public interface Dynamic {
-    void movingAtX(boolean enabled);
-    void movingAtY(boolean enabled);
+    void setVelocityX(double velocityX);
+    void setVelocityY(double velocityY);
     void move();
 }
