@@ -1,13 +1,7 @@
 package ca.bcit.comp2522.termproject.valhalla.entities;
 
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * An abstract Entity class for all things that exist.
@@ -44,7 +38,7 @@ public abstract class Entity implements Slayable, Tangible, Dynamic {
 //    }
 
     public Entity(final String filename, final int x, final int y) {
-        sprite = new ImageView(new Image("hero1_idle.jpeg"));
+        sprite = new ImageView("file:assets/img/" + filename);
         sprite.setX(x);
         sprite.setY(y);
         sprite.setPreserveRatio(true);

@@ -26,7 +26,7 @@ public class Game extends Application {
         stage.setTitle(APP_TITLE);
 
         // game setup
-        Hero hero = new Hero("img/hero1_idle.jpeg");
+        Hero hero = new Hero("baymax.jpg");
         root.getChildren().add(hero.getSprite());
         root.getChildren();
         hero.setHeight(60);
