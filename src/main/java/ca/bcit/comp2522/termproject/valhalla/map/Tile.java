@@ -1,6 +1,6 @@
 package ca.bcit.comp2522.termproject.valhalla.map;
 
-import ca.bcit.comp2522.termproject.valhalla.game.DefaultTower;
+import ca.bcit.comp2522.termproject.valhalla.towers.DefaultTower;
 import javafx.application.Application;
 
 import java.util.ArrayList;

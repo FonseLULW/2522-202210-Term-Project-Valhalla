@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.termproject.valhalla.game;
+package ca.bcit.comp2522.termproject.valhalla.towers;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
