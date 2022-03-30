@@ -45,53 +45,100 @@ public class Game extends Application {
         gameplayScene = new GameplayScene();
         titleScene = new TitleScene();
 
-        gameplayScene.initRoot();
+//        gameplayScene.initRoot();
         titleScene.initRoot();
 
         gameplayScene.setOnKeyPressed(gameplayScene::handleEvent);
+        gameplayScene.setOnKeyReleased(gameplayScene::handleEvent);
         titleScene.setOnKeyPressed(titleScene::handleEvent);
+
+        gameplayScene.startScene();
+//        titleScene.switchScene();
 
         currentScene = titleScene;
 
         // this is the game loop
-        final Clock clock = new Clock() {
-            @Override
-            public void handle(final long timestamp) {
-                // move
-//                gameplayRoot.getChildren().get(1).move();
-            }
-        };
-        clock.start();
+//        final Clock clock = new Clock() {
+//            @Override
+//            public void handle(final long timestamp) {
+//                // move
+////                gameplayRoot.getChildren().get(1).move();
+//            }
+//        };
+//        clock.start();
 
         // display the screen
         gameStage.setScene(currentScene);
         gameStage.show();
     }
 
-    private class GameplayScene extends Scene{
+    private class GameplayScene extends Scene {
+        private Hero hero;
+
         public GameplayScene() {
             super(gameplayRoot, APP_WIDTH, APP_HEIGHT, Color.GAINSBORO);
+            initRoot();
         }
 
         public void switchScene() {
+            hero.setVelocityX(0);
+            hero.setVelocityY(0);
             gameStage.setScene(titleScene);
         }
 
         public void handleEvent(final KeyEvent event) {
-            switch (event.getCode()) {
-                case ESCAPE:
-                    switchScene();
-                    break;
-                default:
-                    break;
+            if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+                switch (event.getCode()) {
+                    case ESCAPE:
+                        switchScene();
+                        break;
+                    case A:
+                        hero.setVelocityX(-5);
+                        break;
+                    case D:
+                        hero.setVelocityX(5);
+                        break;
+                    case W:
+                        hero.setVelocityY(-5);
+                        break;
+                    case S:
+                        hero.setVelocityY(5);
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                switch (event.getCode()) {
+                    case A:
+                    case D:
+                        hero.setVelocityX(0);
+                        break;
+                    case W:
+                    case S:
+                        hero.setVelocityY(0);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         public void initRoot() {
             // stuff inside gameplay screen
-            Hero hero = new Hero("hero1_idle.jpeg");
+            hero = new Hero("hero1_idle.jpeg");
             gameplayRoot.getChildren().add(hero);
             hero.setHeight(60);
+        }
+
+        public void startScene() {
+            final Clock clock = new Clock() {
+                @Override
+                public void handle(final long timestamp) {
+                    // move
+                    hero.move();
+                }
+            };
+            clock.start();
         }
     }
 
