@@ -39,7 +39,7 @@ public class Arena {
     private boolean[][] isGreen;
 
     /**
-     * The amount of money(Resource) the player has.
+     * The amount of money the player has.
      */
     private int money;
 

@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import com.almasb.fxgl.app.GameApplication;
 
 /**
  * The Game class.
