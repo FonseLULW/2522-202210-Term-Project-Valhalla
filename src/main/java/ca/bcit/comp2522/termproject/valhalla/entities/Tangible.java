@@ -9,7 +9,7 @@ import javafx.scene.Node;
  * @version 1.0
  */
 public interface Tangible {
-    Node getSprite();
+//    Node getSprite();
     void setWidth(int width);
     void setHeight(int height);
     boolean collision(Entity entity);

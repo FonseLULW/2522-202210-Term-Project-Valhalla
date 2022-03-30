@@ -26,14 +26,16 @@ public class Game extends Application {
         stage.setTitle(APP_TITLE);
 
         // game setup
-        Hero hero = new Hero("baymax.jpg");
-        root.getChildren().add(hero.getSprite());
+        Hero hero = new Hero("![](../../../../../../../../../resources/img/hero1_attack2.png)");
+        root.getChildren().add(hero);
         root.getChildren();
         hero.setHeight(60);
 
+        // this is the game loop
         final Clock clock = new Clock() {
             @Override
             public void handle(final long timestamp) {
+                // move
                 hero.move();
             }
         };
