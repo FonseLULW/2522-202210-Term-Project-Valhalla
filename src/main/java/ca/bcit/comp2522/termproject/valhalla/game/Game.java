@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject.valhalla.game;
 
 import ca.bcit.comp2522.termproject.valhalla.entities.Hero;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -20,12 +21,12 @@ import javafx.scene.Scene;
  */
 public class Game extends Application {
     private Stage gameStage;
-//    private Group currentRoot;
+    private Group currentRoot;
     private Scene currentScene;
-//    private Group gameplayRoot;
-    private Scene gameplayScene;
-//    private Group titleRoot;
-    private Scene titleScene;
+    private Group gameplayRoot;
+    private GameplayScene gameplayScene;
+    private Group titleRoot;
+    private TitleScene titleScene;
 
 
     public static final int APP_WIDTH = 1000;
@@ -38,13 +39,17 @@ public class Game extends Application {
         gameStage = stage;
         gameStage.setTitle(APP_TITLE);
 
-        Group gameplayRoot = initGameplayRoot();
-        Group titleRoot = initTitleRoot();
-        gameplayScene = new Scene(gameplayRoot, APP_WIDTH, APP_HEIGHT, Color.GAINSBORO);
-        titleScene = new Scene(titleRoot, APP_WIDTH, APP_HEIGHT, Color.BURLYWOOD);
+        gameplayRoot = new Group();
+        titleRoot = new Group();
 
-        gameplayScene.setOnKeyPressed(this::handleEvent);
-        titleScene.setOnKeyPressed(this::handleEvent);
+        gameplayScene = new GameplayScene();
+        titleScene = new TitleScene();
+
+        gameplayScene.initRoot();
+        titleScene.initRoot();
+
+        gameplayScene.setOnKeyPressed(gameplayScene::handleEvent);
+        titleScene.setOnKeyPressed(titleScene::handleEvent);
 
         currentScene = titleScene;
 
@@ -53,7 +58,7 @@ public class Game extends Application {
             @Override
             public void handle(final long timestamp) {
                 // move
-//                hero.move();
+//                gameplayRoot.getChildren().get(1).move();
             }
         };
         clock.start();
@@ -63,43 +68,58 @@ public class Game extends Application {
         gameStage.show();
     }
 
-    public Group initGameplayRoot() {
-        Group root = new Group();
+    private class GameplayScene extends Scene{
+        public GameplayScene() {
+            super(gameplayRoot, APP_WIDTH, APP_HEIGHT, Color.GAINSBORO);
+        }
 
-        // stuff inside gameplay screen
-        Hero hero = new Hero("hero1_idle.jpeg");
-        root.getChildren().add(hero);
-        hero.setHeight(60);
-        return root;
-    }
-
-    public Group initTitleRoot() {
-        Group root = new Group();
-
-        // stuff inside title screen
-        Text text = new Text(10, 50, "hello!");
-        root.getChildren().add(text);
-        return root;
-    }
-
-    public void switchScene() {
-        System.out.println("Print");
-        if (currentScene.equals(titleScene)) {
-            currentScene = gameplayScene;
-            gameStage.setScene(gameplayScene);
-        } else {
-            currentScene = titleScene;
+        public void switchScene() {
             gameStage.setScene(titleScene);
+        }
+
+        public void handleEvent(final KeyEvent event) {
+            switch (event.getCode()) {
+                case ESCAPE:
+                    switchScene();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void initRoot() {
+            // stuff inside gameplay screen
+            Hero hero = new Hero("hero1_idle.jpeg");
+            gameplayRoot.getChildren().add(hero);
+            hero.setHeight(60);
         }
     }
 
-    public void handleEvent(final KeyEvent event) {
-        switch (event.getCode()) {
-            case ESCAPE:
-                switchScene();
-                break;
-            default:
-                break;
+    private class TitleScene extends Scene {
+        public TitleScene() {
+            super(titleRoot, APP_WIDTH, APP_HEIGHT, Color.BURLYWOOD);
+        }
+
+        public void switchScene() {
+            gameStage.setScene(gameplayScene);
+        }
+
+        public void handleEvent(final KeyEvent event) {
+            switch (event.getCode()) {
+                case ESCAPE:
+                    switchScene();
+                    break;
+                case X:
+                    Platform.exit();
+                default:
+                    break;
+            }
+        }
+
+        public void initRoot() {
+            // stuff inside title screen
+            Text text = new Text(10, 50, "hello!");
+            titleRoot.getChildren().add(text);
         }
     }
 
