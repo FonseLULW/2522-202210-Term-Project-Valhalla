@@ -2,8 +2,12 @@ package ca.bcit.comp2522.termproject.valhalla.game;
 
 import ca.bcit.comp2522.termproject.valhalla.entities.Hero;
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -16,8 +20,11 @@ import javafx.scene.Scene;
  */
 public class Game extends Application {
     private Stage gameStage;
+//    private Group currentRoot;
     private Scene currentScene;
+//    private Group gameplayRoot;
     private Scene gameplayScene;
+//    private Group titleRoot;
     private Scene titleScene;
 
 
@@ -31,21 +38,15 @@ public class Game extends Application {
         gameStage = stage;
         gameStage.setTitle(APP_TITLE);
 
-        gameplayScene = initGameplayScene();
-        titleScene = initTitleScene();
+        Group gameplayRoot = initGameplayRoot();
+        Group titleRoot = initTitleRoot();
+        gameplayScene = new Scene(gameplayRoot, APP_WIDTH, APP_HEIGHT, Color.GAINSBORO);
+        titleScene = new Scene(titleRoot, APP_WIDTH, APP_HEIGHT, Color.BURLYWOOD);
 
-        // application setup
+        gameplayScene.setOnKeyPressed(this::handleEvent);
+        titleScene.setOnKeyPressed(this::handleEvent);
+
         currentScene = titleScene;
-
-        currentScene.setOnKeyPressed((event) -> {
-            switch (event.getCode()) {
-                case ESCAPE:
-                    switchScene();
-                    break;
-                default:
-                    break;
-            }
-        });
 
         // this is the game loop
         final Clock clock = new Clock() {
@@ -57,71 +58,49 @@ public class Game extends Application {
         };
         clock.start();
 
-//        currentScene.setOnKeyPressed((event) -> {
-//            switch (event.getCode()) {
-//                case A:
-//                    hero.setVelocityX(-10);
-//                    break;
-//                case D:
-//                    hero.setVelocityX(10);
-//                    break;
-//                case W:
-//                    hero.setVelocityY(-10);
-//                    break;
-//                case S:
-//                    hero.setVelocityY(10);
-//                    break;
-//                default:
-//                    break;
-//            }
-//
-//        });
-//
-//        currentScene.setOnKeyReleased((event) -> {
-//            switch (event.getCode()) {
-//                case A:
-//                    hero.setVelocityX(0);
-//                    break;
-//                case D:
-//                    hero.setVelocityX(0);
-//                    break;
-//                case W:
-//                    hero.setVelocityY(0);
-//                    break;
-//                case S:
-//                    hero.setVelocityY(0);
-//                    break;
-//                default:
-//                    break;
-//            }
-//
-//        });
-
         // display the screen
-        stage.setScene(currentScene);
-        stage.show();
+        gameStage.setScene(currentScene);
+        gameStage.show();
     }
 
-    public Scene initGameplayScene() {
+    public Group initGameplayRoot() {
         Group root = new Group();
-        gameplayScene = new Scene(root, APP_WIDTH, APP_HEIGHT, Color.GAINSBORO);
 
-        // stuff inside gameplay scene
+        // stuff inside gameplay screen
         Hero hero = new Hero("hero1_idle.jpeg");
         root.getChildren().add(hero);
         hero.setHeight(60);
-        return gameplayScene;
+        return root;
     }
 
-    public Scene initTitleScene() {
+    public Group initTitleRoot() {
         Group root = new Group();
-        titleScene = new Scene(root, APP_WIDTH, APP_HEIGHT, Color.BURLYWOOD);
-        return titleScene;
+
+        // stuff inside title screen
+        Text text = new Text(10, 50, "hello!");
+        root.getChildren().add(text);
+        return root;
     }
 
     public void switchScene() {
-        currentScene = gameplayScene;
-        gameStage.setScene(currentScene);
+        System.out.println("Print");
+        if (currentScene.equals(titleScene)) {
+            currentScene = gameplayScene;
+            gameStage.setScene(gameplayScene);
+        } else {
+            currentScene = titleScene;
+            gameStage.setScene(titleScene);
+        }
+    }
+
+    public void handleEvent(final KeyEvent event) {
+        switch (event.getCode()) {
+            case ESCAPE:
+                switchScene();
+                break;
+            default:
+                break;
+        }
     }
 
     /**
