@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
 import com.almasb.fxgl.achievement.Achievement;
+import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
@@ -18,20 +19,19 @@ public class Game extends GameApplication {
         settings.setHeight(APP_HEIGHT);
         settings.setTitle("Valhalla");
         settings.setMainMenuEnabled(true);
+        settings.setGameMenuEnabled(false);
         settings.setPreserveResizeRatio(true);
-
-
-
+        settings.setDefaultCursor(new CursorInfo("heejo_idle.png", 0, 0));
         settings.setSceneFactory(new SceneFactory() {
             @Override
             public FXGLMenu newMainMenu() {
                 return new ValhallaMenu();
             }
 
-            @Override
-            public FXGLMenu newGameMenu() {
-                return new ValhallaMenu();
-            }
+//            @Override
+//            public FXGLMenu newGameMenu() {
+//                return new ValhallaMenu();
+//            }
         });
     }
 
