@@ -5,9 +5,15 @@ import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.app.scene.LoadingScene;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
+
+import ca.bcit.comp2522.termproject.valhalla.data.TowerData;
+import ca.bcit.comp2522.termproject.valhalla.constant.TowerType;
+
 
 public class Game extends GameApplication {
     public static final int APP_WIDTH = 1000;
@@ -38,9 +44,15 @@ public class Game extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new NodeFactory());
-
         FXGL.spawn("hero", 60, 60);
 
+    }
+
+    private void buildTower(final TowerType towerType) {
+    }
+
+    private TowerData getTowerData(final TowerType towerType) {
+        return null; // need to add
     }
 
     public static void main(final String[] args) {
