@@ -18,7 +18,6 @@ public class Game extends GameApplication {
         settings.setHeight(APP_HEIGHT);
         settings.setTitle("Valhalla");
         settings.setMainMenuEnabled(true);
-//        settings.setGameMenuEnabled(true);
         settings.setPreserveResizeRatio(true);
 
 
@@ -26,6 +25,11 @@ public class Game extends GameApplication {
         settings.setSceneFactory(new SceneFactory() {
             @Override
             public FXGLMenu newMainMenu() {
+                return new ValhallaMenu();
+            }
+
+            @Override
+            public FXGLMenu newGameMenu() {
                 return new ValhallaMenu();
             }
         });

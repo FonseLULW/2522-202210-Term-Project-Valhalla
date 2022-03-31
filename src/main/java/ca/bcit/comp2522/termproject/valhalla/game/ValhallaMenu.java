@@ -16,12 +16,8 @@ public class ValhallaMenu extends FXGLMenu {
     public ValhallaMenu() {
         super(MenuType.MAIN_MENU);
 
-        ValhallaButton btnPlay = new ValhallaButton("Play", () -> {
-            System.out.println("playing game lol");
-        });
-        ValhallaButton btnExit = new ValhallaButton("Exit", () -> {
-            System.out.println("exiting game lol");
-        });
+        ValhallaButton btnPlay = new ValhallaButton("Play", this::fireNewGame);
+        ValhallaButton btnExit = new ValhallaButton("Exit", this::fireExit);
         ValhallaButton btnSettings = new ValhallaButton("Settings", () -> {
             System.out.println("editing game lol");
         });
