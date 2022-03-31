@@ -4,8 +4,6 @@ import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 
 public class ValhallaMenu extends FXGLMenu {
 
@@ -19,10 +17,10 @@ public class ValhallaMenu extends FXGLMenu {
 
         // create login form
         LoginForm loginForm = new LoginForm();
-        ValhallaButton btnSubmit = new ValhallaButton("Submit", 0, 0);
-        AnchorPane.setLeftAnchor(btnSubmit, LoginForm.LEFT_PADDING);
-        AnchorPane.setBottomAnchor(btnSubmit, LoginForm.RIGHT_PADDING);
-        loginForm.getChildren().add(btnSubmit);
+        loginForm.setTranslateX(50);
+        loginForm.setTranslateY(50);
+        loginForm.addField(LoginForm.Fields.USERNAME, "Username: ");
+        loginForm.addField(LoginForm.Fields.PASSWORD, "Password: ");
         loginForm.setVisible(false);
 
         // set the action of buttons
@@ -30,7 +28,10 @@ public class ValhallaMenu extends FXGLMenu {
             loginForm.setVisible(true);
         });
         btnExit.setAction(this::fireExit);
-        btnSubmit.setAction(this::fireNewGame);
+        loginForm.getSubmit().setAction(this::fireNewGame);
+        loginForm.getCancel().setAction(() -> {
+            loginForm.setVisible(false);
+        });
 
         // add menu elements to display here
         addChild(btnPlay);
@@ -40,30 +41,5 @@ public class ValhallaMenu extends FXGLMenu {
 
     protected Node createBackground() {
         return FXGL.texture("menu.png", Game.APP_WIDTH, Game.APP_HEIGHT);
-    }
-
-    private static class ValhallaButton extends Button {
-        private static final double BTN_WIDTH = 100;
-        private final String label;
-        private Runnable action;
-
-        public ValhallaButton(final String label, final double x, final double y, final Runnable action) {
-            this.label = label;
-            this.action = action;
-
-            setMinWidth(BTN_WIDTH);
-            setText(this.label);
-            setOnAction(actionEvent -> this.action.run());
-            setTranslateX(x);
-            setTranslateY(y);
-        }
-
-        public ValhallaButton(final String label, final double x, final double y) {
-            this(label, x, y, null);
-        }
-
-        public void setAction(final Runnable action) {
-            this.action = action;
-        }
     }
 }
