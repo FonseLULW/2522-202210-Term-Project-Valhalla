@@ -2,7 +2,6 @@ package ca.bcit.comp2522.termproject.valhalla.towers;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.lang.Math;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -245,6 +244,14 @@ public class BasicTower extends ImageView {
      */
     public int getUpgradeCost() {
         return upgradeCost;
+    }
+
+    /**
+     * return the imageView of the tower
+     * @return ImageView return the imageView of the tower
+     */
+    public ImageView getImageView() {
+        return imageView;
     }
 
     /**
