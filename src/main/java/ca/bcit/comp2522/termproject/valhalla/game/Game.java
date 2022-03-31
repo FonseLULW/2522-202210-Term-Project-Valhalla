@@ -13,7 +13,6 @@ import com.almasb.fxgl.dsl.FXGL;
 
 import ca.bcit.comp2522.termproject.valhalla.data.TowerData;
 import ca.bcit.comp2522.termproject.valhalla.constant.TowerType;
-import org.jetbrains.annotations.NotNull;
 
 
 public class Game extends GameApplication {
@@ -30,7 +29,6 @@ public class Game extends GameApplication {
         settings.setPreserveResizeRatio(true);
         settings.setDefaultCursor(new CursorInfo("heejo_idle.png", 0, 0));
         settings.setSceneFactory(new SceneFactory() {
-            @NotNull
             @Override
             public FXGLMenu newMainMenu() {
                 return new ValhallaMenu();
