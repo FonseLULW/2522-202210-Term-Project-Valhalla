@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Shape;
 
 
 /**
@@ -13,7 +14,7 @@ import javafx.scene.image.ImageView;
  * @author kaioh08
  * @version 2022
  */
-public class DefaultTower {
+public class BasicTower extends ImageView {
 
     /**
      * Default upgrade cost of the tower.
@@ -33,7 +34,7 @@ public class DefaultTower {
     /**
      * The directory where the tower asset is stored.
      */
-    private static String towerAssetPath = "i need tower asset path";
+    private static String towerAssetPath = "heejo_idle.jpeg";
 
     /**
      * Default range of the tower.
@@ -86,7 +87,7 @@ public class DefaultTower {
      * @param xCoordinate x position of the tower
      * @param yCoordinate y position of the tower
      */
-    public void BasicTower(final int xCoordinate, final int yCoordinate) {
+    public BasicTower(final int xCoordinate, final int yCoordinate) {
         x = xCoordinate;
         y = yCoordinate;
 
@@ -109,7 +110,7 @@ public class DefaultTower {
      * @param costOfUpgrade        upgrade cost of the tower
      * @param towerAssetPaths      directory where its image is stored at
      */
-    public void BasicTower(final int xCoordinate, final int yCoordinate, final int towerAttackPower,
+    public BasicTower(final int xCoordinate, final int yCoordinate, final int towerAttackPower,
                            final int rangeOfStartingTower, final int costOfTower, final int costOfUpgrade,
                            final String towerAssetPaths) {
         x = xCoordinate;
@@ -163,16 +164,14 @@ public class DefaultTower {
     public void setImageView(final String assetPathOfTower) {
         Image image = null;
 
-        try {
-            image = new Image(new FileInputStream(assetPathOfTower));
-        } catch (FileNotFoundException e) {
-            // i need to write the catch block for this
-            e.printStackTrace();
-        }
+//        try {
+        image = new Image(assetPathOfTower);
+//        } catch (FileNotFoundException e) {
+//            // i need to write the catch block for this
+//            e.printStackTrace();
+//        }
 
-        if (image != null) {
-            imageView = new ImageView(image);
-        }
+        imageView = new ImageView(image);
     }
 
     /**
@@ -180,18 +179,18 @@ public class DefaultTower {
      *
      * @return the x position of the tower as an int
      */
-    public int getX() {
-        return x;
-    }
+//    public int getX() {
+//        return x;
+//    }
 
     /**
      * Return the y position of the tower.
      *
      * @return the y position of the tower as an int
      */
-    public int getY() {
-        return y;
-    }
+//    public int getY() {
+//        return y;
+//    }
 
     /**
      * Return the attack power of the tower.
