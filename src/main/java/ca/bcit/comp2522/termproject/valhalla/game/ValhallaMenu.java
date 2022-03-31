@@ -3,50 +3,67 @@ package ca.bcit.comp2522.termproject.valhalla.game;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
-import javafx.beans.binding.StringBinding;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+import javafx.scene.layout.AnchorPane;
 
 public class ValhallaMenu extends FXGLMenu {
 
     public ValhallaMenu() {
         super(MenuType.MAIN_MENU);
+        addChild(createBackground());
 
-        ValhallaButton btnPlay = new ValhallaButton("Play", this::fireNewGame);
-        ValhallaButton btnExit = new ValhallaButton("Exit", this::fireExit);
-        ValhallaButton btnSettings = new ValhallaButton("Settings", () -> {
-            System.out.println("editing game lol");
+        // create menu elements here; menu elements must extend javafx Node
+        ValhallaButton btnExit = new ValhallaButton("Exit", 100, 200);
+        ValhallaButton btnPlay = new ValhallaButton("Play", 100, 100);
+
+        // create login form
+        LoginForm loginForm = new LoginForm();
+        ValhallaButton btnSubmit = new ValhallaButton("Submit", 0, 0);
+        AnchorPane.setLeftAnchor(btnSubmit, LoginForm.LEFT_PADDING);
+        AnchorPane.setBottomAnchor(btnSubmit, LoginForm.RIGHT_PADDING);
+        loginForm.getChildren().add(btnSubmit);
+        loginForm.setVisible(false);
+
+        // set the action of buttons
+        btnPlay.setAction(() -> {
+            loginForm.setVisible(true);
         });
-        btnPlay.setTranslateX(100);
-        btnSettings.setTranslateX(200);
-        btnExit.setTranslateX(300);
+        btnExit.setAction(this::fireExit);
+        btnSubmit.setAction(this::fireNewGame);
 
-        addChild(createBackground(Game.APP_WIDTH, Game.APP_HEIGHT));
+        // add menu elements to display here
         addChild(btnPlay);
         addChild(btnExit);
-        addChild(btnSettings);
+        addChild(loginForm);
     }
 
-    protected Node createBackground(final double width, final double height) {
+    protected Node createBackground() {
         return FXGL.texture("menu.png", Game.APP_WIDTH, Game.APP_HEIGHT);
     }
 
     private static class ValhallaButton extends Button {
         private static final double BTN_WIDTH = 100;
-        private final String name;
-        private final Runnable runnable;
+        private final String label;
+        private Runnable action;
 
-        public ValhallaButton(final String name, final Runnable runnable) {
-            this.name = name;
-            this.runnable = runnable;
+        public ValhallaButton(final String label, final double x, final double y, final Runnable action) {
+            this.label = label;
+            this.action = action;
 
             setMinWidth(BTN_WIDTH);
-            setText(name);
-            setOnAction(actionEvent -> runnable.run());
+            setText(this.label);
+            setOnAction(actionEvent -> this.action.run());
+            setTranslateX(x);
+            setTranslateY(y);
+        }
+
+        public ValhallaButton(final String label, final double x, final double y) {
+            this(label, x, y, null);
+        }
+
+        public void setAction(final Runnable action) {
+            this.action = action;
         }
     }
 }
