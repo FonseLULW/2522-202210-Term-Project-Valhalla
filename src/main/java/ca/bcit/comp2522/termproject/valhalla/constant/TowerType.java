@@ -7,9 +7,5 @@ package ca.bcit.comp2522.termproject.valhalla.constant;
  * @version 1.0
  */
 public enum TowerType {
-    LASER,
-    THUNDER,
-    FLAME,
-    ARROW,
-    NONE
+    ARROW
 }
