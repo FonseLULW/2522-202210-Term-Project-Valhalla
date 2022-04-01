@@ -38,6 +38,18 @@ public class DatabaseManager {
 //        }
 //    }
 
+//    public void add(final String table, final HashMap<String, String> values) {
+//        // catches a value mismatch, making pk null, domain constraint violation
+//    }
+
+//    public void delete(final String table, final String username) {
+//        // catches deleting null, referential integrity violation
+//    }
+
+//    public void update(final String table, final String column, final String newValue) {
+//        // catches a domain constraint violation or an entity integrity violation
+//    }
+
     public static void main(final String[] args) {
         DatabaseManager db;
         ResultSet rs;
