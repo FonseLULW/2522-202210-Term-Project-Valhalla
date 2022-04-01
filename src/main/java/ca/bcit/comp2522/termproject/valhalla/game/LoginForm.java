@@ -9,6 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
+
 public class LoginForm extends AnchorPane {
     public enum Fields { USERNAME, PASSWORD }
     public static final double ROW_HEIGHT = 20.0;
@@ -88,6 +90,19 @@ public class LoginForm extends AnchorPane {
         fieldAmount++;
     }
 
+    public boolean validate() {
+        try {
+            DatabaseManager db = new DatabaseManager("comp2522", "root", "eggonomics");
+//            db.search("USERS", rows.getChildren().get())
+            return true;
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error: SQL jar file cannot be found on Project Structure");
+        } catch (SQLException e) {
+            System.out.println("Error: Wrong username or password passed in constructor");
+        }
+        return true;
+    }
+
     private static class FieldFactory {
         private static final double FIELD_RELATIVE_WIDTH = 0.5;
         private static final double LABEL_RELATIVE_WIDTH = 1.0 - FIELD_RELATIVE_WIDTH;
@@ -107,6 +122,7 @@ public class LoginForm extends AnchorPane {
                     throw new IllegalArgumentException("Field is not supported");
                 }
             }
+            // maybe extract func
             input.setPrefHeight(ROW_HEIGHT);
             input.setMinHeight(ROW_HEIGHT);
             input.setPrefWidth(ROW_WIDTH * FIELD_RELATIVE_WIDTH);

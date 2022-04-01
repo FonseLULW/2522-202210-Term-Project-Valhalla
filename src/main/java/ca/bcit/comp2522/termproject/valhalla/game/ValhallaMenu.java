@@ -39,7 +39,7 @@ public class ValhallaMenu extends FXGLMenu {
         });
         btnExit.setAction(this::fireExit);
         loginForm.getSubmit().setAction(() -> {
-            if (validate()) {
+            if (loginForm.validate()) {
                 loadGame();
             }
         });
@@ -61,10 +61,6 @@ public class ValhallaMenu extends FXGLMenu {
         menu.setTranslateY(MENU_Y);
         menu.setStyle("-fx-background-color: #af4c4c");
         return menu;
-    }
-
-    private boolean validate() {
-        return true;
     }
 
     private void loadGame() {

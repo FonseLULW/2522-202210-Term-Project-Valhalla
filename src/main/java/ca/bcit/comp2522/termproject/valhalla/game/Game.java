@@ -27,7 +27,7 @@ public class Game extends GameApplication {
         settings.setMainMenuEnabled(true);
         settings.setGameMenuEnabled(false);
         settings.setPreserveResizeRatio(true);
-        settings.setDefaultCursor(new CursorInfo("heejo_idle.png", 0, 0));
+        settings.setDefaultCursor(new CursorInfo("cursor.png", 0, 0));
         settings.setSceneFactory(new SceneFactory() {
             @Override
             public FXGLMenu newMainMenu() {
@@ -45,7 +45,6 @@ public class Game extends GameApplication {
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new NodeFactory());
         FXGL.spawn("hero", 60, 60);
-
     }
 
     private void buildTower(final TowerType towerType) {
