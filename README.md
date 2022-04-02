@@ -1,4 +1,4 @@
-#Valhalla
+# Valhalla
 **A BCIT COMP-2522 term project**
 
 ## About Valhalla
@@ -10,7 +10,7 @@ base, alternatively you can fight them yourself!
 Good luck brave bearskin, and soon may we meet at the doors of ```Valhalla```!
 
 **Genres:** Tower Defense, Adventure, PvE
-##Authors
+## Authors
 >**Fonse Clarito**  
 ```ID: A01262284```  
 ```Gmail: jalfonsclarito@gmail.com```  
@@ -24,7 +24,7 @@ Good luck brave bearskin, and soon may we meet at the doors of ```Valhalla```!
 [```LinkedIn: Kai Oh```](https://www.linkedin.com/in/kaioh08)  
 [```Website: Kai-Oh-Resume-Website```](https://kai-oh-resume-website.netlify.app/)
 
-##Project made using
+## Project made using
 * Software: Java
 * Graphics: JavaFX
 * Database: SQL using MySQL (and MySQL Workbench)
