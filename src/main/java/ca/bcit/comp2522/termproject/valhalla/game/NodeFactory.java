@@ -27,6 +27,7 @@ public class NodeFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .view("hero1_idle.png")
                 .with(new ProjectileComponent(new Point2D(1, 0), 150))
+                .with(new DraggableComponent())
                 .scale(0.1, 0.1)
                 .build();
     }

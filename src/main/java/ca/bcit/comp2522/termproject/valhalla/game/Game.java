@@ -40,7 +40,7 @@ public class Game extends GameApplication {
 
             @Override
             public FXGLMenu newGameMenu() {
-                return new ValhallaMenu();
+                return new ValhallaPauseMenu();
             }
         });
     }
@@ -48,6 +48,7 @@ public class Game extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new NodeFactory());
+        FXGL.getGameScene().setBackgroundRepeat("map.png");
         FXGL.spawn("hero", 60, 60);
     }
 
