@@ -13,6 +13,9 @@ import com.almasb.fxgl.dsl.FXGL;
 
 import ca.bcit.comp2522.termproject.valhalla.data.TowerData;
 import ca.bcit.comp2522.termproject.valhalla.constant.TowerType;
+import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.UserAction;
+import javafx.scene.input.KeyCode;
 
 
 public class Game extends GameApplication {
@@ -25,7 +28,8 @@ public class Game extends GameApplication {
         settings.setHeight(APP_HEIGHT);
         settings.setTitle("Valhalla");
         settings.setMainMenuEnabled(true);
-        settings.setGameMenuEnabled(false);
+        settings.setGameMenuEnabled(true);
+        settings.setAppIcon("slugman_1.png");
         settings.setPreserveResizeRatio(true);
         settings.setDefaultCursor(new CursorInfo("cursor.png", 0, 0));
         settings.setSceneFactory(new SceneFactory() {
@@ -34,10 +38,10 @@ public class Game extends GameApplication {
                 return new ValhallaMenu();
             }
 
-//            @Override
-//            public FXGLMenu newGameMenu() {
-//                return new ValhallaMenu();
-//            }
+            @Override
+            public FXGLMenu newGameMenu() {
+                return new ValhallaMenu();
+            }
         });
     }
 
@@ -45,6 +49,11 @@ public class Game extends GameApplication {
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new NodeFactory());
         FXGL.spawn("hero", 60, 60);
+    }
+
+    @Override
+    protected void initInput() {
+
     }
 
     private void buildTower(final TowerType towerType) {

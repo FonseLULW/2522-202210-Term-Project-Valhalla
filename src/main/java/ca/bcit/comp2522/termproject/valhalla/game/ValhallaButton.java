@@ -1,6 +1,13 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
+import com.almasb.fxgl.texture.Texture;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+
+import java.sql.Array;
 
 public class ValhallaButton extends Button {
     public static final double BTN_WIDTH = 100;
@@ -9,12 +16,12 @@ public class ValhallaButton extends Button {
     private Runnable action;
 
     public ValhallaButton(final String label, final double x, final double y, final Runnable action) {
+        super(label);
         this.label = label;
         this.action = action;
 
         setMinWidth(BTN_WIDTH);
         setMinHeight(BTN_HEIGHT);
-        setText(this.label);
         setOnAction(actionEvent -> this.action.run());
         setTranslateX(x);
         setTranslateY(y);

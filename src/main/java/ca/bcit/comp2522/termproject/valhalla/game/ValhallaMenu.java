@@ -50,7 +50,7 @@ public class ValhallaMenu extends FXGLMenu {
     }
 
     private Node createBackground() {
-        return FXGL.texture("menu.png", Game.APP_WIDTH, Game.APP_HEIGHT);
+        return FXGL.texture("background.png", Game.APP_WIDTH, Game.APP_HEIGHT);
     }
 
     private VBox createMenu() {
@@ -59,7 +59,6 @@ public class ValhallaMenu extends FXGLMenu {
         menu.setSpacing(spaceBetweenElements);
         menu.setTranslateX(MENU_X);
         menu.setTranslateY(MENU_Y);
-        menu.setStyle("-fx-background-color: #af4c4c");
         return menu;
     }
 
