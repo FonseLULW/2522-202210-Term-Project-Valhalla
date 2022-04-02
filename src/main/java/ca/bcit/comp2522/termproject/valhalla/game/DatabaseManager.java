@@ -7,6 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+/**
+ * A DatabaseManager class to manage the Valhalla database.
+ * @author FonseLULW
+ * @author kaioh08
+ * @version 1.0
+ */
 public class DatabaseManager {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final int PORT = 3306;
@@ -18,6 +24,11 @@ public class DatabaseManager {
 
     private final Connection connection;
 
+    /**
+     * Creates a DatabaseManager object.
+     * @throws ClassNotFoundException thrown if the JDBC Driver cannot be found
+     * @throws SQLException thrown if connection properties given were incorrect
+     */
     public DatabaseManager()
             throws ClassNotFoundException, SQLException {
         Class.forName(DRIVER);
@@ -29,6 +40,11 @@ public class DatabaseManager {
         connection = DriverManager.getConnection(URL + DATABASE_NAME, connectionProperties);
     }
 
+    /*
+     * Sends a query to the Valhalla database.
+     * @return the result of the query as a ResultSet
+     * @throws
+     */
     private ResultSet query(final String query) throws SQLException {
         Statement stmt = connection.createStatement();
         return stmt.executeQuery(query);
@@ -54,6 +70,10 @@ public class DatabaseManager {
 //        // catches a domain constraint violation or an entity integrity violation
 //    }
 
+    /**
+     * Drives sample of DatabaseManager.
+     * @param args unused
+     */
     public static void main(final String[] args) {
         DatabaseManager db;
         ResultSet rs;
