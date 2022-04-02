@@ -11,18 +11,22 @@ public class DatabaseManager {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final int PORT = 3306;
     private static final String URL = "jdbc:mysql://localhost:" + PORT + "/";
+    private static final String DATABASE_NAME = "comp2522";
+
+    private static final String CONNECTION_USERNAME = "root";
+    private static final String CONNECTION_PASSWORD = "eggonomics";
 
     private final Connection connection;
 
-    public DatabaseManager(final String database, final String username, final String password)
+    public DatabaseManager()
             throws ClassNotFoundException, SQLException {
         Class.forName(DRIVER);
 
         Properties connectionProperties = new Properties();
-        connectionProperties.put("user", username);
-        connectionProperties.put("password", password);
+        connectionProperties.put("user", CONNECTION_USERNAME);
+        connectionProperties.put("password", CONNECTION_PASSWORD);
 
-        connection = DriverManager.getConnection(URL + database, connectionProperties);
+        connection = DriverManager.getConnection(URL + DATABASE_NAME, connectionProperties);
     }
 
     private ResultSet query(final String query) throws SQLException {
@@ -54,7 +58,7 @@ public class DatabaseManager {
         DatabaseManager db;
         ResultSet rs;
         try {
-            db = new DatabaseManager("comp2522", "root", "eggonomics");
+            db = new DatabaseManager();
             rs = db.query("SELECT * FROM USERS");
 
             System.out.println("user_id\t\tpassword");

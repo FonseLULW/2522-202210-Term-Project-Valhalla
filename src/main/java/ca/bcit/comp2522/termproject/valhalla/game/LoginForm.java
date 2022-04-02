@@ -125,7 +125,7 @@ public class LoginForm extends AnchorPane {
 
     public boolean authenticate(final String username, final String password) {
 //        try {
-//            DatabaseManager db = new DatabaseManager("comp2522", "root", "eggonomics");
+//            DatabaseManager db = new DatabaseManager();
 ////            db.search("USERS", rows.getChildren().get())
 //            return true;
 //        } catch (ClassNotFoundException e) {
