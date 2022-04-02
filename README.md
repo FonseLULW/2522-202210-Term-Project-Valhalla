@@ -18,7 +18,7 @@ Good luck brave bearskin, and soon may we meet at the doors of ```Valhalla```!
 [```LinkedIn: Jose Alfonso Clarito```](https://www.linkedin.com/in/jaclarito)
 
 >**Kai Oh**  
-```ID: A0???????```  
+```ID: A01274246```  
 ```Gmail: kaka8651@gmail.com```  
 [```Github: kaioh08```](https://github.com/kaioh08)  
 [```LinkedIn: Kai Oh```](https://www.linkedin.com/in/kaioh08)  
