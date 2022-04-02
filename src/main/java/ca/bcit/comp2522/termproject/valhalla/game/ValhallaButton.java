@@ -47,6 +47,10 @@ public class ValhallaButton extends Button {
         this(label, x, y, null);
     }
 
+    public ValhallaButton(final String label) {
+        this(label, 0, 0);
+    }
+
     /**
      * Sets the action of this ValhallaButton.
      * @param action a Runnable that will be executed when this ValhallaButton is pressed
