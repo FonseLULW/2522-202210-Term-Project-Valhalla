@@ -11,6 +11,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * A LoginForm class to log in to your account saved in the Valhalla database.
  * @author FonseLULW
@@ -176,16 +179,24 @@ public class LoginForm extends AnchorPane {
     }
 
     private boolean authenticate(final String username, final String password) {
-//        try {
-//            DatabaseManager db = new DatabaseManager();
-////            db.search("USERS", rows.getChildren().get())
-//            return true;
-//        } catch (ClassNotFoundException e) {
-//            System.out.println("Error: SQL jar file cannot be found on Project Structure");
-//        } catch (SQLException e) {
-//            System.out.println("Error: Wrong username or password passed in constructor");
-//        }
-        return true;
+        try {
+            DatabaseManager db = new DatabaseManager();
+            ResultSet results = db.search(username, password);
+            while (results.next()) {
+                String usernameResult = results.getString("user_id");
+                String passwordResult = results.getString("password");
+                if (username.equals(usernameResult) && password.equals(passwordResult)) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error: SQL jar file cannot be found on Project Structure");
+            return false;
+        } catch (SQLException e) {
+            System.out.println("Error: Inaccurate connection properties in DatabaseManager");
+            return false;
+        }
     }
 
     /**

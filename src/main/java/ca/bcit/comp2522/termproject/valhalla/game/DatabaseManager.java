@@ -47,28 +47,18 @@ public class DatabaseManager {
      */
     private ResultSet query(final String query) throws SQLException {
         Statement stmt = connection.createStatement();
-        return stmt.executeQuery(query);
+        ResultSet res = stmt.executeQuery(query);
+        return res;
     }
 
-//    public ResultSet search(final String table, final String username) {
-//        try {
-//            return query("SELECT * FROM " + table);
-//        } catch (SQLException e) {
-//            return null;
-//        }
-//    }
-
-//    public void add(final String table, final HashMap<String, String> values) {
-//        // catches a value mismatch, making pk null, domain constraint violation
-//    }
-
-//    public void delete(final String table, final String username) {
-//        // catches deleting null, referential integrity violation
-//    }
-
-//    public void update(final String table, final String column, final String newValue) {
-//        // catches a domain constraint violation or an entity integrity violation
-//    }
+    public ResultSet search(final String username, final String password) {
+        try {
+            return query("SELECT * FROM USERS WHERE `user_id` = '" + username
+                    + "' AND `password` = '" + password + "';");
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
     /**
      * Drives sample of DatabaseManager.
