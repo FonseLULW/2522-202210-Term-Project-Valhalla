@@ -4,20 +4,31 @@ import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.scene.Node;
-import javafx.scene.layout.Background;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import org.w3c.dom.Text;
 
+/**
+ * A ValhallaMenu class representing the game's main menu.
+ * @author FonseLULW
+ * @author kaioh08
+ * @version 1.0
+ */
 public class ValhallaMenu extends FXGLMenu {
     private static final double MENU_X = Game.APP_WIDTH / 2.0 - ValhallaButton.BTN_WIDTH / 2;
     private static final double MENU_Y = Game.APP_HEIGHT / 2.0;
 
+    /**
+     * Constructs a new ValhallaMenu object.
+     */
     public ValhallaMenu() {
         super(MenuType.MAIN_MENU);
         addChild(createBackground());
+
         // create menu elements here; menu elements must extend javafx Node
+        final double spaceBetweenBtns = 25;
         ValhallaButton btnPlay = new ValhallaButton("Play", 0, 0);
-        ValhallaButton btnExit = new ValhallaButton("Exit", 0, 25);
+        ValhallaButton btnExit = new ValhallaButton("Exit", 0, spaceBetweenBtns);
         VBox menu = createMenu();
         menu.getChildren().addAll(btnPlay, btnExit);
 
@@ -50,7 +61,8 @@ public class ValhallaMenu extends FXGLMenu {
     }
 
     private Node createBackground() {
-        return FXGL.texture("menu.png", Game.APP_WIDTH, Game.APP_HEIGHT);
+        final Node background = FXGL.texture("background.png", Game.APP_WIDTH, Game.APP_HEIGHT);
+        return background;
     }
 
     private VBox createMenu() {
@@ -59,7 +71,6 @@ public class ValhallaMenu extends FXGLMenu {
         menu.setSpacing(spaceBetweenElements);
         menu.setTranslateX(MENU_X);
         menu.setTranslateY(MENU_Y);
-        menu.setStyle("-fx-background-color: #af4c4c");
         return menu;
     }
 
