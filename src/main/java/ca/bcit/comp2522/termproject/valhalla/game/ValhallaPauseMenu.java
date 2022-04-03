@@ -7,6 +7,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getDialogService;
+
 public class ValhallaPauseMenu extends FXGLMenu {
     public ValhallaPauseMenu() {
         super(MenuType.GAME_MENU);
@@ -43,7 +45,10 @@ public class ValhallaPauseMenu extends FXGLMenu {
             getChildren().addAll(resumeBtn, logoutBtn);
 
             resumeBtn.setAction(ValhallaPauseMenu.this::fireResume);
-            logoutBtn.setAction(ValhallaPauseMenu.this::fireExitToMainMenu);
+            logoutBtn.setAction(() -> {
+                System.out.println("Exiting database");
+                fireExitToMainMenu();
+            });
 
             setWidth(WIDTH);
             setHeight(HEIGHT);

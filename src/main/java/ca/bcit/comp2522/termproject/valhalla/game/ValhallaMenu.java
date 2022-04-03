@@ -4,7 +4,9 @@ import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.scene.Node;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import org.w3c.dom.Text;
 
 /**
  * A ValhallaMenu class representing the game's main menu.
@@ -22,6 +24,7 @@ public class ValhallaMenu extends FXGLMenu {
     public ValhallaMenu() {
         super(MenuType.MAIN_MENU);
         addChild(createBackground());
+
         // create menu elements here; menu elements must extend javafx Node
         final double spaceBetweenBtns = 25;
         ValhallaButton btnPlay = new ValhallaButton("Play", 0, 0);
@@ -58,7 +61,8 @@ public class ValhallaMenu extends FXGLMenu {
     }
 
     private Node createBackground() {
-        return FXGL.texture("background.png", Game.APP_WIDTH, Game.APP_HEIGHT);
+        final Node background = FXGL.texture("background.png", Game.APP_WIDTH, Game.APP_HEIGHT);
+        return background;
     }
 
     private VBox createMenu() {
