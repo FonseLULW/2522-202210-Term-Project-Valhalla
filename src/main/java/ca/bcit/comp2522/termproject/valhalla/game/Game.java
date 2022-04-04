@@ -73,6 +73,57 @@ public class Game extends GameApplication {
         buildIndicator.setY(-1000);
     }
 
+    @Override
+    protected void initGameVars(final Map<String, Object> vars) {
+        vars.put("towerType", TowerType.NONE);
+
+    }
+
+    private void trackMouse(final TowerType towerType) {
+        TowerData data = getTowerData(towerType);
+        if (data == null) {
+            return;
+        }
+
+        int w = data.getWidth();
+        int h = data.getHeight();
+
+        Point2D p = FXGL.getInput().getMousePositionWorld();
+        double x = p.getX() - w / 2.0;
+        double y = p.getY() - h / 2.0;
+        buildIndicator.setX(x);
+        buildIndicator.setY(y);
+        boolean flag = false;
+
+        for (Rectangle r : spaceInfos) {
+            if (r.getX() <= x && r.getWidth() + r.getX() >= x + w && r.getY() <= y && r.getHeight() + r.getY() >= y + h) {
+                flag = true;
+                break;
+            }
+        }
+
+        if (!flag) {
+            buildIndicatorComponent.canBuild(false);
+            return;
+        }
+
+        emptyEntity.setX(x);
+        emptyEntity.setY(y);
+
+        List<Entity> towers = FXGL.getGameWorld().getEntitiesByType(GameType.TOWER);
+
+        BoundingBoxComponent emptyBox = emptyEntity.getBoundingBoxComponent();
+
+        boolean canGenerate = true;
+        for (Entity tower : towers) {
+            if (emptyBox.isCollidingWith(tower.getBoundingBoxComponent())) {
+                canGenerate = false;
+                break;
+            }
+        }
+        buildIndicatorComponent.canBuild(canGenerate);
+    }
+
 
     @Override
     protected void initGame() {
