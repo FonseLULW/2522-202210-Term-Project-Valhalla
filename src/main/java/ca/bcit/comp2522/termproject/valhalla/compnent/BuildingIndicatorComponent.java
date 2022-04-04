@@ -19,7 +19,7 @@ public class BuildingIndicatorComponent extends Component {
     private final Circle circle;
 
     public BuildingIndicatorComponent() {
-        Image towerIcon = FXGL.image("tower/laser/tower_icon.png", 29, 51);
+        Image towerIcon = FXGL.image("tower_image.png", 29, 51);
         texture = new Texture(towerIcon);
 
         okFill = new RadialGradient(
