@@ -160,7 +160,7 @@ public class Game extends GameApplication {
         FXGL.image("slugman_2.png");
         FXGL.image("slugman_3.png");
         FXGL.image("slugman_1.png");
-        FXGL.setLevelFromMap("level1.tmx");
+        FXGL.setLevelFromMap("/resources/assets.textures/level1.tmx");
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
 
         List<Entity> tempEntities = FXGL.getGameWorld().getEntitiesByType(GameType.SPACE, GameType.POINT);
