@@ -41,7 +41,11 @@ Good luck brave bearskin, and soon may we meet at the doors of ```Valhalla```!
    4. **Line 16**: Change the value of `CONNECTION_USERNAME` to your MySQL connection username.
    5. **Line 17**: Change the value of `CONNECTION_PASSWORD` to your MySQL connection password.
 3. Check if the database works by running `DatabaseManager.main()` in line 57.
-> Test Account:  
+4. You can now login using this test account:
+   * **For Chris:** You can login using your `chris` account.
+   * **For everyone else:** You can login using the test account below.
+> Test Account:
 > Username: `test`  
 > Password: `thisisatest`
+
 
