@@ -16,39 +16,32 @@ public class TowerData {
     public TowerData() {
     }
 
-    public TowerData(String name, int width, int height, int damage, int attackRadius, int bulletSpeed, Duration attackDelay, Image towerIcon) {
+    public TowerData(final String name, final int width, final int height, final int damage, final int attackRadius,
+                     final int bulletSpeed, final Duration attackDelay, final Image towerIcon) {
         this.name = name;
         this.width = width;
         this.height = height;
         this.damage = damage;
         this.attackRadius = attackRadius;
-        this.bulletSpeed= bulletSpeed;
+        this.bulletSpeed = bulletSpeed;
         this.attackDelay = attackDelay;
-        this.towerIcon =towerIcon;
+        this.towerIcon = towerIcon;
     }
 
     public int getBulletSpeed() {
         return bulletSpeed;
     }
 
-    public void setBulletSpeed(int bulletSpeed) {
-        this.bulletSpeed = bulletSpeed;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public Image getTowerIcon() {
         return towerIcon;
-    }
-
-    public void setTowerIcon(Image towerIcon) {
-        this.towerIcon = towerIcon;
     }
 
     public int getDamage() {
@@ -77,17 +70,5 @@ public class TowerData {
 
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
-    public void setAttackRadius(int attackRadius) {
-        this.attackRadius = attackRadius;
-    }
-
-    public void setAttackDelay(Duration attackDelay) {
-        this.attackDelay = attackDelay;
     }
 }
