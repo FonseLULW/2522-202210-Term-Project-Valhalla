@@ -42,6 +42,58 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("space")
+    public Entity newSpace(final SpawnData data) {
+        Game app = (Game) (FXGL.getApp());
+        app.getSpaceInfos().add(new Rectangle(data.getX(), data.getY(), data.<Integer>get("width"),
+                data.<Integer>get("height")));
+        return entityBuilder(data)
+                .type(GameType.SPACE)
+                .build();
+    }
+
+    @Spawns("empty")
+    public Entity newEmpty(final SpawnData data) {
+        return entityBuilder(data)
+                .type(GameType.EMPTY)
+                .collidable()
+                .build();
+    }
+
+    @Spawns("enemy")
+    public Entity newEnemy(final SpawnData data) {
+        int maxHp = 500;
+        HealthIntComponent hp = new HealthIntComponent(maxHp);
+        ProgressBar hpBar = new ProgressBar(false);
+        hpBar.setFill(Color.LIGHTGREEN);
+        hpBar.setWidth(48);
+        hpBar.setHeight(7);
+        hpBar.setTranslateY(-5);
+        hpBar.setMaxValue(maxHp);
+        hpBar.setCurrentValue(maxHp);
+        hpBar.currentValueProperty().bind(hp.valueProperty());
+
+        hp.valueProperty().addListener((ob, ov, nv) -> {
+            int value = nv.intValue();
+            if (value > maxHp * 0.65) {
+                hpBar.setFill(Color.LIGHTGREEN);
+            } else if (value > maxHp * 0.25) {
+                hpBar.setFill(Color.GOLD);
+            } else {
+                hpBar.setFill(Color.RED);
+            }
+
+        });
+        return entityBuilder(data)
+                .type(GameType.ENEMY)
+                .with(hp)
+                .view(hpBar)
+                .with(new EnemyComponent(hpBar))
+                .with(new CollidableComponent(true))
+                .bbox(BoundingShape.box(48, 48))
+                .build();
+    }
+
     @Spawns("arrowTowerBullet")
     public Entity newArrowBullet(final SpawnData data) {
         return createBullet(data);
