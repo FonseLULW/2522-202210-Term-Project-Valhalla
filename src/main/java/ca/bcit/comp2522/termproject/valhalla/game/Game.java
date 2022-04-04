@@ -79,6 +79,31 @@ public class Game extends GameApplication {
 
     }
 
+    @Override
+    protected void initInput() {
+        FXGL.getInput().addEventHandler(MouseEvent.MOUSE_MOVED, e -> {
+            TowerType towerType = FXGL.geto("towerType");
+            if (towerType == TowerType.NONE) {
+                return;
+            }
+            trackMouse(towerType);
+        });
+
+        FXGL.getInput().addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            if (e.getButton() == MouseButton.SECONDARY) {
+                FXGL.set("towerType", TowerType.NONE);
+                hideIndicator();
+                return;
+            }
+            TowerType towerType = FXGL.geto("towerType");
+            if (towerType == TowerType.NONE) {
+                return;
+            }
+            buildTower(towerType);
+        });
+
+    }
+
     private void trackMouse(final TowerType towerType) {
         TowerData data = getTowerData(towerType);
         if (data == null) {
