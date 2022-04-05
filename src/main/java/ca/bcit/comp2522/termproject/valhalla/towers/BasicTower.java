@@ -34,7 +34,7 @@ public class BasicTower extends ImageView {
     /**
      * The directory where the tower asset is stored.
      */
-    private static String towerAssetPath = "heejo_idle.jpeg";
+    private static String towerAssetPath = "tower/tower_image.png";
 
     /**
      * Default range of the tower.

@@ -54,7 +54,7 @@ public class Game extends GameApplication {
         settings.setTitle("Valhalla");
         settings.setAppIcon("Logo.png");
         settings.setMainMenuEnabled(true);
-        settings.setGameMenuEnabled(false);
+        settings.setGameMenuEnabled(true);
         settings.setPreserveResizeRatio(true);
         settings.setDefaultCursor(new CursorInfo("cursor.png", 0, 0));
         settings.setSceneFactory(new SceneFactory() {
@@ -63,10 +63,10 @@ public class Game extends GameApplication {
                 return new ValhallaMenu();
             }
 
-//            @Override
-//            public FXGLMenu newGameMenu() {
-//                return new ValhallaMenu();
-//            }
+            @Override
+            public FXGLMenu newGameMenu() {
+                return new ValhallaPauseMenu();
+            }
         });
     }
 
@@ -192,7 +192,7 @@ public class Game extends GameApplication {
         FXGL.spawn("placeBox");
 
         arrowBtn = FXGL.spawn("placedButton", new SpawnData(1016, 360)
-                .put("imgName", "tower_image.png")
+                .put("imgName", "tower/tower_image.png")
                 .put("width", 43.0)
                 .put("height", 68.0)
                 .put("towerType", TowerType.ARROW)).getComponent(PlacedButtonComponent.class);
