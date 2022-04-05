@@ -20,6 +20,9 @@ import javafx.util.Pair;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 
+/**
+ * GameEntityFactory.
+ */
 public class GameEntityFactory implements EntityFactory {
 
     @Spawns("arrowTower")

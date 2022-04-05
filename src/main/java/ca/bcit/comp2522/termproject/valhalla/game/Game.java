@@ -154,7 +154,7 @@ public class Game extends GameApplication {
 
     @Override
     protected void initGame() {
-//        FXGL.getGameWorld().addEntityFactory(new NodeFactory());
+        FXGL.getGameWorld().addEntityFactory(new NodeFactory());
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
 //        FXGL.spawn("hero", 60, 60);
 
