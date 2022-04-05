@@ -29,7 +29,7 @@ public class GameEntityFactory implements EntityFactory {
     public Entity newArrowTower(final SpawnData data) {
         return entityBuilder(data)
                 .type(GameType.TOWER)
-                .viewWithBBox(FXGL.texture("arrow.png"))
+                .viewWithBBox(FXGL.texture("tower/tower_image.png"))
                 .with(new ArrowTowerComponent())
                 .build();
     }
@@ -105,7 +105,7 @@ public class GameEntityFactory implements EntityFactory {
     private Entity createBullet(final SpawnData data) {
         return entityBuilder(data)
                 .type(GameType.BULLET)
-                .viewWithBBox(FXGL.texture("res", 50, 10))
+                .viewWithBBox(FXGL.texture("tower/arrow2.png", 50, 10))
                 .with(new CollidableComponent(true))
                 .with(new OffscreenCleanComponent())
                 .with(new BulletComponent(data.get("radius"), data.get("damage")))
