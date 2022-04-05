@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="15" tilewidth="50" tileheight="50" infinite="0" nextlayerid="5" nextobjectid="50">
- <tileset firstgid="1" name="bg_map" tilewidth="50" tileheight="50" tilecount="300" columns="20">
-  <image source="bg_map.png" width="1024" height="768"/>
+ <tileset firstgid="1" name="map.png" tilewidth="50" tileheight="50" tilecount="300" columns="20">
+  <image source="map.png" width="1024" height="768"/>
  </tileset>
  <layer id="4" name="图块层 1" width="20" height="15">
   <data encoding="base64" compression="zlib">
