@@ -37,8 +37,8 @@ import java.util.Map;
  * Game.
  */
 public class Game extends GameApplication {
-    public static final int APP_WIDTH = 1000;
-    public static final int APP_HEIGHT = 563;
+    public static final int APP_WIDTH = 1920;
+    public static final int APP_HEIGHT = 1080;
     private final LinkedHashMap<Integer, Pair<Point2D, String>> pointInfos = new LinkedHashMap<>();
     private Entity buildIndicator;
     private BuildingIndicatorComponent buildIndicatorComponent;
@@ -154,16 +154,16 @@ public class Game extends GameApplication {
 
     @Override
     protected void initGame() {
-        FXGL.getGameWorld().addEntityFactory(new NodeFactory());
-        FXGL.spawn("hero", 60, 60);
+//        FXGL.getGameWorld().addEntityFactory(new NodeFactory());
+        FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
+//        FXGL.spawn("hero", 60, 60);
 
         FXGL.getGameScene().setBackgroundColor(Color.web("#16232B"));
         FXGL.image("slugman_1.png");
         FXGL.image("slugman_2.png");
         FXGL.image("slugman_3.png");
         FXGL.image("slugman_1.png");
-        FXGL.setLevelFromMap("/resources/assets.textures/level1.tmx");
-        FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
+        FXGL.setLevelFromMap("level1.tmx");
 
         List<Entity> tempEntities = FXGL.getGameWorld().getEntitiesByType(GameType.SPACE, GameType.POINT);
         FXGL.getGameWorld().removeEntities(tempEntities);
