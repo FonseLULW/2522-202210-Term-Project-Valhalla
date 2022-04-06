@@ -56,6 +56,7 @@ public class Game extends GameApplication {
         settings.setMainMenuEnabled(true);
         settings.setGameMenuEnabled(true);
         settings.setPreserveResizeRatio(true);
+        settings.setManualResizeEnabled(true); // can scale the resize window
         settings.setDefaultCursor(new CursorInfo("cursor.png", 0, 0));
         settings.setSceneFactory(new SceneFactory() {
             @Override
