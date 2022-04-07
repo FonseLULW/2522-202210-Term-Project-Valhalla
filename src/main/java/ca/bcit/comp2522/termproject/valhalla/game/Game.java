@@ -3,7 +3,7 @@ package ca.bcit.comp2522.termproject.valhalla.game;
 import ca.bcit.comp2522.termproject.valhalla.compnent.BulletComponent;
 import ca.bcit.comp2522.termproject.valhalla.compnent.EnemyComponent;
 import ca.bcit.comp2522.termproject.valhalla.constant.Config;
-import ca.bcit.comp2522.termproject.valhalla.entities.SpeedComponent;
+import ca.bcit.comp2522.termproject.valhalla.compnent.SpeedComponent;
 import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;

@@ -1,9 +1,8 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
 import ca.bcit.comp2522.termproject.valhalla.compnent.*;
-import ca.bcit.comp2522.termproject.valhalla.entities.SpeedComponent;
+import ca.bcit.comp2522.termproject.valhalla.compnent.SpeedComponent;
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.dsl.components.DraggableComponent;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.dsl.components.KeepOnScreenComponent;
 import com.almasb.fxgl.dsl.components.OffscreenCleanComponent;
@@ -36,6 +35,7 @@ public class GameEntityFactory implements EntityFactory {
                 .type(GameType.TOWER)
                 .viewWithBBox(FXGL.texture("tower/tower_image.png"))
                 .with(new ArrowTowerComponent())
+//                .with(new DraggableComponent()) //try this it's so fun with 9999 arrows lol
                 .build();
     }
 
@@ -162,7 +162,6 @@ public class GameEntityFactory implements EntityFactory {
                 .at(0, 0)
                 .viewWithBBox(sprite)
                 .type(GameType.HERO)
-                .with(new DraggableComponent())
                 .with(new SpeedComponent(speed))
                 .with(new KeepOnScreenComponent())
                 .build();

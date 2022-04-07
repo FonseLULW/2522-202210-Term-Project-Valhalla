@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.termproject.valhalla.entities;
+package ca.bcit.comp2522.termproject.valhalla.compnent;
 
 import com.almasb.fxgl.entity.component.Component;
 
