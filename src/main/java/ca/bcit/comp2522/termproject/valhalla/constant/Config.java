@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.valhalla.constant;
 
+import ca.bcit.comp2522.termproject.valhalla.data.HeroData;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import ca.bcit.comp2522.termproject.valhalla.data.TowerData;
@@ -15,4 +16,6 @@ public interface Config {
             return FXGLMath.random(LOWER_BOUND, UPPER_BOUND);
         }
     };
+
+    HeroData HERO_DATA = new HeroData("arrowTower", 63, 90, 50, 150, 467, Duration.seconds(0.8), FXGL.image("hero1_idle.png"));
 }

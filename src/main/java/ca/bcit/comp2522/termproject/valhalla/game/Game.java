@@ -1,9 +1,7 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
-import ca.bcit.comp2522.termproject.valhalla.compnent.BulletComponent;
-import ca.bcit.comp2522.termproject.valhalla.compnent.EnemyComponent;
+import ca.bcit.comp2522.termproject.valhalla.compnent.*;
 import ca.bcit.comp2522.termproject.valhalla.constant.Config;
-import ca.bcit.comp2522.termproject.valhalla.compnent.SpeedComponent;
 import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
@@ -13,8 +11,6 @@ import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.components.BoundingBoxComponent;
-import ca.bcit.comp2522.termproject.valhalla.compnent.BuildingIndicatorComponent;
-import ca.bcit.comp2522.termproject.valhalla.compnent.PlacedButtonComponent;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
 import ca.bcit.comp2522.termproject.valhalla.data.TowerData;
 import ca.bcit.comp2522.termproject.valhalla.constant.TowerType;
@@ -119,10 +115,10 @@ public class Game extends GameApplication {
         }, KeyCode.A);
         input.addAction(new UserAction("attack") {
             @Override
-            protected void onAction() {
-                System.out.println("lmao");
+            protected void onActionBegin() {
+                hero.getComponent(HeroComponent.class).attackArea();
             }
-        }, KeyCode.SPACE);
+        }, MouseButton.PRIMARY);
 
         // towers
         FXGL.getInput().addEventHandler(MouseEvent.MOUSE_MOVED, e -> {

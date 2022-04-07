@@ -165,6 +165,7 @@ public class GameEntityFactory implements EntityFactory {
                 .type(GameType.HERO)
                 .with(new SpeedComponent(speed))
                 .with(new KeepOnScreenComponent())
+                .with(new HeroComponent())
                 .build();
     }
 }
