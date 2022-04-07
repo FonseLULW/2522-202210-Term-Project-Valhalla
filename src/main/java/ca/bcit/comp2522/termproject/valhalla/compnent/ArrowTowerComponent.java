@@ -17,7 +17,7 @@ public class ArrowTowerComponent extends Component {
 
     private LocalTimer shootTimer;
     private final TowerData towerData = Config.ARROW_TOWER_DATA;
-    int MAX_BULLET = 999;
+    int MAX_BULLET = 0;
 
     @Override
     public void onAdded() {
