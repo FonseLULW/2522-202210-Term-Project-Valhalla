@@ -117,6 +117,12 @@ public class Game extends GameApplication {
                 hero.translateX(-hero.getComponent(SpeedComponent.class).getSpeed());
             }
         }, KeyCode.A);
+        input.addAction(new UserAction("attack") {
+            @Override
+            protected void onAction() {
+                System.out.println("lmao");
+            }
+        }, KeyCode.SPACE);
 
         // towers
         FXGL.getInput().addEventHandler(MouseEvent.MOUSE_MOVED, e -> {

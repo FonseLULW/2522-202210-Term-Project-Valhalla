@@ -3,6 +3,7 @@ package ca.bcit.comp2522.termproject.valhalla.game;
 import ca.bcit.comp2522.termproject.valhalla.compnent.*;
 import ca.bcit.comp2522.termproject.valhalla.compnent.SpeedComponent;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.dsl.components.DraggableComponent;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.dsl.components.KeepOnScreenComponent;
 import com.almasb.fxgl.dsl.components.OffscreenCleanComponent;
