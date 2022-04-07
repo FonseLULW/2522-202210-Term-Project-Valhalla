@@ -3,6 +3,7 @@ package ca.bcit.comp2522.termproject.valhalla.game;
 import ca.bcit.comp2522.termproject.valhalla.compnent.BulletComponent;
 import ca.bcit.comp2522.termproject.valhalla.compnent.EnemyComponent;
 import ca.bcit.comp2522.termproject.valhalla.constant.Config;
+import ca.bcit.comp2522.termproject.valhalla.entities.SpeedComponent;
 import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
@@ -17,10 +18,13 @@ import ca.bcit.comp2522.termproject.valhalla.compnent.PlacedButtonComponent;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
 import ca.bcit.comp2522.termproject.valhalla.data.TowerData;
 import ca.bcit.comp2522.termproject.valhalla.constant.TowerType;
+import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import javafx.geometry.Point2D;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -33,6 +37,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getInput;
+
 /**
  * Game.
  */
@@ -44,6 +50,7 @@ public class Game extends GameApplication {
     private BuildingIndicatorComponent buildIndicatorComponent;
     private Entity emptyEntity;
     private PlacedButtonComponent arrowBtn;
+    private Entity hero;
 
     ArrayList<Rectangle> spaceInfos = new ArrayList<>();
 
@@ -83,6 +90,34 @@ public class Game extends GameApplication {
 
     @Override
     protected void initInput() {
+        // hero movement
+        Input input = getInput();
+        input.addAction(new UserAction("up") {
+            @Override
+            protected void onAction() {
+                hero.translateY(-hero.getComponent(SpeedComponent.class).getSpeed());
+            }
+        }, KeyCode.W);
+        input.addAction(new UserAction("right") {
+            @Override
+            protected void onAction() {
+                hero.translateX(hero.getComponent(SpeedComponent.class).getSpeed());
+            }
+        }, KeyCode.D);
+        input.addAction(new UserAction("down") {
+            @Override
+            protected void onAction() {
+                hero.translateY(hero.getComponent(SpeedComponent.class).getSpeed());
+            }
+        }, KeyCode.S);
+        input.addAction(new UserAction("left") {
+            @Override
+            protected void onAction() {
+                hero.translateX(-hero.getComponent(SpeedComponent.class).getSpeed());
+            }
+        }, KeyCode.A);
+
+        // towers
         FXGL.getInput().addEventHandler(MouseEvent.MOUSE_MOVED, e -> {
             TowerType towerType = FXGL.geto("towerType");
             if (towerType == TowerType.NONE) {
@@ -163,7 +198,7 @@ public class Game extends GameApplication {
         FXGL.image("enemy/slugman_1.png");
         FXGL.setLevelFromMap("level1.tmx");
 
-        FXGL.spawn("hero", 60, 60);
+        hero = FXGL.spawn("hero", 60, 60);
         List<Entity> tempEntities = FXGL.getGameWorld().getEntitiesByType(GameType.SPACE, GameType.POINT);
         FXGL.getGameWorld().removeEntities(tempEntities);
         buildIndicator = FXGL.spawn("buildIndicator");
