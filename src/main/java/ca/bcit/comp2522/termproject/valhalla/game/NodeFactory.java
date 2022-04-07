@@ -26,23 +26,7 @@ import javafx.scene.image.ImageView;
  * @author kaioh08
  * @version 1.0
  */
+@Deprecated
 public class NodeFactory implements EntityFactory {
-    @Spawns("hero")
-    public Entity newHero(final SpawnData data) {
-        final double scale = 0.1;
-        final double width = 626.0;
-        final double height = 899.0;
-        final ImageView sprite = new ImageView(new Image("assets/textures/hero1_idle.png",
-                width * scale, height * scale, true, true));
 
-        final double speed = 5.0;
-        return FXGL.entityBuilder(data)
-                .at(0, 0)
-                .viewWithBBox(sprite)
-                .type(GameType.HERO)
-                .with(new DraggableComponent())
-                .with(new SpeedComponent(speed))
-                .with(new KeepOnScreenComponent())
-                .build();
-    }
 }

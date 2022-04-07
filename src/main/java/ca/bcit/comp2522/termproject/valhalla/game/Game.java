@@ -154,9 +154,7 @@ public class Game extends GameApplication {
 
     @Override
     protected void initGame() {
-//        FXGL.getGameWorld().addEntityFactory(new NodeFactory());
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
-//        FXGL.spawn("hero", 60, 60);
 
         FXGL.getGameScene().setBackgroundColor(Color.web("#16232B"));
         FXGL.image("enemy/slugman_1.png");
@@ -165,6 +163,7 @@ public class Game extends GameApplication {
         FXGL.image("enemy/slugman_1.png");
         FXGL.setLevelFromMap("level1.tmx");
 
+        FXGL.spawn("hero", 60, 60);
         List<Entity> tempEntities = FXGL.getGameWorld().getEntitiesByType(GameType.SPACE, GameType.POINT);
         FXGL.getGameWorld().removeEntities(tempEntities);
         buildIndicator = FXGL.spawn("buildIndicator");

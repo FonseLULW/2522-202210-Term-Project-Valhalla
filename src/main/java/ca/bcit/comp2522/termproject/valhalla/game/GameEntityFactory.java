@@ -1,8 +1,11 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
 import ca.bcit.comp2522.termproject.valhalla.compnent.*;
+import ca.bcit.comp2522.termproject.valhalla.entities.SpeedComponent;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.dsl.components.DraggableComponent;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
+import com.almasb.fxgl.dsl.components.KeepOnScreenComponent;
 import com.almasb.fxgl.dsl.components.OffscreenCleanComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -14,6 +17,8 @@ import com.almasb.fxgl.texture.Texture;
 import com.almasb.fxgl.ui.ProgressBar;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
@@ -141,6 +146,25 @@ public class GameEntityFactory implements EntityFactory {
     public Entity newPlaceBox(final SpawnData data) {
         return entityBuilder(data)
                 .at(1000, 0)
+                .build();
+    }
+
+    @Spawns("hero")
+    public Entity newHero(final SpawnData data) {
+        final double scale = 0.1;
+        final double width = 626.0;
+        final double height = 899.0;
+        final ImageView sprite = new ImageView(new Image("assets/textures/hero1_idle.png",
+                width * scale, height * scale, true, true));
+
+        final double speed = 5.0;
+        return FXGL.entityBuilder(data)
+                .at(0, 0)
+                .viewWithBBox(sprite)
+                .type(GameType.HERO)
+                .with(new DraggableComponent())
+                .with(new SpeedComponent(speed))
+                .with(new KeepOnScreenComponent())
                 .build();
     }
 }
