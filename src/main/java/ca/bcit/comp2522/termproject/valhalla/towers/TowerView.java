@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
  * @author kaioh
  * @version 1.0
  */
+@Deprecated
 public class TowerView {
 
     private final BasicTower tower;

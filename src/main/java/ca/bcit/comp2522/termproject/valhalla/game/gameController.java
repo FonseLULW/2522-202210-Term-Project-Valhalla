@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 
-
+@Deprecated
 public class gameController {
 
     /**

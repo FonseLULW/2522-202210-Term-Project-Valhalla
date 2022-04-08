@@ -14,6 +14,7 @@ import javafx.scene.shape.Shape;
  * @author kaioh08
  * @version 2022
  */
+@Deprecated
 public class BasicTower extends ImageView {
 
     /**
