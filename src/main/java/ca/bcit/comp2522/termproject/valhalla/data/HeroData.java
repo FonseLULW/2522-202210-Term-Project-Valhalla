@@ -4,8 +4,8 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class HeroData {
-    private int width;
-    private int height;
+    private double width;
+    private double height;
     private int damage;
     private int attackRadius;
     private Duration attackDelay;
@@ -17,7 +17,7 @@ public class HeroData {
     public HeroData() {
     }
 
-    public HeroData(final String name, final int width, final int height, final int damage, final int attackRadius,
+    public HeroData(final String name, final double width, final double height, final int damage, final int attackRadius,
                      final int attackSpeed, final Duration attackDelay, final double moveSpeed, final Image heroIcon) {
         this.name = name;
         this.width = width;
@@ -62,19 +62,19 @@ public class HeroData {
         return moveSpeed;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(double width) {
         this.width = width;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 }

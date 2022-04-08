@@ -22,10 +22,10 @@ public class EnemyComponent extends Component {
     int index;
     private final ProgressBar hpBar;
     private final AnimatedTexture texture;
-    private final AnimationChannel walkingRight = new AnimationChannel(FXGL.image("enemy/slugman_1.png", 48, 48), 5, 48, 48, Duration.INDEFINITE, 0, 14);
-    private final AnimationChannel walkingLeft = new AnimationChannel(FXGL.image("enemy/slugman_2.png", 48, 48), 5, 48, 48, Duration.INDEFINITE, 0, 14);
-    private final AnimationChannel walkingUp = new AnimationChannel(FXGL.image("enemy/slugman_3.png", 48, 48), 5, 48, 48, Duration.INDEFINITE, 0, 14);
-    private final AnimationChannel walkingDown = new AnimationChannel(FXGL.image("enemy/slugman_1.png", 48, 48), 5, 48, 48, Duration.INDEFINITE, 0, 14);
+    private final AnimationChannel walkingRight = new AnimationChannel(FXGL.image("enemy/slugman_1.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
+    private final AnimationChannel walkingLeft = new AnimationChannel(FXGL.image("enemy/slugman_2.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
+    private final AnimationChannel walkingUp = new AnimationChannel(FXGL.image("enemy/slugman_3.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
+    private final AnimationChannel walkingDown = new AnimationChannel(FXGL.image("enemy/slugman_1.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
 
     private boolean dead;
 
@@ -62,16 +62,16 @@ public class EnemyComponent extends Component {
     }
 
     private void walkingAnimation() {
-        String dir = pointInfos.get(index).getValue();
-        if ("right".equals(dir)) {
+//        String dir = pointInfos.get(index).getValue();
+//        if ("right".equals(dir)) {
             texture.loopAnimationChannel(walkingRight);
-        } else if ("left".equals(dir)) {
-            texture.loopAnimationChannel(walkingLeft);
-        } else if ("up".equals(dir)) {
-            texture.loopAnimationChannel(walkingUp);
-        } else if ("down".equals(dir)) {
-            texture.loopAnimationChannel(walkingDown);
-        }
+//        } else if ("left".equals(dir)) {
+//            texture.loopAnimationChannel(walkingLeft);
+//        } else if ("up".equals(dir)) {
+//            texture.loopAnimationChannel(walkingUp);
+//        } else if ("down".equals(dir)) {
+//            texture.loopAnimationChannel(walkingDown);
+//        }
     }
 
     @Override
