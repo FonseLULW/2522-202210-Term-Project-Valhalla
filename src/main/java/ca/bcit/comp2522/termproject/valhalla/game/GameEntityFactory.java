@@ -1,9 +1,8 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
 import ca.bcit.comp2522.termproject.valhalla.compnent.*;
-import ca.bcit.comp2522.termproject.valhalla.compnent.SpeedComponent;
+import ca.bcit.comp2522.termproject.valhalla.compnent.ControllableComponent;
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.dsl.components.DraggableComponent;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.dsl.components.KeepOnScreenComponent;
 import com.almasb.fxgl.dsl.components.OffscreenCleanComponent;
@@ -12,10 +11,14 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
+import com.almasb.fxgl.entity.components.TransformComponent;
+import com.almasb.fxgl.entity.components.ViewComponent;
 import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.Texture;
 import com.almasb.fxgl.ui.ProgressBar;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
+import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -97,6 +100,7 @@ public class GameEntityFactory implements EntityFactory {
                 .type(GameType.ENEMY)
                 .with(hp)
                 .view(hpBar)
+//                .with(new TransformComponent())
                 .with(new EnemyComponent(hpBar))
                 .with(new CollidableComponent(true))
                 .bbox(BoundingShape.box(48, 48))
@@ -161,9 +165,12 @@ public class GameEntityFactory implements EntityFactory {
         final double speed = 5.0;
         return FXGL.entityBuilder(data)
                 .at(0, 0)
-                .viewWithBBox(sprite)
+                .bbox(new HitBox(BoundingShape.box(60.0, 90.0)))
+//                .viewWithBBox(sprite)
                 .type(GameType.HERO)
-                .with(new SpeedComponent(speed))
+//                .with(new ViewComponent())
+//                .with(new TransformComponent())
+//                .with(new ControllableComponent(speed))
                 .with(new KeepOnScreenComponent())
                 .with(new HeroComponent())
                 .build();

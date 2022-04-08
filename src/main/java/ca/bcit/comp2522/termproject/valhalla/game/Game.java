@@ -92,25 +92,27 @@ public class Game extends GameApplication {
         input.addAction(new UserAction("up") {
             @Override
             protected void onAction() {
-                hero.translateY(-hero.getComponent(SpeedComponent.class).getSpeed());
+                hero.translateY(-hero.getComponent(HeroComponent.class).getSpeed());
             }
         }, KeyCode.W);
         input.addAction(new UserAction("right") {
             @Override
             protected void onAction() {
-                hero.translateX(hero.getComponent(SpeedComponent.class).getSpeed());
+                hero.translateX(hero.getComponent(HeroComponent.class).getSpeed());
+                hero.setScaleX(-1);
             }
         }, KeyCode.D);
         input.addAction(new UserAction("down") {
             @Override
             protected void onAction() {
-                hero.translateY(hero.getComponent(SpeedComponent.class).getSpeed());
+                hero.translateY(hero.getComponent(HeroComponent.class).getSpeed());
             }
         }, KeyCode.S);
         input.addAction(new UserAction("left") {
             @Override
             protected void onAction() {
-                hero.translateX(-hero.getComponent(SpeedComponent.class).getSpeed());
+                hero.translateX(-hero.getComponent(HeroComponent.class).getSpeed());
+                hero.setScaleX(1);
             }
         }, KeyCode.A);
         input.addAction(new UserAction("attack") {
