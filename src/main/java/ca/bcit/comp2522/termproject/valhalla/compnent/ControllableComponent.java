@@ -2,10 +2,11 @@ package ca.bcit.comp2522.termproject.valhalla.compnent;
 
 import com.almasb.fxgl.entity.component.Component;
 
-public class SpeedComponent extends Component {
+@Deprecated
+public class ControllableComponent extends Component {
     private double speed;
 
-    public SpeedComponent(final double speed) {
+    public ControllableComponent(final double speed) {
         this.speed = speed;
     }
 

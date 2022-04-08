@@ -12,12 +12,13 @@ public class HeroData {
     private Image heroIcon;
     private String name;
     private int attackSpeed;
+    private double moveSpeed;
 
     public HeroData() {
     }
 
     public HeroData(final String name, final int width, final int height, final int damage, final int attackRadius,
-                     final int attackSpeed, final Duration attackDelay, final Image heroIcon) {
+                     final int attackSpeed, final Duration attackDelay, final double moveSpeed, final Image heroIcon) {
         this.name = name;
         this.width = width;
         this.height = height;
@@ -26,6 +27,7 @@ public class HeroData {
         this.attackSpeed = attackSpeed;
         this.attackDelay = attackDelay;
         this.heroIcon = heroIcon;
+        this.moveSpeed = moveSpeed;
     }
 
     public int getAttackSpeed() {
@@ -54,6 +56,10 @@ public class HeroData {
 
     public int getAttackRadius() {
         return attackRadius;
+    }
+
+    public double getMoveSpeed() {
+        return moveSpeed;
     }
 
     public int getWidth() {

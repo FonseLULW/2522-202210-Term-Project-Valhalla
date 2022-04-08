@@ -16,12 +16,22 @@ import java.util.List;
 public class HeroComponent extends Component {
     LocalTimer attackTimer;
     HeroData heroData = Config.HERO_DATA;
-    int num;
+
+    private double speed;
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(final double speed) {
+        this.speed = speed;
+    }
 
     @Override
     public void onAdded() {
         attackTimer = FXGL.newLocalTimer();
         attackTimer.capture();
+        speed = heroData.getMoveSpeed();
     }
 
     public void attackArea() {
@@ -40,14 +50,5 @@ public class HeroComponent extends Component {
 
     private void attack(Entity attackedEntity) {
         attackedEntity.getComponent(EnemyComponent.class).attacked(heroData.getDamage());
-//
-//        Point2D position = getEntity().getPosition();
-//        Point2D direction = attackedEntity.getPosition().subtract(position);
-//
-//        Entity bullet = FXGL.spawn(heroData.getName() + "Bullet", new SpawnData(entity.getCenter().subtract(50 / 2.0, 10 / 2.0))
-//                .put("radius", heroData.getAttackRadius())
-//                .put("damage", heroData.getDamage()));
-//
-//        bullet.addComponent(new ProjectileComponent(direction, heroData.getAttackSpeed()));
     }
 }

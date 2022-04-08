@@ -17,5 +17,5 @@ public interface Config {
         }
     };
 
-    HeroData HERO_DATA = new HeroData("arrowTower", 63, 90, 50, 150, 467, Duration.seconds(0.8), FXGL.image("hero1_idle.png"));
+    HeroData HERO_DATA = new HeroData("arrowTower", 63, 90, 50, 150, 467, Duration.seconds(0.8), 5.0, FXGL.image("hero1_idle.png"));
 }
