@@ -7,11 +7,14 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.almasb.fxgl.ui.ProgressBar;
+import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class EnemyComponent extends Component {
 
@@ -22,16 +25,24 @@ public class EnemyComponent extends Component {
     int index;
     private final ProgressBar hpBar;
     private final AnimatedTexture texture;
-    private final AnimationChannel walkingRight = new AnimationChannel(FXGL.image("enemy/slugman_1.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
-    private final AnimationChannel walkingLeft = new AnimationChannel(FXGL.image("enemy/slugman_2.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
-    private final AnimationChannel walkingUp = new AnimationChannel(FXGL.image("enemy/slugman_3.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
-    private final AnimationChannel walkingDown = new AnimationChannel(FXGL.image("enemy/slugman_1.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
+    private final AnimationChannel walkingRight
+    = new AnimationChannel(List.of(
+                new Image("assets/textures/enemy/slugman_1.png", 48, 48, true, true),
+                new Image("assets/textures/enemy/slugman_2.png", 48, 48, true, true),
+                new Image("assets/textures/enemy/slugman_3.png", 48, 48, true, true),
+                new Image("assets/textures/enemy/slugman_2.png", 48, 48, true, true)
+        ), Duration.seconds(0.3));
+//            = new AnimationChannel(FXGL.image("enemy/slugman_1.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
+//    private final AnimationChannel walkingLeft = new AnimationChannel(FXGL.image("enemy/slugman_2.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
+//    private final AnimationChannel walkingUp = new AnimationChannel(FXGL.image("enemy/slugman_3.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
+//    private final AnimationChannel walkingDown = new AnimationChannel(FXGL.image("enemy/slugman_1.png", 48, 48), 5, 48, 48, Duration.seconds(1), 0, 14);
 
     private boolean dead;
 
     public EnemyComponent(final ProgressBar hpBar) {
         this.hpBar = hpBar;
         texture = new AnimatedTexture(walkingRight);
+//        texture.setInterpolator(Interpolator.EASE_BOTH);
     }
 
     public boolean isDead() {
@@ -47,7 +58,8 @@ public class EnemyComponent extends Component {
         if (hp.isZero()) {
             dead = true;
             entity.getViewComponent().removeChild(hpBar);
-            texture.setOnCycleFinished(() -> entity.removeFromWorld());
+            entity.removeFromWorld();
+//            texture.setOnCycleFinished(() -> entity.removeFromWorld());
         }
 
     }
@@ -55,16 +67,20 @@ public class EnemyComponent extends Component {
     @Override
     public void onAdded() {
         entity.getViewComponent().addChild(texture);
+        entity.setScaleOrigin(new Point2D(48.0 / 2, 48.0 / 2));
+
         Game app = (Game) (FXGL.getApp());
         pointInfos = app.getPointInfos();
         nextWaypoint = pointInfos.get(index).getKey();
-        walkingAnimation();
+
+        texture.setInterpolator(Interpolator.EASE_IN);
+//        walkingAnimation();
     }
 
     private void walkingAnimation() {
 //        String dir = pointInfos.get(index).getValue();
 //        if ("right".equals(dir)) {
-            texture.loopAnimationChannel(walkingRight);
+            texture.loop();
 //        } else if ("left".equals(dir)) {
 //            texture.loopAnimationChannel(walkingLeft);
 //        } else if ("up".equals(dir)) {
@@ -79,6 +95,13 @@ public class EnemyComponent extends Component {
         if (index >= pointInfos.size() || dead) {
             return;
         }
+        String dir = pointInfos.get(index).getValue();
+        if ("right".equals(dir) || "up".equals(dir)) {
+            texture.setScaleX(-1);
+        } else {
+            texture.setScaleX(1);
+        }
+
         speed = tpf * 30 * 2;
 
         Point2D velocity = nextWaypoint.subtract(entity.getPosition())

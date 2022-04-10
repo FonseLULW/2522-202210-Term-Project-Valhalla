@@ -203,7 +203,6 @@ public class Game extends GameApplication {
         FXGL.image("enemy/slugman_1.png");
         FXGL.setLevelFromMap("level1.tmx");
 
-        hero = FXGL.spawn("hero", 60, 60);
         List<Entity> tempEntities = FXGL.getGameWorld().getEntitiesByType(GameType.SPACE, GameType.POINT);
         FXGL.getGameWorld().removeEntities(tempEntities);
         buildIndicator = FXGL.spawn("buildIndicator");
@@ -216,17 +215,18 @@ public class Game extends GameApplication {
         emptyEntity.setX(-100);
         emptyEntity.setY(-100);
 
-        FXGL.runOnce(() -> {
-            FXGL.run(() -> {
-                FXGL.spawn("enemy", pointInfos.get(0).getKey());
-            }, Duration.seconds(1), 20);
-        }, Duration.seconds(5));
+//        FXGL.runOnce(() -> {
+//            FXGL.run(() -> {
+//                FXGL.spawn("enemy", pointInfos.get(0).getKey());
+//            }, Duration.seconds(1), 20);
+//        }, Duration.seconds(5));
 
         FXGL.run(() -> {
             FXGL.run(() -> {
                 FXGL.spawn("enemy", pointInfos.get(0).getKey());
+//                System.out.println("slug!");
             }, Duration.seconds(1), 20);
-        }, Duration.seconds(30), 20);
+        }, Duration.seconds(5), 1);
 
         FXGL.spawn("placeBox");
 
@@ -244,6 +244,8 @@ public class Game extends GameApplication {
                 selectedPlaceBtn(false);
             }
         });
+
+        hero = FXGL.spawn("hero", 60, 60);
 
     }
 
