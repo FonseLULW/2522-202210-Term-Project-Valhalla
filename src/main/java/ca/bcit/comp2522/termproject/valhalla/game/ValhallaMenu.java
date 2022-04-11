@@ -87,6 +87,8 @@ public class ValhallaMenu extends FXGLMenu {
 
     @Override
     public void onCreate() {
+        final double bgmVolume = 0.20;
         FXGL.loopBGM("introX.wav");
+        FXGL.getSettings().setGlobalMusicVolume(bgmVolume);
     }
 }

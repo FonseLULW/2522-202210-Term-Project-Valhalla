@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
+import com.almasb.fxgl.dsl.FXGL;
 import javafx.scene.control.Button;
 
 /**
@@ -32,7 +33,10 @@ public class ValhallaButton extends Button {
 
         setMinWidth(BTN_WIDTH);
         setMinHeight(BTN_HEIGHT);
-        setOnAction(actionEvent -> this.action.run());
+        setOnAction(actionEvent -> {
+            FXGL.play("menubtn.wav");
+            this.action.run();
+        });
         setTranslateX(x);
         setTranslateY(y);
     }
