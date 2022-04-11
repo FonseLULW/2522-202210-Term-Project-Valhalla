@@ -6,6 +6,7 @@ import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.core.collection.PropertyMap;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
@@ -19,6 +20,8 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
+import com.almasb.fxgl.ui.Position;
+import com.almasb.fxgl.ui.ProgressBar;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -82,6 +85,8 @@ public class Game extends GameApplication {
     @Override
     protected void initGameVars(final Map<String, Object> vars) {
         vars.put("towerType", TowerType.NONE);
+        vars.put("wavesSpawned", 0);
+        vars.put("baseHealth", 1000);
 
     }
 
@@ -215,18 +220,24 @@ public class Game extends GameApplication {
         emptyEntity.setX(-100);
         emptyEntity.setY(-100);
 
-//        FXGL.runOnce(() -> {
-//            FXGL.run(() -> {
-//                FXGL.spawn("enemy", pointInfos.get(0).getKey());
-//            }, Duration.seconds(1), 20);
-//        }, Duration.seconds(5));
+        FXGL.runOnce(() -> {
+            FXGL.run(() -> {
+                FXGL.spawn("enemy", pointInfos.get(0).getKey());
+            }, Duration.seconds(1), 20);
+            PropertyMap state = FXGL.getWorldProperties();
+            state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
+            System.out.println(state.getInt("wavesSpawned"));
+        }, Duration.seconds(5));
 
         FXGL.run(() -> {
             FXGL.run(() -> {
                 FXGL.spawn("enemy", pointInfos.get(0).getKey());
 //                System.out.println("slug!");
             }, Duration.seconds(1), 20);
-        }, Duration.seconds(5), 1);
+            PropertyMap state = FXGL.getWorldProperties();
+            state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
+            System.out.println(state.getInt("wavesSpawned"));
+        }, Duration.seconds(30), 4);
 
         FXGL.spawn("placeBox");
 
@@ -342,6 +353,31 @@ public class Game extends GameApplication {
             }
 
         });
+    }
+
+    @Override
+    protected void initUI() {
+        // wave counter
+        ProgressBar wavesBar = new ProgressBar(true);
+        wavesBar.setFill(Color.DEEPSKYBLUE);
+        wavesBar.setLabelPosition(Position.RIGHT);
+        wavesBar.setLabelVisible(true);
+        wavesBar.setTranslateX(5);
+        wavesBar.setTranslateY(APP_HEIGHT - 50);
+        wavesBar.setMaxValue(5);
+        PropertyMap state = FXGL.getWorldProperties();
+        wavesBar.currentValueProperty().bind(state.intProperty("wavesSpawned"));
+
+        state.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
+            if (nv.intValue() >= 5) {
+                wavesBar.setFill(Color.CRIMSON);
+                FXGL.getNotificationService().pushNotification("You are going to have a very bad time...\t-Hejo");
+            } else if (nv.intValue() == 4) {
+                wavesBar.setFill(Color.LIGHTSKYBLUE);
+            }
+        });
+
+        FXGL.addUINode(wavesBar);
     }
 
     public static void main(final String[] args) {
