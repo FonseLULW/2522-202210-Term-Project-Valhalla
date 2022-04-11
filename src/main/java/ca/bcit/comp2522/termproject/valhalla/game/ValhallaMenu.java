@@ -2,6 +2,10 @@ package ca.bcit.comp2522.termproject.valhalla.game;
 
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
+import com.almasb.fxgl.audio.Audio;
+import com.almasb.fxgl.audio.AudioType;
+import com.almasb.fxgl.audio.Music;
+import com.almasb.fxgl.audio.Sound;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
@@ -77,6 +81,12 @@ public class ValhallaMenu extends FXGLMenu {
     private void loadGame() {
         // if new player fireNewGame
         // else get load file of user and fireLoad
+        FXGL.getAudioPlayer().stopAllMusic();
         fireNewGame();
+    }
+
+    @Override
+    public void onCreate() {
+        FXGL.loopBGM("introX.wav");
     }
 }
