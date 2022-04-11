@@ -23,11 +23,14 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.ui.Position;
 import com.almasb.fxgl.ui.ProgressBar;
 import javafx.geometry.Point2D;
+import javafx.scene.effect.Effect;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
@@ -358,6 +361,8 @@ public class Game extends GameApplication {
     @Override
     protected void initUI() {
         // wave counter
+        final double wavesBarWidth = 240;
+        final double wavesBarHeight = 10;
         ProgressBar wavesBar = new ProgressBar(true);
         wavesBar.setFill(Color.DEEPSKYBLUE);
         wavesBar.setLabelPosition(Position.RIGHT);
@@ -365,19 +370,27 @@ public class Game extends GameApplication {
         wavesBar.setTranslateX(5);
         wavesBar.setTranslateY(APP_HEIGHT - 50);
         wavesBar.setMaxValue(5);
+        wavesBar.setLabelFill(Color.DARKBLUE);
         PropertyMap state = FXGL.getWorldProperties();
         wavesBar.currentValueProperty().bind(state.intProperty("wavesSpawned"));
+
+        Text wavesText = new Text(wavesBar.getTranslateX() + wavesBarWidth,
+                wavesBar.getTranslateY() + wavesBarHeight, "waves initiated");
+        wavesText.setFill(Color.DARKBLUE);
 
         state.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
             if (nv.intValue() >= 5) {
                 wavesBar.setFill(Color.CRIMSON);
-                FXGL.getNotificationService().pushNotification("You are going to have a very bad time...\t-Hejo");
+                FXGL.getNotificationService().setBackgroundColor(Color.CRIMSON);
+                FXGL.getNotificationService().setTextColor(Color.LIGHTSKYBLUE);
+                FXGL.getNotificationService().pushNotification("You are going to have a very bad time...");
             } else if (nv.intValue() == 4) {
                 wavesBar.setFill(Color.LIGHTSKYBLUE);
             }
         });
 
         FXGL.addUINode(wavesBar);
+        FXGL.addUINode(wavesText);
     }
 
     public static void main(final String[] args) {
