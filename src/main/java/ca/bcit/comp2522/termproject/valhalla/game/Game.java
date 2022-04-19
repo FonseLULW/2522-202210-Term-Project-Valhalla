@@ -212,7 +212,6 @@ public class Game extends GameApplication {
         buildIndicatorComponent.canBuild(canGenerate);
     }
 
-
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
@@ -273,7 +272,7 @@ public class Game extends GameApplication {
         });
 
         hero = FXGL.spawn("hero", 60, 60);
-
+        FXGL.loopBGM("bensound-instinct.mp3");
     }
 
     public LinkedHashMap<Integer, Pair<Point2D, String>> getPointInfos() {
@@ -392,6 +391,8 @@ public class Game extends GameApplication {
                 wavesBar.setFill(Color.CRIMSON);
                 FXGL.getNotificationService().setBackgroundColor(Color.CRIMSON);
                 FXGL.getNotificationService().setTextColor(Color.LIGHTSKYBLUE);
+                FXGL.getAudioPlayer().pauseAllMusic();
+                FXGL.loopBGM("bensound-epic.mp3");
                 FXGL.getNotificationService().pushNotification("You are going to have a very bad time...");
             } else if (nv.intValue() == 4) {
                 wavesBar.setFill(Color.LIGHTSKYBLUE);
@@ -421,6 +422,8 @@ public class Game extends GameApplication {
     public void showGameOver() {
         FXGL.getNotificationService().setBackgroundColor(Color.CRIMSON);
         FXGL.getNotificationService().setTextColor(Color.LIGHTSKYBLUE);
+        FXGL.getAudioPlayer().pauseAllMusic();
+        FXGL.loopBGM("sadendingalt.mp3");
         FXGL.getNotificationService().pushNotification("YOU DIED");
         FXGL.getGameWorld().removeEntity(hero);
         hero = null;

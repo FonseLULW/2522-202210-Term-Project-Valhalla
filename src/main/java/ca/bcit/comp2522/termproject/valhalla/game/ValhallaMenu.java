@@ -7,9 +7,11 @@ import com.almasb.fxgl.audio.AudioType;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.audio.Sound;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Text;
 
 /**
@@ -90,5 +92,11 @@ public class ValhallaMenu extends FXGLMenu {
         final double bgmVolume = 0.20;
         FXGL.loopBGM("introX.wav");
         FXGL.getSettings().setGlobalMusicVolume(bgmVolume);
+    }
+
+    @Override
+    public void onEnteredFrom(@NotNull Scene prevState) {
+        FXGL.getAudioPlayer().pauseAllMusic();
+        FXGL.loopBGM("introX.wav");
     }
 }

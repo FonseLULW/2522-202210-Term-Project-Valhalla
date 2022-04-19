@@ -23,6 +23,7 @@ public class ArrowTowerComponent extends Component {
     public void onAdded() {
         shootTimer = FXGL.newLocalTimer();
         shootTimer.capture();
+        FXGL.play("building.wav");
     }
 
     @Override
