@@ -2,10 +2,14 @@ package ca.bcit.comp2522.termproject.valhalla.game;
 
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
+import com.almasb.fxgl.audio.Audio;
+import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.scene.Scene;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
+import org.jetbrains.annotations.NotNull;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getDialogService;
 
@@ -28,6 +32,18 @@ public class ValhallaPauseMenu extends FXGLMenu {
 
     private Node createBackground() {
         return FXGL.texture("pausebg.png", Game.APP_WIDTH, Game.APP_HEIGHT);
+    }
+
+    @Override
+    public void onEnteredFrom(@NotNull final Scene prevState) {
+        final double bgmVolume = 0.20;
+        FXGL.loopBGM("pause.mp3");
+        FXGL.getSettings().setGlobalMusicVolume(bgmVolume);
+    }
+
+    @Override
+    public void onExitingTo(@NotNull final Scene nextState) {
+        FXGL.getAudioPlayer().pauseAllMusic();
     }
 
     private class PauseMenu extends VBox {

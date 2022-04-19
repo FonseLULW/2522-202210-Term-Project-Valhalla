@@ -77,6 +77,11 @@ public class EnemyComponent extends Component {
 //        walkingAnimation();
     }
 
+    @Override
+    public void onRemoved() {
+        FXGL.play("slugmandefeat.wav");
+    }
+
     private void walkingAnimation() {
 //        String dir = pointInfos.get(index).getValue();
 //        if ("right".equals(dir)) {
