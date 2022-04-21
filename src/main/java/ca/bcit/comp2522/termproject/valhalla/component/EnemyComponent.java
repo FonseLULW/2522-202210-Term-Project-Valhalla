@@ -1,7 +1,5 @@
-package ca.bcit.comp2522.termproject.valhalla.compnent;
+package ca.bcit.comp2522.termproject.valhalla.component;
 
-import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
-import ca.bcit.comp2522.termproject.valhalla.constant.TowerType;
 import ca.bcit.comp2522.termproject.valhalla.game.Game;
 import com.almasb.fxgl.core.collection.PropertyMap;
 import com.almasb.fxgl.dsl.FXGL;
@@ -116,13 +114,7 @@ public class EnemyComponent extends Component {
         entity.translate(velocity);
 
         if (nextWaypoint.distance(entity.getPosition()) < speed) {
-            System.out.println("--------");
-            System.out.println("Waypoint: " + nextWaypoint.distance(entity.getPosition()));
-            System.out.println("Speed: " + speed);
-            System.out.println("Index: " + index);
-            System.out.println("Size: " + pointInfos.size());
             entity.setPosition(nextWaypoint);
-            System.out.println("--------");
             walkingAnimation();
             index++;
             if (index < pointInfos.size()) {

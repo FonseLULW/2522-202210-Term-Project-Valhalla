@@ -1,12 +1,10 @@
-package ca.bcit.comp2522.termproject.valhalla.compnent;
+package ca.bcit.comp2522.termproject.valhalla.component;
 
 import ca.bcit.comp2522.termproject.valhalla.constant.Config;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
 import ca.bcit.comp2522.termproject.valhalla.data.HeroData;
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.dsl.components.ProjectileComponent;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
@@ -14,7 +12,6 @@ import com.almasb.fxgl.time.LocalTimer;
 import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import javafx.util.Duration;
 
 import java.util.List;
 

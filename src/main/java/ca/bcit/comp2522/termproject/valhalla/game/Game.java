@@ -1,6 +1,6 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
-import ca.bcit.comp2522.termproject.valhalla.compnent.*;
+import ca.bcit.comp2522.termproject.valhalla.component.*;
 import ca.bcit.comp2522.termproject.valhalla.constant.Config;
 import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
@@ -22,16 +22,12 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.ui.Position;
 import com.almasb.fxgl.ui.ProgressBar;
-import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
-import com.almasb.fxgl.entity.component.Component;
-import javafx.scene.effect.Effect;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -63,7 +59,7 @@ public class Game extends GameApplication {
         settings.setWidth(APP_WIDTH);
         settings.setHeight(APP_HEIGHT);
         settings.setTitle("Valhalla");
-        settings.setAppIcon("Logo.png");
+        settings.setAppIcon("logo.png");
         settings.setMainMenuEnabled(true);
         settings.setGameMenuEnabled(true);
         settings.setPreserveResizeRatio(true);
@@ -274,6 +270,14 @@ public class Game extends GameApplication {
             }
         });
 
+        PropertyMap vars = FXGL.getWorldProperties();
+        vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
+            if (nv.intValue() == 5) {
+                FXGL.spawn("hejo", pointInfos.get(0).getKey());
+            }
+        });
+
+
         hero = FXGL.spawn("hero", 60, 60);
         FXGL.loopBGM("bensound-instinct.mp3");
     }
@@ -397,14 +401,6 @@ public class Game extends GameApplication {
                 FXGL.loopBGM("bensound-epic.mp3");
                 FXGL.getNotificationService().pushNotification("You are going to have a very bad time...");
                 wavesBar.setFill(Color.LIGHTSKYBLUE);
-
-                FXGL.run(() -> {
-                    FXGL.run(() -> {
-                        FXGL.spawn("hejo", pointInfos.get(0).getKey());
-                    }, Duration.seconds(1), 1);
-                    state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
-                    System.out.println(state.getInt("wavesSpawned"));
-                }, Duration.seconds(30), 1);
             }
         });
         FXGL.addUINode(wavesBar);

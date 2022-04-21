@@ -1,7 +1,6 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
-import ca.bcit.comp2522.termproject.valhalla.compnent.*;
-import ca.bcit.comp2522.termproject.valhalla.compnent.ControllableComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.*;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.dsl.components.KeepOnScreenComponent;
@@ -11,14 +10,11 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
-import com.almasb.fxgl.entity.components.TransformComponent;
-import com.almasb.fxgl.entity.components.ViewComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.Texture;
 import com.almasb.fxgl.ui.ProgressBar;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
-import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

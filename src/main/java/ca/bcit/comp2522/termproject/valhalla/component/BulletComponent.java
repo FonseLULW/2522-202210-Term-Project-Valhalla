@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.termproject.valhalla.compnent;
+package ca.bcit.comp2522.termproject.valhalla.component;
 
 import com.almasb.fxgl.entity.component.Component;
 import javafx.geometry.Point2D;
