@@ -3,4 +3,5 @@ open module drop.main {
     requires javafx.media;
     requires java.sql;
     requires mysql.connector.java;
+    requires annotations;
 }

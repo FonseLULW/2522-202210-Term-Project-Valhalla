@@ -90,7 +90,7 @@ public class Game extends GameApplication {
     protected void initGameVars(final Map<String, Object> vars) {
         vars.put("towerType", TowerType.NONE);
         vars.put("wavesSpawned", 0);
-        vars.put("baseHealth", 1000);
+        vars.put("baseHealth", 10);
 
     }
 
@@ -101,33 +101,45 @@ public class Game extends GameApplication {
         input.addAction(new UserAction("up") {
             @Override
             protected void onAction() {
-                hero.translateY(-hero.getComponent(HeroComponent.class).getSpeed());
+                if (hero != null) {
+                    hero.translateY(-hero.getComponent(HeroComponent.class).getSpeed());
+                }
             }
         }, KeyCode.W);
         input.addAction(new UserAction("right") {
             @Override
             protected void onAction() {
-                hero.translateX(hero.getComponent(HeroComponent.class).getSpeed());
-                hero.setScaleX(-1);
+                if (hero != null) {
+                    hero.translateX(hero.getComponent(HeroComponent.class).getSpeed());
+                    hero.setScaleX(-1);
+                }
             }
         }, KeyCode.D);
         input.addAction(new UserAction("down") {
             @Override
             protected void onAction() {
-                hero.translateY(hero.getComponent(HeroComponent.class).getSpeed());
+                if (hero != null) {
+                    hero.translateY(hero.getComponent(HeroComponent.class).getSpeed());
+                }
             }
         }, KeyCode.S);
         input.addAction(new UserAction("left") {
             @Override
             protected void onAction() {
-                hero.translateX(-hero.getComponent(HeroComponent.class).getSpeed());
-                hero.setScaleX(1);
+                if (hero != null) {
+                    hero.translateX(-hero.getComponent(HeroComponent.class).getSpeed());
+                    hero.setScaleX(1);
+                }
             }
         }, KeyCode.A);
         input.addAction(new UserAction("attack") {
             @Override
             protected void onActionBegin() {
-                hero.getComponent(HeroComponent.class).attackArea();
+                if (hero != null) {
+                    hero.getComponent(HeroComponent.class).attackArea();
+                    PropertyMap state = FXGL.getWorldProperties();
+                    state.setValue("baseHealth", state.getInt("baseHealth") - 1);
+                }
             }
         }, MouseButton.PRIMARY);
 
@@ -200,7 +212,6 @@ public class Game extends GameApplication {
         buildIndicatorComponent.canBuild(canGenerate);
     }
 
-
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
@@ -261,7 +272,7 @@ public class Game extends GameApplication {
         });
 
         hero = FXGL.spawn("hero", 60, 60);
-
+        FXGL.loopBGM("bensound-instinct.mp3");
     }
 
     public LinkedHashMap<Integer, Pair<Point2D, String>> getPointInfos() {
@@ -375,23 +386,47 @@ public class Game extends GameApplication {
         PropertyMap state = FXGL.getWorldProperties();
         wavesBar.currentValueProperty().bind(state.intProperty("wavesSpawned"));
 
-        Text wavesText = new Text(wavesBar.getTranslateX() + wavesBarWidth,
-                wavesBar.getTranslateY() + wavesBarHeight, "waves initiated");
-        wavesText.setFill(Color.DARKBLUE);
-
         state.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
             if (nv.intValue() >= 5) {
                 wavesBar.setFill(Color.CRIMSON);
                 FXGL.getNotificationService().setBackgroundColor(Color.CRIMSON);
                 FXGL.getNotificationService().setTextColor(Color.LIGHTSKYBLUE);
+                FXGL.getAudioPlayer().pauseAllMusic();
+                FXGL.loopBGM("bensound-epic.mp3");
                 FXGL.getNotificationService().pushNotification("You are going to have a very bad time...");
             } else if (nv.intValue() == 4) {
                 wavesBar.setFill(Color.LIGHTSKYBLUE);
             }
         });
-
         FXGL.addUINode(wavesBar);
+
+        Text wavesText = new Text(wavesBar.getTranslateX() + wavesBarWidth,
+                wavesBar.getTranslateY() + wavesBarHeight, "waves initiated");
+        wavesText.setFill(Color.DARKBLUE);
         FXGL.addUINode(wavesText);
+
+        ProgressBar baseHealthBar = new ProgressBar(true);
+        baseHealthBar.setMaxValue(state.getInt("baseHealth"));
+        baseHealthBar.setMinValue(0);
+        baseHealthBar.setLabelVisible(true);
+        baseHealthBar.currentValueProperty().bind(state.intProperty("baseHealth"));
+        state.intProperty("baseHealth").addListener((ob, ov, nv) -> {
+            if (nv.intValue() <= 0) {
+                showGameOver();
+            }
+        });
+        FXGL.addUINode(baseHealthBar);
+
+    }
+
+    public void showGameOver() {
+        FXGL.getNotificationService().setBackgroundColor(Color.CRIMSON);
+        FXGL.getNotificationService().setTextColor(Color.LIGHTSKYBLUE);
+        FXGL.getAudioPlayer().pauseAllMusic();
+        FXGL.loopBGM("sadendingalt.mp3");
+        FXGL.getNotificationService().pushNotification("YOU DIED");
+        FXGL.getGameWorld().removeEntity(hero);
+        hero = null;
     }
 
     public static void main(final String[] args) {

@@ -81,4 +81,9 @@ public class HeroComponent extends Component {
     private void attack(Entity attackedEntity) {
         attackedEntity.getComponent(EnemyComponent.class).attacked(heroData.getDamage());
     }
+
+    @Override
+    public void onRemoved() {
+
+    }
 }

@@ -100,7 +100,7 @@
    </properties>
    <point/>
   </object>
-  <object id="15" type="point" x="838" y="334">
+  <object id="15" type="point" x="1000" y="334">
    <properties>
     <property name="dir" value="right"/>
     <property name="index" type="int" value="13"/>
