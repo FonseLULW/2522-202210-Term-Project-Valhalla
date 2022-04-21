@@ -39,7 +39,6 @@ public class GameEntityFactory implements EntityFactory {
                 .type(GameType.TOWER)
                 .viewWithBBox(FXGL.texture("tower/tower_image.png"))
                 .with(new ArrowTowerComponent())
-//                .with(new DraggableComponent()) //try this it's so fun with 9999 arrows lol
                 .build();
     }
 
@@ -151,6 +150,16 @@ public class GameEntityFactory implements EntityFactory {
     public Entity newPlaceBox(final SpawnData data) {
         return entityBuilder(data)
                 .at(1000, 0)
+                .build();
+    }
+
+    @Spawns("maskRectangle")
+    public Entity newMaskRectangle(final SpawnData data) {
+        Rectangle mask = new Rectangle(115, Game.APP_HEIGHT, Color.web("#16232B"));
+        return entityBuilder(data)
+//        Color.web("#16232B")
+                .view(mask)
+                .at(Game.APP_WIDTH-115, 0)
                 .build();
     }
 

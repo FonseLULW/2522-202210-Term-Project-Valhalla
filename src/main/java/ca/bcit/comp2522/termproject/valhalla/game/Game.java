@@ -51,7 +51,7 @@ public class Game extends GameApplication {
     private Entity buildIndicator;
     private BuildingIndicatorComponent buildIndicatorComponent;
     private Entity emptyEntity;
-    private PlacedButtonComponent arrowBtn;
+    private Entity arrowBtn;
     private Entity hero;
 
     ArrayList<Rectangle> spaceInfos = new ArrayList<>();
@@ -90,7 +90,7 @@ public class Game extends GameApplication {
     protected void initGameVars(final Map<String, Object> vars) {
         vars.put("towerType", TowerType.NONE);
         vars.put("wavesSpawned", 0);
-        vars.put("baseHealth", 10);
+        vars.put("baseHealth", 1000);
 
     }
 
@@ -138,7 +138,6 @@ public class Game extends GameApplication {
                 if (hero != null) {
                     hero.getComponent(HeroComponent.class).attackArea();
                     PropertyMap state = FXGL.getWorldProperties();
-                    state.setValue("baseHealth", state.getInt("baseHealth") - 1);
                 }
             }
         }, MouseButton.PRIMARY);
@@ -216,6 +215,7 @@ public class Game extends GameApplication {
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
 
+
         FXGL.getGameScene().setBackgroundColor(Color.web("#16232B"));
         FXGL.image("enemy/slugman_1.png");
         FXGL.image("enemy/slugman_2.png");
@@ -247,20 +247,22 @@ public class Game extends GameApplication {
         FXGL.run(() -> {
             FXGL.run(() -> {
                 FXGL.spawn("enemy", pointInfos.get(0).getKey());
-//                System.out.println("slug!");
             }, Duration.seconds(1), 20);
             PropertyMap state = FXGL.getWorldProperties();
             state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
             System.out.println(state.getInt("wavesSpawned"));
         }, Duration.seconds(30), 4);
 
+        FXGL.spawn("maskRectangle").setZIndex(20);
         FXGL.spawn("placeBox");
 
         arrowBtn = FXGL.spawn("placedButton", new SpawnData(1016, 360)
                 .put("imgName", "tower/tower_image.png")
                 .put("width", 43.0)
                 .put("height", 68.0)
-                .put("towerType", TowerType.ARROW)).getComponent(PlacedButtonComponent.class);
+                .put("towerType", TowerType.ARROW));
+        arrowBtn.getComponent(PlacedButtonComponent.class);
+        arrowBtn.setZIndex(21);
 
         FXGL.getop("towerType").addListener((ob, ov, nv) -> {
             if (TowerType.ARROW == nv) {
@@ -330,7 +332,7 @@ public class Game extends GameApplication {
     }
 
     private void selectedPlaceBtn(final boolean arrow) {
-        arrowBtn.setSelected(arrow);
+        arrowBtn.getComponent(PlacedButtonComponent.class).setSelected(arrow);
     }
 
     @Override
@@ -373,8 +375,8 @@ public class Game extends GameApplication {
     @Override
     protected void initUI() {
         // wave counter
-        final double wavesBarWidth = 240;
-        final double wavesBarHeight = 10;
+        final double barWidth = 240;
+        final double barHeight = 10;
         ProgressBar wavesBar = new ProgressBar(true);
         wavesBar.setFill(Color.DEEPSKYBLUE);
         wavesBar.setLabelPosition(Position.RIGHT);
@@ -400,22 +402,35 @@ public class Game extends GameApplication {
         });
         FXGL.addUINode(wavesBar);
 
-        Text wavesText = new Text(wavesBar.getTranslateX() + wavesBarWidth,
-                wavesBar.getTranslateY() + wavesBarHeight, "waves initiated");
+        Text wavesText = new Text(wavesBar.getTranslateX() + barWidth,
+                wavesBar.getTranslateY() + barHeight, "waves initiated");
         wavesText.setFill(Color.DARKBLUE);
         FXGL.addUINode(wavesText);
 
+        // base health bar
         ProgressBar baseHealthBar = new ProgressBar(true);
         baseHealthBar.setMaxValue(state.getInt("baseHealth"));
         baseHealthBar.setMinValue(0);
         baseHealthBar.setLabelVisible(true);
+        baseHealthBar.setLabelFill(Color.MEDIUMVIOLETRED);
+        baseHealthBar.setFill(Color.MEDIUMVIOLETRED);
+        baseHealthBar.setLabelPosition(Position.RIGHT);
+        baseHealthBar.setTranslateX(5);
+        baseHealthBar.setTranslateY(APP_HEIGHT - 50 + barHeight + 10);
         baseHealthBar.currentValueProperty().bind(state.intProperty("baseHealth"));
         state.intProperty("baseHealth").addListener((ob, ov, nv) -> {
             if (nv.intValue() <= 0) {
                 showGameOver();
+            } else if (nv.intValue() <= 200) {
+                baseHealthBar.setFill(Color.RED);
             }
         });
         FXGL.addUINode(baseHealthBar);
+
+        Text baseHealthBarText = new Text(baseHealthBar.getTranslateX() + barWidth + 50,
+                baseHealthBar.getTranslateY() + barHeight, "base health");
+        baseHealthBarText.setFill(Color.MEDIUMVIOLETRED);
+        FXGL.addUINode(baseHealthBarText);
 
     }
 

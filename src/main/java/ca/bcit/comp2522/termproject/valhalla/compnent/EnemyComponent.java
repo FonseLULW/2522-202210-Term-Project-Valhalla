@@ -1,6 +1,9 @@
 package ca.bcit.comp2522.termproject.valhalla.compnent;
 
+import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
+import ca.bcit.comp2522.termproject.valhalla.constant.TowerType;
 import ca.bcit.comp2522.termproject.valhalla.game.Game;
+import com.almasb.fxgl.core.collection.PropertyMap;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.component.Component;
@@ -15,6 +18,7 @@ import javafx.util.Pair;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Random;
 
 public class EnemyComponent extends Component {
 
@@ -57,6 +61,7 @@ public class EnemyComponent extends Component {
         hp.damage(damage);
         if (hp.isZero()) {
             dead = true;
+            FXGL.play("slugmandefeat.wav");
             entity.getViewComponent().removeChild(hpBar);
             entity.removeFromWorld();
 //            texture.setOnCycleFinished(() -> entity.removeFromWorld());
@@ -75,11 +80,6 @@ public class EnemyComponent extends Component {
 
         texture.setInterpolator(Interpolator.EASE_IN);
 //        walkingAnimation();
-    }
-
-    @Override
-    public void onRemoved() {
-        FXGL.play("slugmandefeat.wav");
     }
 
     private void walkingAnimation() {
@@ -116,12 +116,26 @@ public class EnemyComponent extends Component {
         entity.translate(velocity);
 
         if (nextWaypoint.distance(entity.getPosition()) < speed) {
+            System.out.println("--------");
+            System.out.println("Waypoint: " + nextWaypoint.distance(entity.getPosition()));
+            System.out.println("Speed: " + speed);
+            System.out.println("Index: " + index);
+            System.out.println("Size: " + pointInfos.size());
             entity.setPosition(nextWaypoint);
+            System.out.println("--------");
             walkingAnimation();
             index++;
             if (index < pointInfos.size()) {
                 nextWaypoint = pointInfos.get(index).getKey();
+            } else {
+                Random rng = new Random();
+                PropertyMap vars = FXGL.getWorldProperties();
+                if (vars.getInt("baseHealth") > 0) {
+                    vars.setValue("baseHealth", vars.getInt("baseHealth") - rng.nextInt(15, 50));
+                }
+                entity.removeFromWorld();
             }
         }
+
     }
 }
