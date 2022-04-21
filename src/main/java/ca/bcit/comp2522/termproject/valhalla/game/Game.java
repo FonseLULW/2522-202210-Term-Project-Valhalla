@@ -22,7 +22,9 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.ui.Position;
 import com.almasb.fxgl.ui.ProgressBar;
+import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
+import com.almasb.fxgl.entity.component.Component;
 import javafx.scene.effect.Effect;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -67,7 +69,6 @@ public class Game extends GameApplication {
         settings.setPreserveResizeRatio(true);
         settings.setManualResizeEnabled(true); // can scale the resize window
         settings.setDefaultCursor(new CursorInfo("cursor.png", 0, 0));
-//        settings.setSoundMenuPress("menubtn.wav");
         settings.setSceneFactory(new SceneFactory() {
             @Override
             public FXGLMenu newMainMenu() {
@@ -339,7 +340,6 @@ public class Game extends GameApplication {
     protected void onPreInit() {
         FXGL.getSettings().setGlobalSoundVolume(0.5);
         FXGL.getSettings().setGlobalMusicVolume(0.5);
-        // FXGL.loopBGM("find free music and we can play music on loop");
     }
 
     private TowerData getTowerData(final TowerType towerType) {
@@ -396,8 +396,15 @@ public class Game extends GameApplication {
                 FXGL.getAudioPlayer().pauseAllMusic();
                 FXGL.loopBGM("bensound-epic.mp3");
                 FXGL.getNotificationService().pushNotification("You are going to have a very bad time...");
-            } else if (nv.intValue() == 4) {
                 wavesBar.setFill(Color.LIGHTSKYBLUE);
+
+                FXGL.run(() -> {
+                    FXGL.run(() -> {
+                        FXGL.spawn("hejo", pointInfos.get(0).getKey());
+                    }, Duration.seconds(1), 1);
+                    state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
+                    System.out.println(state.getInt("wavesSpawned"));
+                }, Duration.seconds(30), 1);
             }
         });
         FXGL.addUINode(wavesBar);
