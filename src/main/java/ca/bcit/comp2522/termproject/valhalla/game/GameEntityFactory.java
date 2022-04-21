@@ -157,7 +157,6 @@ public class GameEntityFactory implements EntityFactory {
     public Entity newMaskRectangle(final SpawnData data) {
         Rectangle mask = new Rectangle(115, Game.APP_HEIGHT, Color.web("#16232B"));
         return entityBuilder(data)
-//        Color.web("#16232B")
                 .view(mask)
                 .at(Game.APP_WIDTH-115, 0)
                 .build();
@@ -175,13 +174,42 @@ public class GameEntityFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .at(0, 0)
                 .bbox(new HitBox(BoundingShape.box(60.0, 90.0)))
-//                .viewWithBBox(sprite)
                 .type(GameType.HERO)
-//                .with(new ViewComponent())
-//                .with(new TransformComponent())
-//                .with(new ControllableComponent(speed))
                 .with(new KeepOnScreenComponent())
                 .with(new HeroComponent())
+                .build();
+    }
+
+    @Spawns("hejo")
+    public Entity newHejo(final SpawnData data) {
+        int maxHp = 100000;
+        HealthIntComponent hp = new HealthIntComponent(maxHp);
+        ProgressBar hpBar = new ProgressBar(false);
+        hpBar.setFill(Color.LIGHTGREEN);
+        hpBar.setWidth(48);
+        hpBar.setHeight(21);
+        hpBar.setTranslateY(-5);
+        hpBar.setMaxValue(maxHp);
+        hpBar.setCurrentValue(maxHp);
+        hpBar.currentValueProperty().bind(hp.valueProperty());
+
+        hp.valueProperty().addListener((ob, ov, nv) -> {
+            int value = nv.intValue();
+            if (value > maxHp * 0.65) {
+                hpBar.setFill(Color.LIGHTGREEN);
+            } else if (value > maxHp * 0.25) {
+                hpBar.setFill(Color.GOLD);
+            } else {
+                hpBar.setFill(Color.RED);
+            }
+        });
+        return entityBuilder(data)
+                .type(GameType.ENEMY)
+                .with(hp)
+                .view(hpBar)
+                .with(new EnemyComponent(hpBar))
+                .with(new CollidableComponent(true))
+                .bbox(BoundingShape.box(88, 120))
                 .build();
     }
 }
