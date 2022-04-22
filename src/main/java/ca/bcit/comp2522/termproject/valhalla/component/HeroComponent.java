@@ -13,10 +13,7 @@ import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
-
 import java.util.List;
-
-import static com.almasb.fxgl.dsl.FXGL.image;
 
 /**
  * A HeroComponent class.
@@ -25,36 +22,55 @@ import static com.almasb.fxgl.dsl.FXGL.image;
  * @version 1.0
  */
 public class HeroComponent extends Component {
-    LocalTimer attackTimer;
-    HeroData heroData = Config.HERO_DATA;
-    AnimationChannel animAttack;
-    AnimationChannel animWalk;
-    AnimatedTexture texture;
+    private static LocalTimer attackTimer;
 
+    private final HeroData heroData;
+    private final AnimationChannel animAttack;
+    private final AnimationChannel animWalk;
+    private final AnimatedTexture texture;
     private double speed;
 
+    /**
+     * Constructs a new HeroComponent.
+     */
     public HeroComponent() {
-        Image attack1 = new Image("assets/textures/hero_attack1.png", heroData.getWidth(), heroData.getHeight(), true, true);
-        Image attack2 = new Image("assets/textures/hero_attack2.png", heroData.getWidth(), heroData.getHeight(), true, true);
-        Image attack3 = new Image("assets/textures/hero_attack3.png", heroData.getWidth(), heroData.getHeight(), true, true);
-        Image attack4 = new Image("assets/textures/hero_attack4.png", heroData.getWidth(), heroData.getHeight(), true, true);
-        Image idle = new Image("assets/textures/hero_idle.png", heroData.getWidth(), heroData.getHeight(), true, true);
-        Image walk1 = new Image("assets/textures/hero_walk1.png", heroData.getWidth(), heroData.getHeight(), true, true);
-        Image walk2 = new Image("assets/textures/hero_walk2.png", heroData.getWidth(), heroData.getHeight(), true, true);
-        Image walk3 = new Image("assets/textures/hero_walk3.png", heroData.getWidth(), heroData.getHeight(), true, true);
+        heroData = Config.HERO_DATA;
+        Image attack1 = initImage("assets/textures/hero_attack1.png");
+        Image attack2 = initImage("assets/textures/hero_attack2.png");
+        Image attack3 = initImage("assets/textures/hero_attack3.png");
+        Image attack4 = initImage("assets/textures/hero_attack4.png");
+        Image idle = initImage("assets/textures/hero_idle.png");
+        Image walk1 = initImage("assets/textures/hero_walk1.png");
+        Image walk2 = initImage("assets/textures/hero_walk2.png");
+        Image walk3 = initImage("assets/textures/hero_walk3.png");
 
         animAttack = new AnimationChannel(List.of(idle, attack1, attack1, attack2, attack2, attack2, attack3,
                 attack3, attack3, attack4, idle), heroData.getAttackDelay());
-        animWalk = new AnimationChannel(List.of(idle, walk1, walk2, walk3, idle), Duration.seconds(0.8));
+        final double animWalkDuration = 0.8;
+        animWalk = new AnimationChannel(List.of(idle, walk1, walk2, walk3, idle), Duration.seconds(animWalkDuration));
 
         texture = new AnimatedTexture(animWalk);
         texture.setInterpolator(Interpolator.EASE_BOTH);
     }
 
+    /*
+     * Initializes an image to be used in animations.
+     */
+    private Image initImage(final String filepath) {
+        return new Image(filepath, heroData.getWidth(), heroData.getHeight(), true, true);
+    }
+
+    /**
+     * Returns the speed of this HeroComponent as a double.
+     * @return  the speed of this HeroComponent as a double
+     */
     public double getSpeed() {
         return speed;
     }
 
+    /**
+     * Runs on creation of this HeroComponent.
+     */
     @Override
     public void onAdded() {
         attackTimer = FXGL.newLocalTimer();
@@ -64,10 +80,16 @@ public class HeroComponent extends Component {
         entity.setScaleOrigin(new Point2D(heroData.getWidth() / 2, heroData.getHeight() / 2));
     }
 
+    /**
+     * Moves the animation of this HeroComponent.
+     */
     public void move() {
         texture.loopAnimationChannel(animWalk);
     }
 
+    /**
+     * Performs an area of effect attack.
+     */
     public void attackArea() {
         if (attackTimer.elapsed(heroData.getAttackDelay())) {
             texture.playAnimationChannel(animAttack);
@@ -83,7 +105,11 @@ public class HeroComponent extends Component {
         }
     }
 
-    private void attack(Entity attackedEntity) {
+    /*
+     * Deals damage to each enemy caught in the area of effect attack.
+     * @param attackedEntity an enemy Entity
+     */
+    private void attack(final Entity attackedEntity) {
         attackedEntity.getComponent(EnemyComponent.class).attacked(heroData.getDamage());
     }
 }
