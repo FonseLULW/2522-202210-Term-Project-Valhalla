@@ -26,18 +26,14 @@ public class HeroComponent extends Component {
     private double speed;
 
     public HeroComponent() {
-        animAttack = new AnimationChannel(List.of(
-        new Image("assets/textures/hero_attack1.png", heroData.getWidth(), heroData.getHeight(), true, true),
-        new Image("assets/textures/hero_attack2.png", heroData.getWidth(), heroData.getHeight(), true, true),
-        new Image("assets/textures/hero_attack3.png", heroData.getWidth(), heroData.getHeight(), true, true),
-        new Image("assets/textures/hero_attack3.png", heroData.getWidth(), heroData.getHeight(), true, true),
-        new Image("assets/textures/hero_attack3.png", heroData.getWidth(), heroData.getHeight(), true, true),
-        new Image("assets/textures/hero_attack3.png", heroData.getWidth(), heroData.getHeight(), true, true),
-        new Image("assets/textures/hero_attack3.png", heroData.getWidth(), heroData.getHeight(), true, true),
-        new Image("assets/textures/hero_attack3.png", heroData.getWidth(), heroData.getHeight(), true, true),
-        new Image("assets/textures/hero_attack2.png", heroData.getWidth(), heroData.getHeight(), true, true),
-        new Image("assets/textures/hero_attack1.png", heroData.getWidth(), heroData.getHeight(), true, true)
-        ), heroData.getAttackDelay());
+        Image attack1 = new Image("assets/textures/hero_attack1.png", heroData.getWidth(), heroData.getHeight(), true, true);
+        Image attack2 = new Image("assets/textures/hero_attack2.png", heroData.getWidth(), heroData.getHeight(), true, true);
+        Image attack3 = new Image("assets/textures/hero_attack3.png", heroData.getWidth(), heroData.getHeight(), true, true);
+        Image attack4 = new Image("assets/textures/hero_attack4.png", heroData.getWidth(), heroData.getHeight(), true, true);
+        Image attack5 = new Image("assets/textures/hero_attack5.png", heroData.getWidth(), heroData.getHeight(), true, true);
+
+        animAttack = new AnimationChannel(List.of(attack5, attack1, attack1, attack2, attack2, attack2, attack3,
+                attack3, attack3, attack4, attack5), heroData.getAttackDelay());
 
         texture = new AnimatedTexture(animAttack);
         texture.setInterpolator(Interpolator.EASE_BOTH);

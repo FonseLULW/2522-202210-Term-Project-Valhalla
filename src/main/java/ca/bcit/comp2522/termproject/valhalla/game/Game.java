@@ -1,6 +1,10 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
-import ca.bcit.comp2522.termproject.valhalla.component.*;
+import ca.bcit.comp2522.termproject.valhalla.component.BuildingIndicatorComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.BulletComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.EnemyComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.HeroComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.PlacedButtonComponent;
 import ca.bcit.comp2522.termproject.valhalla.constant.Config;
 import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
@@ -32,6 +36,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -67,11 +72,13 @@ public class Game extends GameApplication {
         settings.setManualResizeEnabled(true); // can scale the resize window
         settings.setDefaultCursor(new CursorInfo("cursor.png", 0, 0));
         settings.setSceneFactory(new SceneFactory() {
+            @NotNull
             @Override
             public FXGLMenu newMainMenu() {
                 return new ValhallaMenu();
             }
 
+            @NotNull
             @Override
             public FXGLMenu newGameMenu() {
                 return new ValhallaPauseMenu();
@@ -95,13 +102,13 @@ public class Game extends GameApplication {
     @Override
     protected void initInput() {
         // starting scene.
-        onKeyDown(KeyCode.ENTER, () -> {
-            var lines = getAssetLoader().loadText("cutscene.txt");
-            var cutscene = new Cutscene(lines);
-            getCutsceneService().startCutscene(cutscene);
-
-            return null;
-        });
+//        onKeyDown(KeyCode.ENTER, () -> {
+//            var lines = getAssetLoader().loadText("cutscene.txt");
+//            var cutscene = new Cutscene(lines);
+//            getCutsceneService().startCutscene(cutscene);
+//
+//            return null;
+//        });
 
         // hero movement
         Input input = getInput();
@@ -221,7 +228,6 @@ public class Game extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
-
 
         FXGL.getGameScene().setBackgroundColor(Color.web("#16232B"));
         FXGL.image("enemy/slugman_1.png");
@@ -391,13 +397,14 @@ public class Game extends GameApplication {
         // wave counter
         final double barWidth = 240;
         final double barHeight = 10;
+        final int x = 5;
         ProgressBar wavesBar = new ProgressBar(true);
         wavesBar.setFill(Color.DEEPSKYBLUE);
         wavesBar.setLabelPosition(Position.RIGHT);
         wavesBar.setLabelVisible(true);
-        wavesBar.setTranslateX(5);
+        wavesBar.setTranslateX(x);
         wavesBar.setTranslateY(APP_HEIGHT - 50);
-        wavesBar.setMaxValue(5);
+        wavesBar.setMaxValue(x);
         wavesBar.setLabelFill(Color.DARKBLUE);
         PropertyMap state = FXGL.getWorldProperties();
         wavesBar.currentValueProperty().bind(state.intProperty("wavesSpawned"));
