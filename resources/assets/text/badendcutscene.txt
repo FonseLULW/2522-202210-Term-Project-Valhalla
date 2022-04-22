@@ -1,0 +1,34 @@
+// the narrator
+1.name = A viking man
+2.name: situation
+3.name = heejo
+4.name = slugman
+
+// no images if its left with no asset
+1.image =
+3.image = heejo_idle.png
+4.image = enemy/slugman_1.png
+
+// actual dialog
+
+3: MWAHAHAHAHAHA I have won!
+
+3: Slugmen, WREAK HAVOC...
+
+4: g54ds:}{><IS#(Afg44da
+
+4: sadlK129'[;[{lop
+
+4: EAT3Qjask;9VIKad8INGS!!!
+
+4: ,LK;sd;[/;?12cccg
+
+1: Nooooo!!!!
+
+1: My village, my home, my family...
+
+1: All... G O N E
+
+3: You have lost! You should have gone for the head...
+
+1: Maybe there was a way to get a better ending...

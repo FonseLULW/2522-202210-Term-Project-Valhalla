@@ -474,12 +474,10 @@ public class Game extends GameApplication {
     }
 
     public void showGameOver() {
-        FXGL.getNotificationService().setBackgroundColor(Color.CRIMSON);
-        FXGL.getNotificationService().setTextColor(Color.LIGHTSKYBLUE);
         FXGL.getAudioPlayer().pauseAllMusic();
         FXGL.loopBGM("sadendingalt.mp3");
-        FXGL.getNotificationService().pushNotification("YOU DIED");
         FXGL.getGameWorld().removeEntity(hero);
+        cutsceneManager.playCutscene("badendcutscene.txt", () -> FXGL.getWindowService().gotoMainMenu());
         hero = null;
     }
 
