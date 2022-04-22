@@ -1,6 +1,11 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
-import ca.bcit.comp2522.termproject.valhalla.component.*;
+import ca.bcit.comp2522.termproject.valhalla.component.ArrowTowerComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.BuildingIndicatorComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.BulletComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.EnemyComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.HeroComponent;
+import ca.bcit.comp2522.termproject.valhalla.component.PlacedButtonComponent;
 import com.almasb.fxgl.core.collection.PropertyMap;
 import com.almasb.fxgl.cutscene.Cutscene;
 import com.almasb.fxgl.dsl.FXGL;
@@ -12,9 +17,6 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
-import com.almasb.fxgl.entity.components.IDComponent;
-import com.almasb.fxgl.input.Input;
-import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.Texture;
@@ -23,15 +25,15 @@ import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
-import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
-import static com.almasb.fxgl.dsl.FXGLForKtKt.getInput;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getAssetLoader;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getCutsceneService;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.runOnce;
 
 /**
  * The GameEntityFactory class.
@@ -41,6 +43,11 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.getInput;
  */
 public class GameEntityFactory implements EntityFactory {
 
+    /**
+     * Spawns a new arrow tower.
+     * @param data SpawnData object for new arrow tower
+     * @return a new arrow tower Entity
+     */
     @Spawns("arrowTower")
     public Entity newArrowTower(final SpawnData data) {
         return entityBuilder(data)
@@ -50,6 +57,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new point.
+     * @param data SpawnData object for point
+     * @return a new point Entity
+     */
     @Spawns("point")
     public Entity newPoint(final SpawnData data) {
         int index = data.get("index");
@@ -61,6 +73,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new space.
+     * @param data SpawnData object for space
+     * @return a new space Entity
+     */
     @Spawns("space")
     public Entity newSpace(final SpawnData data) {
         Game app = (Game) (FXGL.getApp());
@@ -71,6 +88,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new empty space.
+     * @param data SpawnData object for empty space
+     * @return a new empty space Entity
+     */
     @Spawns("empty")
     public Entity newEmpty(final SpawnData data) {
         return entityBuilder(data)
@@ -79,6 +101,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new enemy.
+     * @param data SpawnData object for enemy
+     * @return a new enemy Entity
+     */
     @Spawns("enemy")
     public Entity newEnemy(final SpawnData data) {
         int maxHp = 500;
@@ -114,6 +141,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new arrow projectile.
+     * @param data SpawnData object for arrow projectile
+     * @return a new arrow projectile Entity
+     */
     @Spawns("arrowTowerBullet")
     public Entity newArrowBullet(final SpawnData data) {
         return createBullet(data);
@@ -129,6 +161,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new build indicator.
+     * @param data SpawnData object for build indicator
+     * @return a new build indicator Entity
+     */
     @Spawns("buildIndicator")
     public Entity newBuildIndicator(final SpawnData data) {
         return entityBuilder(data)
@@ -137,6 +174,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new placed button.
+     * @param data SpawnData object for placed button
+     * @return a new placed button Entity
+     */
     @Spawns("placedButton")
     public Entity newPlacedButton(final SpawnData data) {
         Texture texture = FXGL.texture((String) data.get("imgName"), data.get("width"), data.get("height"));
@@ -154,6 +196,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new place box.
+     * @param data SpawnData object for place box
+     * @return a new place box Entity
+     */
     @Spawns("placeBox")
     public Entity newPlaceBox(final SpawnData data) {
         return entityBuilder(data)
@@ -161,6 +208,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new masking rectangle.
+     * @param data SpawnData object for masking rectangle
+     * @return a new masking rectangle Entity
+     */
     @Spawns("maskRectangle")
     public Entity newMaskRectangle(final SpawnData data) {
         Rectangle mask = new Rectangle(115, Game.APP_HEIGHT, Color.web("#16232B"));
@@ -170,6 +222,11 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns a new hero.
+     * @param data SpawnData object for hero
+     * @return a new hero Entity
+     */
     @Spawns("hero")
     public Entity newHero(final SpawnData data) {
         final double scale = 0.1;
@@ -188,9 +245,14 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
+    /**
+     * Spawns hejo.
+     * @param data SpawnData object for hejo
+     * @return a hejo Entity
+     */
     @Spawns("hejo")
     public Entity newHejo(final SpawnData data) {
-        int maxHp = 10000;
+        final int maxHp = 10000;
         HealthIntComponent hp = new HealthIntComponent(maxHp);
         ProgressBar hpBar = new ProgressBar(false);
         hpBar.setFill(Color.LIGHTGREEN);
