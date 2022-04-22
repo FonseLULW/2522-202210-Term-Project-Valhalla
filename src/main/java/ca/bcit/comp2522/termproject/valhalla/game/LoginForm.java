@@ -220,7 +220,7 @@ public class LoginForm extends AnchorPane {
         public HBox getField(final Fields field, final String label) {
 
             TextField input = switch (field) {
-                case USERNAME -> new TextField("Username");
+                case USERNAME -> new TextField("chris");
                 case PASSWORD -> new PasswordField();
             };
 
