@@ -15,6 +15,7 @@ import com.almasb.fxgl.cutscene.Cutscene;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.EntityWorldListener;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.components.BoundingBoxComponent;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
@@ -104,7 +105,7 @@ public class Game extends GameApplication {
         vars.put("towerType", TowerType.NONE);
         vars.put("wavesSpawned", 0);
         vars.put("baseHealth", 1000);
-        vars.put("gameWon", false);
+        vars.put("bossSpawned", false);
 
     }
 
@@ -303,18 +304,18 @@ public class Game extends GameApplication {
                 selectedPlaceBtn(false);
             }
         });
-
         PropertyMap vars = FXGL.getWorldProperties();
         vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
-            if (nv.intValue() == 1) {
+            if (nv.intValue() == 5) {
                 FXGL.spawn("hejo", pointInfos.get(0).getKey());
+                FXGL.getWorldProperties().setValue("bossSpawned", true);
+                MusicPlayer.getSingleton().playGameMusic();
             }
         });
 
         hero = FXGL.spawn("hero", 60, 60);
         cutsceneManager.playCutscene("cutscene.txt");
-
-        FXGL.loopBGM("bensound-instinct.mp3");
+        MusicPlayer.getSingleton().playGameMusic();
     }
 
     public LinkedHashMap<Integer, Pair<Point2D, String>> getPointInfos() {
@@ -434,7 +435,6 @@ public class Game extends GameApplication {
                 FXGL.getNotificationService().setBackgroundColor(Color.CRIMSON);
                 FXGL.getNotificationService().setTextColor(Color.LIGHTSKYBLUE);
                 FXGL.getAudioPlayer().pauseAllMusic();
-                FXGL.loopBGM("bensound-epic.mp3");
                 FXGL.getNotificationService().pushNotification("You are going to have a very bad time...");
                 wavesBar.setFill(Color.LIGHTSKYBLUE);
             }
@@ -474,8 +474,7 @@ public class Game extends GameApplication {
     }
 
     public void showGameOver() {
-        FXGL.getAudioPlayer().pauseAllMusic();
-        FXGL.loopBGM("sadendingalt.mp3");
+        MusicPlayer.getSingleton().playSadMusic();
         FXGL.getGameWorld().removeEntity(hero);
         cutsceneManager.playCutscene("badendcutscene.txt", () -> FXGL.getWindowService().gotoMainMenu());
         hero = null;

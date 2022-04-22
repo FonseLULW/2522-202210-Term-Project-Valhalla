@@ -54,7 +54,7 @@ public class ValhallaPauseMenu extends FXGLMenu {
     public void onEnteredFrom(@NotNull final Scene prevState) {
         final double bgmVolume = 0.20;
         FXGL.getAudioPlayer().pauseAllMusic();
-        FXGL.loopBGM("pause.mp3");
+        MusicPlayer.getSingleton().playGameMenuMusic();
         FXGL.getSettings().setGlobalMusicVolume(bgmVolume);
     }
 
@@ -65,7 +65,7 @@ public class ValhallaPauseMenu extends FXGLMenu {
     @Override
     public void onExitingTo(@NotNull final Scene nextState) {
         FXGL.getAudioPlayer().pauseAllMusic();
-        FXGL.loopBGM("bensound-instinct.mp3");
+        MusicPlayer.getSingleton().playGameMusic();
     }
 
     /*
