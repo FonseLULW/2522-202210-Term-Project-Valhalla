@@ -11,7 +11,7 @@
 
 // actual dialog
 
-1: It was wonderful time for my family to live...
+1: It was a wonderful time for my family to live...
 
 1: Until the invasion happened...
 
@@ -29,4 +29,6 @@
 
 1: and take control of me using "WASD" to move and left mouse click to attack.
 
-1: It is all on you!... (You will have to press ENTER one more time after this dialog to enter my world.)
+1: If you need to pause, press ESC!
+
+1: It is all on you!...Good luck
