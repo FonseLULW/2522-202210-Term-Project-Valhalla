@@ -313,7 +313,6 @@ public class Game extends GameApplication {
             }
         });
 
-
         hero = FXGL.spawn("hero", 60, 60);
         FXGL.loopBGM("bensound-instinct.mp3");
     }

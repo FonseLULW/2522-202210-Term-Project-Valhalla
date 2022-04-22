@@ -23,7 +23,6 @@ public class HeroComponent extends Component {
     HeroData heroData = Config.HERO_DATA;
     AnimationChannel animAttack;
     AnimationChannel animWalk;
-    AnimationChannel animIdle;
     AnimatedTexture texture;
 
     private double speed;
@@ -48,10 +47,6 @@ public class HeroComponent extends Component {
 
     public double getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(final double speed) {
-        this.speed = speed;
     }
 
     @Override
