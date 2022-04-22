@@ -102,18 +102,14 @@ public class Game extends GameApplication {
 
     @Override
     protected void initInput() {
-        // starting scene.
-//        onKeyDown(KeyCode.ENTER, () -> {
-//            var lines = getAssetLoader().loadText("cutscene.txt");
-//            var cutscene = new Cutscene(lines);
-//            getCutsceneService().startCutscene(cutscene);
-//
-//            return null;
-//        });
-
         // hero movement
         Input input = getInput();
         input.addAction(new UserAction("up") {
+            @Override
+            protected void onActionBegin() {
+                hero.getComponent(HeroComponent.class).move();
+            }
+
             @Override
             protected void onAction() {
                 if (hero != null) {
@@ -122,6 +118,11 @@ public class Game extends GameApplication {
             }
         }, KeyCode.W);
         input.addAction(new UserAction("right") {
+            @Override
+            protected void onActionBegin() {
+                hero.getComponent(HeroComponent.class).move();
+            }
+
             @Override
             protected void onAction() {
                 if (hero != null) {
@@ -132,6 +133,11 @@ public class Game extends GameApplication {
         }, KeyCode.D);
         input.addAction(new UserAction("down") {
             @Override
+            protected void onActionBegin() {
+                hero.getComponent(HeroComponent.class).move();
+            }
+
+            @Override
             protected void onAction() {
                 if (hero != null) {
                     hero.translateY(hero.getComponent(HeroComponent.class).getSpeed());
@@ -139,6 +145,11 @@ public class Game extends GameApplication {
             }
         }, KeyCode.S);
         input.addAction(new UserAction("left") {
+            @Override
+            protected void onActionBegin() {
+                hero.getComponent(HeroComponent.class).move();
+            }
+
             @Override
             protected void onAction() {
                 if (hero != null) {

@@ -177,7 +177,7 @@ public class GameEntityFactory implements EntityFactory {
 
         final double speed = 5.0;
         return FXGL.entityBuilder(data)
-                .at(0, 0)
+                .at(Game.APP_WIDTH / 2.0, Game.APP_HEIGHT / 2.0)
                 .bbox(new HitBox(BoundingShape.box(60.0, 90.0)))
                 .type(GameType.HERO)
                 .with(new KeepOnScreenComponent())
@@ -187,7 +187,7 @@ public class GameEntityFactory implements EntityFactory {
 
     @Spawns("hejo")
     public Entity newHejo(final SpawnData data) {
-        int maxHp = 100;
+        int maxHp = 10000;
         HealthIntComponent hp = new HealthIntComponent(maxHp);
         ProgressBar hpBar = new ProgressBar(false);
         hpBar.setFill(Color.LIGHTGREEN);
