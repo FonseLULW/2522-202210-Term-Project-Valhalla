@@ -6,11 +6,28 @@ import com.almasb.fxgl.dsl.FXGL;
 import ca.bcit.comp2522.termproject.valhalla.data.TowerData;
 import javafx.util.Duration;
 
-public interface Config {
-    int LOWER_BOUND = 10;
-    int UPPER_BOUND = 15;
+/**
+ * An abstract class of config of the game.
+ *
+ * @author kaioh
+ * @author FonseLULW
+ * @version 1.0
+ */
+public abstract class Config {
+    /**
+     * The lower bound of the tower's damage.
+     */
+    public static final int LOWER_BOUND = 10;
+    /**
+     * The upper bound of the tower's damage.
+     */
+    public static final int UPPER_BOUND = 15;
 
-    TowerData ARROW_TOWER_DATA = new TowerData("arrowTower", 43, 68, 1, 580, 467, Duration.seconds(0.7), FXGL.image("tower/tower_image.png")) {
+    /**
+     * The tower's data.
+     */
+    public static final TowerData ARROW_TOWER_DATA = new TowerData("arrowTower", 43, 68, 1,
+            580, 467, Duration.seconds(0.7), FXGL.image("tower/tower_image.png")) {
         @Override
         public int getDamage() {
             return FXGLMath.random(LOWER_BOUND, UPPER_BOUND);
@@ -20,5 +37,6 @@ public interface Config {
     /**
      * The Hero's data.
      */
-    HeroData HERO_DATA = new HeroData("arrowTower", 60.0, 90.0, 120, 50, Duration.seconds(0.2), 2.0);
+    public static final HeroData HERO_DATA = new HeroData("arrowTower", 60.0, 90.0, 120,
+            50, Duration.seconds(0.2), 2.0);
 }
