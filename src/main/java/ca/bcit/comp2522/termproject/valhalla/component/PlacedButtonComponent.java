@@ -15,17 +15,23 @@ import javafx.util.Duration;
  * @version 1.0
  */
 public class PlacedButtonComponent extends Component {
-    //TODO DELETE THIS
     private static final AnimationChannel BORDER_ANIMATION = new AnimationChannel(FXGL.image("selected_border.png"),
             5, 80, 80, Duration.seconds(1), 0, 14);
     private AnimatedTexture texture;
     private final TowerType towerType;
     private boolean isSelected;
 
+    /**
+     * Gets the towerType.
+     * @param towerType towerType
+     */
     public PlacedButtonComponent(final TowerType towerType) {
         this.towerType = towerType;
     }
 
+    /**
+     * Adds animation to the border.
+     */
     @Override
     public void onAdded() {
         texture = new AnimatedTexture(BORDER_ANIMATION);
@@ -42,6 +48,10 @@ public class PlacedButtonComponent extends Component {
         });
     }
 
+    /**
+     * Checks if the border is selected or not.
+     * @param selected a boolean value
+     */
     public void setSelected(final boolean selected) {
         this.isSelected = selected;
         if (selected) {
