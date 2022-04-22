@@ -2,17 +2,11 @@ package ca.bcit.comp2522.termproject.valhalla.game;
 
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
-import com.almasb.fxgl.audio.Audio;
-import com.almasb.fxgl.audio.AudioType;
-import com.almasb.fxgl.audio.Music;
-import com.almasb.fxgl.audio.Sound;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.scene.Scene;
 import javafx.scene.Node;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 /**
  * A ValhallaMenu class representing the game's main menu.
@@ -48,12 +42,8 @@ public class ValhallaMenu extends FXGLMenu {
         loginForm.setVisible(false);
 
         // set the action of buttons
-        btnPlay.setAction(() -> {
-            loginForm.setVisible(true);
-        });
-        loginForm.getCancel().setAction(() -> {
-            loginForm.setVisible(false);
-        });
+        btnPlay.setAction(() -> loginForm.setVisible(true));
+        loginForm.getCancel().setAction(() -> loginForm.setVisible(false));
         btnExit.setAction(this::fireExit);
         loginForm.getSubmit().setAction(() -> {
             if (loginForm.validate()) {
@@ -67,8 +57,7 @@ public class ValhallaMenu extends FXGLMenu {
     }
 
     private Node createBackground() {
-        final Node background = FXGL.texture("background.png", Game.APP_WIDTH, Game.APP_HEIGHT);
-        return background;
+        return FXGL.texture("background.png", Game.APP_WIDTH, Game.APP_HEIGHT);
     }
 
     private VBox createMenu() {
@@ -81,12 +70,13 @@ public class ValhallaMenu extends FXGLMenu {
     }
 
     private void loadGame() {
-        // if new player fireNewGame
-        // else get load file of user and fireLoad
         FXGL.getAudioPlayer().stopAllMusic();
         fireNewGame();
     }
 
+    /**
+     * Runs on creation of this ValhallaMenu.
+     */
     @Override
     public void onCreate() {
         final double bgmVolume = 0.20;
@@ -94,8 +84,12 @@ public class ValhallaMenu extends FXGLMenu {
         FXGL.getSettings().setGlobalMusicVolume(bgmVolume);
     }
 
+    /**
+     * Runs when entering or switching to this ValhallaMenu.
+     * @param prevState a Scene being entered from
+     */
     @Override
-    public void onEnteredFrom(@NotNull Scene prevState) {
+    public void onEnteredFrom(@NotNull final Scene prevState) {
         FXGL.getAudioPlayer().pauseAllMusic();
         FXGL.loopBGM("introX.wav");
     }

@@ -51,6 +51,10 @@ public class ValhallaButton extends Button {
         this(label, x, y, null);
     }
 
+    /**
+     * Constructs a new ValhallaButton object.
+     * @param label a String displayed on this ValhallaButton
+     */
     public ValhallaButton(final String label) {
         this(label, 0, 0);
     }

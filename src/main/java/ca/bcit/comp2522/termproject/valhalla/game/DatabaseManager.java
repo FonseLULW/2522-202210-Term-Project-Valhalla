@@ -19,6 +19,7 @@ public class DatabaseManager {
     private static final String URL = "jdbc:mysql://localhost:" + PORT + "/";
     private static final String DATABASE_NAME = "comp2522";
 
+    //TODO: change username and password to chris's credentials
     private static final String CONNECTION_USERNAME = "root";
     private static final String CONNECTION_PASSWORD = "eggonomics";
 
@@ -47,15 +48,21 @@ public class DatabaseManager {
      */
     private ResultSet query(final String query) throws SQLException {
         Statement stmt = connection.createStatement();
-        ResultSet res = stmt.executeQuery(query);
-        return res;
+        return stmt.executeQuery(query);
     }
 
+    /**
+     * Searches the database for the given username and password.
+     * @param username a String representing the username
+     * @param password a String representing the password
+     * @return a ResultSet containing the results of the search
+     */
     public ResultSet search(final String username, final String password) {
         try {
             return query("SELECT * FROM USERS WHERE `user_id` = '" + username
                     + "' AND `password` = '" + password + "';");
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
