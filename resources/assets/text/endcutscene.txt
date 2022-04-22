@@ -1,0 +1,26 @@
+// the narrator
+1.name = A viking man
+2.name: situation
+3.name = heejo
+4.name = slugman
+
+// no images if its left with no asset
+1.image = hero1_idle.png
+3.image = heejo_idle.png
+4.image = enemy/slugman_1.png
+
+// actual dialog
+
+3: You have defeated me, but I will come back eventually...
+
+3: Slugmen, let us leave at once...
+
+4: g54ds:}{><IS#(Afg44da
+
+1: You have saved our home! We will be forever grateful
+
+1: You are our hero!
+
+1: You will forever be celebrated in Valhalla!!
+
+1: Congrats, you won the game! (Press enter one more time to exit)

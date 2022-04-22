@@ -1,6 +1,8 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
 import ca.bcit.comp2522.termproject.valhalla.component.*;
+import com.almasb.fxgl.core.collection.PropertyMap;
+import com.almasb.fxgl.cutscene.Cutscene;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.dsl.components.KeepOnScreenComponent;
@@ -11,6 +13,8 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.entity.components.IDComponent;
+import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.Texture;
@@ -19,11 +23,15 @@ import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import javafx.util.Pair;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getInput;
 
 /**
  * GameEntityFactory.
@@ -201,7 +209,16 @@ public class GameEntityFactory implements EntityFactory {
             }
 
             if (value <= 0) {
-                System.out.println("HEJO DEATH");
+                var background = FXGL.texture("starting_scene1.PNG", Game.APP_WIDTH, Game.APP_HEIGHT);
+                runOnce(() -> {
+                    FXGL.getGameScene().addUINode(background);
+                    var lines = getAssetLoader().loadText("endcutscene.txt");
+                    var cutscene = new Cutscene(lines);
+                    PropertyMap vars = FXGL.getWorldProperties();
+                    vars.setValue("gameWon", true);
+                    getCutsceneService().startCutscene(cutscene);
+                    return null;
+                }, Duration.seconds(1));
             }
         });
         return entityBuilder(data)
