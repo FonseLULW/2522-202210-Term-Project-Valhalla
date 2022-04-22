@@ -139,7 +139,7 @@ public class GameEntityFactory implements EntityFactory {
                 .type(GameType.ENEMY)
                 .with(hp)
                 .view(hpBar)
-                .with(new EnemyComponent(hpBar))
+                .with(new EnemyComponent(hp, hpBar))
                 .with(new CollidableComponent(true))
                 .bbox(BoundingShape.box(width, height))
                 .build();
@@ -303,7 +303,7 @@ public class GameEntityFactory implements EntityFactory {
                 .type(GameType.ENEMY)
                 .with(hp)
                 .view(hpBar)
-                .with(new EnemyComponent(hpBar))
+                .with(new EnemyComponent(hp, hpBar))
                 .with(new CollidableComponent(true))
                 .bbox(BoundingShape.box(width, height))
                 .build();

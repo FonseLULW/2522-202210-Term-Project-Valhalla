@@ -55,6 +55,7 @@ public class Game extends GameApplication {
     public static final int APP_WIDTH = 1115;
     public static final int APP_HEIGHT = 15 * 50;
     private final LinkedHashMap<Integer, Pair<Point2D, String>> pointInfos = new LinkedHashMap<>();
+    private final CutsceneManager cutsceneManager;
     private Entity buildIndicator;
     private BuildingIndicatorComponent buildIndicatorComponent;
     private Entity emptyEntity;
@@ -62,6 +63,10 @@ public class Game extends GameApplication {
     private Entity hero;
 
     ArrayList<Rectangle> spaceInfos = new ArrayList<>();
+
+    public Game() {
+        cutsceneManager = new CutsceneManager("starting_scene1.PNG");
+    }
 
     @Override
     protected void initSettings(final GameSettings settings) {
@@ -301,31 +306,32 @@ public class Game extends GameApplication {
 
         PropertyMap vars = FXGL.getWorldProperties();
         vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
-            if (nv.intValue() == 1) {
+            if (nv.intValue() == 5) {
                 FXGL.spawn("hejo", pointInfos.get(0).getKey());
             }
         });
 
         hero = FXGL.spawn("hero", 60, 60);
-
-        var background = FXGL.texture("starting_scene1.PNG", Game.APP_WIDTH, Game.APP_HEIGHT);
-        runOnce(() -> {
-            FXGL.getGameScene().addUINode(background);
-            var lines = getAssetLoader().loadText("cutscene.txt");
-            var cutscene = new Cutscene(lines);
-            getCutsceneService().startCutscene(cutscene);
-            Input input = getInput();
-            input.addAction(new UserAction("cutSceneEnd") {
-                @Override
-                protected void onActionBegin() {
-                    FXGL.getGameScene().removeUINode(background);
-                    if (vars.getBoolean("gameWon")) {
-                        FXGL.getWindowService().gotoMainMenu();
-                    }
-                }
-            }, KeyCode.ENTER);
-            return null;
-        }, Duration.seconds(1));
+        cutsceneManager.playCutscene("cutscene.txt");
+//        var background = FXGL.texture("starting_scene1.PNG", Game.APP_WIDTH, Game.APP_HEIGHT);
+//        runOnce(() -> {
+//            FXGL.getGameScene().addUINode(background);
+//            var lines = getAssetLoader().loadText("cutscene.txt");
+//            var cutscene = new Cutscene(lines);
+//            getCutsceneService().startCutscene(cutscene);
+//            Input input = getInput();
+//            // TODO: causes a crash when reloading
+//            input.addAction(new UserAction("cutSceneEnd") {
+//                @Override
+//                protected void onActionBegin() {
+//                    FXGL.getGameScene().removeUINode(background);
+//                    if (vars.getBoolean("gameWon")) {
+//                        FXGL.getWindowService().gotoMainMenu();
+//                    }
+//                }
+//            }, KeyCode.ENTER);
+//            return null;
+//        }, Duration.seconds(1));
 
         FXGL.loopBGM("bensound-instinct.mp3");
     }
