@@ -285,8 +285,6 @@ public class Game extends GameApplication {
 
         runOnce(() -> {
             FXGL.getGameScene().addUINode(background);
-
-//            getGameScene().setBackgroundRepeat("starting_scene2.PNG");
             var lines = getAssetLoader().loadText("cutscene.txt");
             var cutscene = new Cutscene(lines);
             getCutsceneService().startCutscene(cutscene);
