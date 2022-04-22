@@ -306,7 +306,6 @@ public class Game extends GameApplication {
                 protected void onActionBegin() {
                     FXGL.getGameScene().removeUINode(background);
                     if (vars.getBoolean("gameWon")) {
-                        System.out.println();
                         FXGL.getWindowService().gotoMainMenu();
                     }
                 }
