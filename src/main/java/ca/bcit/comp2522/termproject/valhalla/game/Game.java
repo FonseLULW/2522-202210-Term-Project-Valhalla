@@ -46,7 +46,10 @@ import java.util.Map;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
 
 /**
- * Game.
+ * The Game class.
+ * @author FonseLULW
+ * @author kaioh
+ * @version 1.0
  */
 public class Game extends GameApplication {
     public static final int APP_WIDTH = 1115;

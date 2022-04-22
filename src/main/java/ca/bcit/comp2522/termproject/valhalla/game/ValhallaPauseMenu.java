@@ -13,6 +13,12 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getDialogService;
 
+/**
+ * A ValhallaPauseMenu class representing the game's pause menu.
+ * @author FonseLULW
+ * @author kaioh08
+ * @version 1.0
+ */
 public class ValhallaPauseMenu extends FXGLMenu {
     public ValhallaPauseMenu() {
         super(MenuType.GAME_MENU);

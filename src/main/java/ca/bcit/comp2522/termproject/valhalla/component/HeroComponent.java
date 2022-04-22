@@ -18,6 +18,12 @@ import java.util.List;
 
 import static com.almasb.fxgl.dsl.FXGL.image;
 
+/**
+ * A HeroComponent class.
+ * @author FonseLULW
+ * @author kaioh
+ * @version 1.0
+ */
 public class HeroComponent extends Component {
     LocalTimer attackTimer;
     HeroData heroData = Config.HERO_DATA;

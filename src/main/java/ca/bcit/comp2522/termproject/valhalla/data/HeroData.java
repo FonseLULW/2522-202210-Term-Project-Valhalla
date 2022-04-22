@@ -3,6 +3,12 @@ package ca.bcit.comp2522.termproject.valhalla.data;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
+/**
+ * A HeroData class.
+ * @author FonseLULW
+ * @author kaioh
+ * @version 1.0
+ */
 public class HeroData {
     private double width;
     private double height;
@@ -13,9 +19,6 @@ public class HeroData {
     private String name;
     private int attackSpeed;
     private double moveSpeed;
-
-    public HeroData() {
-    }
 
     public HeroData(final String name, final double width, final double height, final int damage, final int attackRadius,
                      final int attackSpeed, final Duration attackDelay, final double moveSpeed, final Image heroIcon) {
@@ -30,20 +33,12 @@ public class HeroData {
         this.moveSpeed = moveSpeed;
     }
 
-    public int getAttackSpeed() {
-        return attackSpeed;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(final String name) {
         this.name = name;
-    }
-
-    public Image getHeroIcon() {
-        return heroIcon;
     }
 
     public int getDamage() {

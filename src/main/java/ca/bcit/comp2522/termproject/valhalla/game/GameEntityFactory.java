@@ -34,7 +34,10 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getInput;
 
 /**
- * GameEntityFactory.
+ * The GameEntityFactory class.
+ * @author FonseLULW
+ * @author kaioh
+ * @version 1.0
  */
 public class GameEntityFactory implements EntityFactory {
 
