@@ -12,6 +12,7 @@ import com.almasb.fxgl.time.LocalTimer;
 import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class HeroComponent extends Component {
     LocalTimer attackTimer;
     HeroData heroData = Config.HERO_DATA;
     AnimationChannel animAttack;
+    AnimationChannel animWalk;
+    AnimationChannel animIdle;
     AnimatedTexture texture;
 
     private double speed;
@@ -30,12 +33,16 @@ public class HeroComponent extends Component {
         Image attack2 = new Image("assets/textures/hero_attack2.png", heroData.getWidth(), heroData.getHeight(), true, true);
         Image attack3 = new Image("assets/textures/hero_attack3.png", heroData.getWidth(), heroData.getHeight(), true, true);
         Image attack4 = new Image("assets/textures/hero_attack4.png", heroData.getWidth(), heroData.getHeight(), true, true);
-        Image attack5 = new Image("assets/textures/hero_attack5.png", heroData.getWidth(), heroData.getHeight(), true, true);
+        Image idle = new Image("assets/textures/hero_idle.png", heroData.getWidth(), heroData.getHeight(), true, true);
+        Image walk1 = new Image("assets/textures/hero_walk1.png", heroData.getWidth(), heroData.getHeight(), true, true);
+        Image walk2 = new Image("assets/textures/hero_walk2.png", heroData.getWidth(), heroData.getHeight(), true, true);
+        Image walk3 = new Image("assets/textures/hero_walk3.png", heroData.getWidth(), heroData.getHeight(), true, true);
 
-        animAttack = new AnimationChannel(List.of(attack5, attack1, attack1, attack2, attack2, attack2, attack3,
-                attack3, attack3, attack4, attack5), heroData.getAttackDelay());
+        animAttack = new AnimationChannel(List.of(idle, attack1, attack1, attack2, attack2, attack2, attack3,
+                attack3, attack3, attack4, idle), heroData.getAttackDelay());
+        animWalk = new AnimationChannel(List.of(idle, walk1, walk2, walk3, idle), Duration.seconds(0.8));
 
-        texture = new AnimatedTexture(animAttack);
+        texture = new AnimatedTexture(animWalk);
         texture.setInterpolator(Interpolator.EASE_BOTH);
     }
 
@@ -56,9 +63,13 @@ public class HeroComponent extends Component {
         entity.setScaleOrigin(new Point2D(heroData.getWidth() / 2, heroData.getHeight() / 2));
     }
 
+    public void move() {
+        texture.loopAnimationChannel(animWalk);
+    }
+
     public void attackArea() {
         if (attackTimer.elapsed(heroData.getAttackDelay())) {
-            texture.play();
+            texture.playAnimationChannel(animAttack);
             List<Entity> enemies = FXGL.getGameWorld().getEntitiesByType(GameType.ENEMY);
             for (Entity enemy : enemies) {
                 Point2D ep = enemy.getPosition();
@@ -73,10 +84,5 @@ public class HeroComponent extends Component {
 
     private void attack(Entity attackedEntity) {
         attackedEntity.getComponent(EnemyComponent.class).attacked(heroData.getDamage());
-    }
-
-    @Override
-    public void onRemoved() {
-
     }
 }

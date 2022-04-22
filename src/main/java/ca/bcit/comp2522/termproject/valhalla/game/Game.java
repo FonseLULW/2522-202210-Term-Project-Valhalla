@@ -114,6 +114,11 @@ public class Game extends GameApplication {
         Input input = getInput();
         input.addAction(new UserAction("up") {
             @Override
+            protected void onActionBegin() {
+                hero.getComponent(HeroComponent.class).move();
+            }
+
+            @Override
             protected void onAction() {
                 if (hero != null) {
                     hero.translateY(-hero.getComponent(HeroComponent.class).getSpeed());
@@ -121,6 +126,11 @@ public class Game extends GameApplication {
             }
         }, KeyCode.W);
         input.addAction(new UserAction("right") {
+            @Override
+            protected void onActionBegin() {
+                hero.getComponent(HeroComponent.class).move();
+            }
+
             @Override
             protected void onAction() {
                 if (hero != null) {
@@ -131,6 +141,11 @@ public class Game extends GameApplication {
         }, KeyCode.D);
         input.addAction(new UserAction("down") {
             @Override
+            protected void onActionBegin() {
+                hero.getComponent(HeroComponent.class).move();
+            }
+
+            @Override
             protected void onAction() {
                 if (hero != null) {
                     hero.translateY(hero.getComponent(HeroComponent.class).getSpeed());
@@ -138,6 +153,11 @@ public class Game extends GameApplication {
             }
         }, KeyCode.S);
         input.addAction(new UserAction("left") {
+            @Override
+            protected void onActionBegin() {
+                hero.getComponent(HeroComponent.class).move();
+            }
+
             @Override
             protected void onAction() {
                 if (hero != null) {
