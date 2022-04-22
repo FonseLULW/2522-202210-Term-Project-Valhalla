@@ -17,5 +17,8 @@ public interface Config {
         }
     };
 
+    /**
+     * The Hero's data.
+     */
     HeroData HERO_DATA = new HeroData("arrowTower", 60.0, 90.0, 120, 50, Duration.seconds(0.2), 2.0);
 }
