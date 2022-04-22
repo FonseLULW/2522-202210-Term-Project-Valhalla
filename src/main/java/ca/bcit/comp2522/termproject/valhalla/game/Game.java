@@ -1,10 +1,6 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
-import ca.bcit.comp2522.termproject.valhalla.component.BuildingIndicatorComponent;
-import ca.bcit.comp2522.termproject.valhalla.component.BulletComponent;
-import ca.bcit.comp2522.termproject.valhalla.component.EnemyComponent;
-import ca.bcit.comp2522.termproject.valhalla.component.HeroComponent;
-import ca.bcit.comp2522.termproject.valhalla.component.PlacedButtonComponent;
+import ca.bcit.comp2522.termproject.valhalla.compnent.*;
 import ca.bcit.comp2522.termproject.valhalla.constant.Config;
 import com.almasb.fxgl.app.CursorInfo;
 import com.almasb.fxgl.app.GameApplication;
@@ -16,7 +12,6 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.SpawnData;
-import com.almasb.fxgl.entity.component.ComponentListener;
 import com.almasb.fxgl.entity.components.BoundingBoxComponent;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
 import ca.bcit.comp2522.termproject.valhalla.data.TowerData;
@@ -26,18 +21,23 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
+import com.almasb.fxgl.texture.Texture;
 import com.almasb.fxgl.ui.Position;
 import com.almasb.fxgl.ui.ProgressBar;
+import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
+import com.almasb.fxgl.entity.component.Component;
+import javafx.scene.Node;
+import javafx.scene.effect.Effect;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -66,20 +66,18 @@ public class Game extends GameApplication {
         settings.setWidth(APP_WIDTH);
         settings.setHeight(APP_HEIGHT);
         settings.setTitle("Valhalla");
-        settings.setAppIcon("logo.png");
+        settings.setAppIcon("Logo.png");
         settings.setMainMenuEnabled(true);
         settings.setGameMenuEnabled(true);
         settings.setPreserveResizeRatio(true);
         settings.setManualResizeEnabled(true); // can scale the resize window
         settings.setDefaultCursor(new CursorInfo("cursor.png", 0, 0));
         settings.setSceneFactory(new SceneFactory() {
-            @NotNull
             @Override
             public FXGLMenu newMainMenu() {
                 return new ValhallaMenu();
             }
 
-            @NotNull
             @Override
             public FXGLMenu newGameMenu() {
                 return new ValhallaPauseMenu();
@@ -102,23 +100,9 @@ public class Game extends GameApplication {
 
     @Override
     protected void initInput() {
-        // starting scene.
-//        onKeyDown(KeyCode.ENTER, () -> {
-//            var lines = getAssetLoader().loadText("cutscene.txt");
-//            var cutscene = new Cutscene(lines);
-//            getCutsceneService().startCutscene(cutscene);
-//
-//            return null;
-//        });
-
         // hero movement
         Input input = getInput();
         input.addAction(new UserAction("up") {
-            @Override
-            protected void onActionBegin() {
-                hero.getComponent(HeroComponent.class).move();
-            }
-
             @Override
             protected void onAction() {
                 if (hero != null) {
@@ -127,11 +111,6 @@ public class Game extends GameApplication {
             }
         }, KeyCode.W);
         input.addAction(new UserAction("right") {
-            @Override
-            protected void onActionBegin() {
-                hero.getComponent(HeroComponent.class).move();
-            }
-
             @Override
             protected void onAction() {
                 if (hero != null) {
@@ -142,11 +121,6 @@ public class Game extends GameApplication {
         }, KeyCode.D);
         input.addAction(new UserAction("down") {
             @Override
-            protected void onActionBegin() {
-                hero.getComponent(HeroComponent.class).move();
-            }
-
-            @Override
             protected void onAction() {
                 if (hero != null) {
                     hero.translateY(hero.getComponent(HeroComponent.class).getSpeed());
@@ -154,11 +128,6 @@ public class Game extends GameApplication {
             }
         }, KeyCode.S);
         input.addAction(new UserAction("left") {
-            @Override
-            protected void onActionBegin() {
-                hero.getComponent(HeroComponent.class).move();
-            }
-
             @Override
             protected void onAction() {
                 if (hero != null) {
@@ -250,6 +219,7 @@ public class Game extends GameApplication {
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
 
+
         FXGL.getGameScene().setBackgroundColor(Color.web("#16232B"));
         FXGL.image("enemy/slugman_1.png");
         FXGL.image("enemy/slugman_2.png");
@@ -307,15 +277,28 @@ public class Game extends GameApplication {
             }
         });
 
-        PropertyMap vars = FXGL.getWorldProperties();
-        vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
-            if (nv.intValue() == 5) {
-                Entity hejo = FXGL.spawn("hejo", pointInfos.get(0).getKey());
-            }
-        });
-
         hero = FXGL.spawn("hero", 60, 60);
         FXGL.loopBGM("bensound-instinct.mp3");
+
+        var background = FXGL.texture("starting_scene1.PNG", Game.APP_WIDTH, Game.APP_HEIGHT);
+
+
+        runOnce(() -> {
+            FXGL.getGameScene().addUINode(background);
+
+//            getGameScene().setBackgroundRepeat("starting_scene2.PNG");
+            var lines = getAssetLoader().loadText("cutscene.txt");
+            var cutscene = new Cutscene(lines);
+            getCutsceneService().startCutscene(cutscene);
+            Input input = getInput();
+            input.addAction(new UserAction("cutSceneEnd") {
+                @Override
+                protected void onActionBegin() {
+                    FXGL.getGameScene().removeUINode(background);
+                }
+            }, KeyCode.ENTER);
+            return null;
+        }, Duration.seconds(1));
     }
 
     public LinkedHashMap<Integer, Pair<Point2D, String>> getPointInfos() {
@@ -417,14 +400,13 @@ public class Game extends GameApplication {
         // wave counter
         final double barWidth = 240;
         final double barHeight = 10;
-        final int x = 5;
         ProgressBar wavesBar = new ProgressBar(true);
         wavesBar.setFill(Color.DEEPSKYBLUE);
         wavesBar.setLabelPosition(Position.RIGHT);
         wavesBar.setLabelVisible(true);
-        wavesBar.setTranslateX(x);
+        wavesBar.setTranslateX(5);
         wavesBar.setTranslateY(APP_HEIGHT - 50);
-        wavesBar.setMaxValue(x);
+        wavesBar.setMaxValue(5);
         wavesBar.setLabelFill(Color.DARKBLUE);
         PropertyMap state = FXGL.getWorldProperties();
         wavesBar.currentValueProperty().bind(state.intProperty("wavesSpawned"));
@@ -438,6 +420,14 @@ public class Game extends GameApplication {
                 FXGL.loopBGM("bensound-epic.mp3");
                 FXGL.getNotificationService().pushNotification("You are going to have a very bad time...");
                 wavesBar.setFill(Color.LIGHTSKYBLUE);
+
+                FXGL.run(() -> {
+                    FXGL.run(() -> {
+                        FXGL.spawn("hejo", pointInfos.get(0).getKey());
+                    }, Duration.seconds(1), 1);
+                    state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
+                    System.out.println(state.getInt("wavesSpawned"));
+                }, Duration.seconds(30), 1);
             }
         });
         FXGL.addUINode(wavesBar);

@@ -1,8 +1,32 @@
 // the narrator
-1.name = Mystery voice in your head
+1.name = A viking man
+2.name: situation
+3.name = heejo
+4.name = slugman
 
-// no images for the mystery voice
-1.image =
+// no images if its left with no asset
+1.image = hero1_idle.png
+3.image = heejo_idle.png
+4.image = enemy/slugman_1.png
 
 // actual dialog
-1: It was wonderful time for the viking tribes to live
+
+1: It was wonderful time for my family to live...
+
+1: Until the invasion happened...
+
+2:(Alien Invasion is happening)
+
+1: My village is under attack by unknown things
+
+4: sdna:}{><IS#(A8Sf
+
+3: Hello
+
+1: I want you to help me defeat these things and save my village.
+
+1: You can place the tower to kill the slugman advancing
+
+1: and take control of me using "WASD" to move and left mouse click to attack.
+
+1: It is all on you!... (You will have to press ENTER one more time after this dialog to enter my world.)
