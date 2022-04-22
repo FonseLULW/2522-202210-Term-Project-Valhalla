@@ -77,7 +77,7 @@ public class Game extends GameApplication {
         settings.setMainMenuEnabled(true);
         settings.setGameMenuEnabled(true);
         settings.setPreserveResizeRatio(true);
-        settings.setManualResizeEnabled(true); // can scale the resize window
+        settings.setManualResizeEnabled(true);
         settings.setDefaultCursor(new CursorInfo("cursor.png", 0, 0));
         settings.setSceneFactory(new SceneFactory() {
             @NotNull
@@ -306,32 +306,13 @@ public class Game extends GameApplication {
 
         PropertyMap vars = FXGL.getWorldProperties();
         vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
-            if (nv.intValue() == 5) {
+            if (nv.intValue() == 1) {
                 FXGL.spawn("hejo", pointInfos.get(0).getKey());
             }
         });
 
         hero = FXGL.spawn("hero", 60, 60);
         cutsceneManager.playCutscene("cutscene.txt");
-//        var background = FXGL.texture("starting_scene1.PNG", Game.APP_WIDTH, Game.APP_HEIGHT);
-//        runOnce(() -> {
-//            FXGL.getGameScene().addUINode(background);
-//            var lines = getAssetLoader().loadText("cutscene.txt");
-//            var cutscene = new Cutscene(lines);
-//            getCutsceneService().startCutscene(cutscene);
-//            Input input = getInput();
-//            // TODO: causes a crash when reloading
-//            input.addAction(new UserAction("cutSceneEnd") {
-//                @Override
-//                protected void onActionBegin() {
-//                    FXGL.getGameScene().removeUINode(background);
-//                    if (vars.getBoolean("gameWon")) {
-//                        FXGL.getWindowService().gotoMainMenu();
-//                    }
-//                }
-//            }, KeyCode.ENTER);
-//            return null;
-//        }, Duration.seconds(1));
 
         FXGL.loopBGM("bensound-instinct.mp3");
     }

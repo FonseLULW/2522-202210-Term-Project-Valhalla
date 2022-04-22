@@ -286,17 +286,24 @@ public class GameEntityFactory implements EntityFactory {
                 hpBar.setFill(Color.RED);
             }
 
+//            "starting_scene1.PNG" "endcutscene.txt"
+
             if (value <= 0) {
-                var background = FXGL.texture("starting_scene1.PNG", Game.APP_WIDTH, Game.APP_HEIGHT);
-                runOnce(() -> {
-                    FXGL.getGameScene().addUINode(background);
-                    var lines = getAssetLoader().loadText("endcutscene.txt");
-                    var cutscene = new Cutscene(lines);
-                    PropertyMap vars = FXGL.getWorldProperties();
-                    vars.setValue("gameWon", true);
-                    getCutsceneService().startCutscene(cutscene);
-                    return null;
-                }, Duration.seconds(1));
+                CutsceneManager cutsceneManager = new CutsceneManager("starting_scene1.PNG");
+                cutsceneManager.playCutscene("endcutscene.txt", () -> {
+                    FXGL.getWindowService().gotoMainMenu();
+                });
+
+//                var background = FXGL.texture("starting_scene1.PNG", Game.APP_WIDTH, Game.APP_HEIGHT);
+//                runOnce(() -> {
+//                    FXGL.getGameScene().addUINode(background);
+//                    var lines = getAssetLoader().loadText();
+//                    var cutscene = new Cutscene(lines);
+//                    PropertyMap vars = FXGL.getWorldProperties();
+//                    vars.setValue("gameWon", true);
+//                    getCutsceneService().startCutscene(cutscene);
+//                    return null;
+//                }, Duration.seconds(1));
             }
         });
         return entityBuilder(data)

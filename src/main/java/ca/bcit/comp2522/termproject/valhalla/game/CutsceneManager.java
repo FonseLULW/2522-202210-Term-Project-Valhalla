@@ -17,7 +17,7 @@ public class CutsceneManager {
         this.cutsceneBackgroundFilename = cutsceneBackgroundFilename;
     }
 
-    public void playCutscene(final String cutsceneFilename) {
+    public void playCutscene(final String cutsceneFilename, final Runnable afterCutscene) {
         runOnce(() -> {
             var cutsceneBackground = FXGL.texture(cutsceneBackgroundFilename, Game.APP_WIDTH, Game.APP_HEIGHT);
             FXGL.getGameScene().addUINode(cutsceneBackground);
@@ -25,8 +25,15 @@ public class CutsceneManager {
             var cutscene = new Cutscene(lines);
             FXGL.getCutsceneService().startCutscene(cutscene, () -> {
                 FXGL.getGameScene().removeUINode(cutsceneBackground);
+                if (afterCutscene != null) {
+                    afterCutscene.run();
+                }
             });
             return null;
         }, Duration.seconds(1));
+    }
+
+    public void playCutscene(final String cutsceneFilename) {
+        playCutscene(cutsceneFilename, null);
     }
 }
