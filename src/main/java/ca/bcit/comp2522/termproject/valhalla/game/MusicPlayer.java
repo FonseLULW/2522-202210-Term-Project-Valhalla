@@ -1,9 +1,14 @@
 package ca.bcit.comp2522.termproject.valhalla.game;
 
 import com.almasb.fxgl.dsl.FXGL;
-import javafx.scene.Scene;
 
-public class MusicPlayer {
+/**
+ * A MusicPlayer singleton class.
+ * @author FonseLULW
+ * @author kaioh
+ * @version 1.0
+ */
+public final class MusicPlayer {
     private static MusicPlayer singleton = null;
     private final String mainMenuMusic;
     private final String pauseMenuMusic;
@@ -11,6 +16,9 @@ public class MusicPlayer {
     private final String bossMusic;
     private final String sadMusic;
 
+    /*
+     * Constructs a new MusicPlayer if not already made.
+     */
     private MusicPlayer() {
         mainMenuMusic = "introX.wav";
         pauseMenuMusic = "pause.mp3";
@@ -19,6 +27,10 @@ public class MusicPlayer {
         sadMusic = "sadendingalt.mp3";
     }
 
+    /**
+     * Returns the single instance of this MusicPlayer.
+     * @return the single instance of this MusicPlayer
+     */
     public static MusicPlayer getSingleton() {
         if (singleton == null) {
             singleton = new MusicPlayer();
@@ -26,6 +38,9 @@ public class MusicPlayer {
         return singleton;
     }
 
+    /**
+     * Plays the game background music.
+     */
     public void playGameMusic() {
         FXGL.getAudioPlayer().pauseAllMusic();
         if (FXGL.getWorldProperties().getBoolean("bossSpawned")) {
@@ -35,16 +50,25 @@ public class MusicPlayer {
         }
     }
 
+    /**
+     * Plays the pause menu background music.
+     */
     public void playGameMenuMusic() {
         FXGL.getAudioPlayer().pauseAllMusic();
         FXGL.loopBGM(pauseMenuMusic);
     }
 
+    /**
+     * Plays the main menu background music.
+     */
     public void playMainMenuMusic() {
         FXGL.getAudioPlayer().pauseAllMusic();
         FXGL.loopBGM(mainMenuMusic);
     }
 
+    /**
+     * Plays the bad ending background music.
+     */
     public void playSadMusic() {
         FXGL.getAudioPlayer().pauseAllMusic();
         FXGL.loopBGM(sadMusic);
