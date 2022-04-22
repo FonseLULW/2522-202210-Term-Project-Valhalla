@@ -16,6 +16,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.component.ComponentListener;
 import com.almasb.fxgl.entity.components.BoundingBoxComponent;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
 import ca.bcit.comp2522.termproject.valhalla.data.TowerData;
@@ -309,7 +310,7 @@ public class Game extends GameApplication {
         PropertyMap vars = FXGL.getWorldProperties();
         vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
             if (nv.intValue() == 5) {
-                FXGL.spawn("hejo", pointInfos.get(0).getKey());
+                Entity hejo = FXGL.spawn("hejo", pointInfos.get(0).getKey());
             }
         });
 

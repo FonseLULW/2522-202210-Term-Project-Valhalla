@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.valhalla.component;
 
+import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
 import ca.bcit.comp2522.termproject.valhalla.game.Game;
 import com.almasb.fxgl.core.collection.PropertyMap;
 import com.almasb.fxgl.dsl.FXGL;

@@ -10,6 +10,7 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
+import com.almasb.fxgl.entity.components.IDComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.texture.Texture;
@@ -178,7 +179,7 @@ public class GameEntityFactory implements EntityFactory {
 
     @Spawns("hejo")
     public Entity newHejo(final SpawnData data) {
-        int maxHp = 100000;
+        int maxHp = 100;
         HealthIntComponent hp = new HealthIntComponent(maxHp);
         ProgressBar hpBar = new ProgressBar(false);
         hpBar.setFill(Color.LIGHTGREEN);
@@ -197,6 +198,10 @@ public class GameEntityFactory implements EntityFactory {
                 hpBar.setFill(Color.GOLD);
             } else {
                 hpBar.setFill(Color.RED);
+            }
+
+            if (value <= 0) {
+                System.out.println("HEJO DEATH");
             }
         });
         return entityBuilder(data)
