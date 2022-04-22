@@ -108,22 +108,29 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Spawns("enemy")
     public Entity newEnemy(final SpawnData data) {
-        int maxHp = 500;
+        final int maxHp = 500;
         HealthIntComponent hp = new HealthIntComponent(maxHp);
         ProgressBar hpBar = new ProgressBar(false);
         hpBar.setFill(Color.LIGHTGREEN);
-        hpBar.setWidth(48);
-        hpBar.setHeight(7);
-        hpBar.setTranslateY(-5);
+
+        final int width = 48;
+        final int height = 7;
+        hpBar.setWidth(width);
+        hpBar.setHeight(height);
+
+        final int offsetY = -5;
+        hpBar.setTranslateY(offsetY);
         hpBar.setMaxValue(maxHp);
         hpBar.setCurrentValue(maxHp);
         hpBar.currentValueProperty().bind(hp.valueProperty());
 
+        final double sixtyFivePercentHealth = 0.65;
+        final double quarterHealth = 0.25;
         hp.valueProperty().addListener((ob, ov, nv) -> {
             int value = nv.intValue();
-            if (value > maxHp * 0.65) {
+            if (value > maxHp * sixtyFivePercentHealth) {
                 hpBar.setFill(Color.LIGHTGREEN);
-            } else if (value > maxHp * 0.25) {
+            } else if (value > maxHp * quarterHealth) {
                 hpBar.setFill(Color.GOLD);
             } else {
                 hpBar.setFill(Color.RED);
@@ -134,10 +141,9 @@ public class GameEntityFactory implements EntityFactory {
                 .type(GameType.ENEMY)
                 .with(hp)
                 .view(hpBar)
-//                .with(new TransformComponent())
                 .with(new EnemyComponent(hpBar))
                 .with(new CollidableComponent(true))
-                .bbox(BoundingShape.box(48, 48))
+                .bbox(BoundingShape.box(width, height))
                 .build();
     }
 
@@ -152,9 +158,12 @@ public class GameEntityFactory implements EntityFactory {
     }
 
     private Entity createBullet(final SpawnData data) {
+        final int width = 50;
+        final int height = 10;
+
         return entityBuilder(data)
                 .type(GameType.BULLET)
-                .viewWithBBox(FXGL.texture("tower/arrow2.png", 50, 10))
+                .viewWithBBox(FXGL.texture("tower/arrow2.png", width, height))
                 .with(new CollidableComponent(true))
                 .with(new OffscreenCleanComponent())
                 .with(new BulletComponent(data.get("radius"), data.get("damage")))
@@ -168,9 +177,10 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Spawns("buildIndicator")
     public Entity newBuildIndicator(final SpawnData data) {
+        final int zIndex = 100;
         return entityBuilder(data)
                 .with(new BuildingIndicatorComponent())
-                .zIndex(100)
+                .zIndex(zIndex)
                 .build();
     }
 
@@ -181,15 +191,17 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Spawns("placedButton")
     public Entity newPlacedButton(final SpawnData data) {
+        final int offset = 80;
         Texture texture = FXGL.texture((String) data.get("imgName"), data.get("width"), data.get("height"));
-        texture.setTranslateX((80 - texture.getWidth()) / 2.0);
-        texture.setTranslateY((80 - texture.getHeight()) / 2.0);
+        texture.setTranslateX((offset - texture.getWidth()) / 2.0);
+        texture.setTranslateY((offset - texture.getHeight()) / 2.0);
 
-        Texture bgTexture = FXGL.texture("towerBorder.png", 105, 105);
-        bgTexture.setTranslateX((80 - bgTexture.getWidth()) / 2);
-        bgTexture.setTranslateY((80 - bgTexture.getHeight()) / 2);
+        final int towerBorderSize = 105;
+        Texture bgTexture = FXGL.texture("towerBorder.png", towerBorderSize, towerBorderSize);
+        bgTexture.setTranslateX((offset - bgTexture.getWidth()) / 2);
+        bgTexture.setTranslateY((offset - bgTexture.getHeight()) / 2);
         return entityBuilder(data)
-                .view(new Rectangle(80, 80, Color.web("#D5D5D511")))
+                .view(new Rectangle(offset, offset, Color.web("#D5D5D511")))
                 .view(bgTexture)
                 .view(texture)
                 .with(new PlacedButtonComponent(data.get("towerType")))
@@ -203,8 +215,9 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Spawns("placeBox")
     public Entity newPlaceBox(final SpawnData data) {
+        final int locationX = 1000;
         return entityBuilder(data)
-                .at(1000, 0)
+                .at(locationX, 0)
                 .build();
     }
 
@@ -215,10 +228,11 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Spawns("maskRectangle")
     public Entity newMaskRectangle(final SpawnData data) {
-        Rectangle mask = new Rectangle(115, Game.APP_HEIGHT, Color.web("#16232B"));
+        final int width = 115;
+        Rectangle mask = new Rectangle(width, Game.APP_HEIGHT, Color.web("#16232B"));
         return entityBuilder(data)
                 .view(mask)
-                .at(Game.APP_WIDTH-115, 0)
+                .at(Game.APP_WIDTH - width, 0)
                 .build();
     }
 
@@ -229,16 +243,11 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Spawns("hero")
     public Entity newHero(final SpawnData data) {
-        final double scale = 0.1;
-        final double width = 626.0;
-        final double height = 899.0;
-        final ImageView sprite = new ImageView(new Image("assets/textures/hero1_idle.png",
-                width * scale, height * scale, true, true));
-
-        final double speed = 5.0;
+        final double bboxWidth = 60.0;
+        final double bboxHeight = 90.0;
         return FXGL.entityBuilder(data)
                 .at(Game.APP_WIDTH / 2.0, Game.APP_HEIGHT / 2.0)
-                .bbox(new HitBox(BoundingShape.box(60.0, 90.0)))
+                .bbox(new HitBox(BoundingShape.box(bboxWidth, bboxHeight)))
                 .type(GameType.HERO)
                 .with(new KeepOnScreenComponent())
                 .with(new HeroComponent())
@@ -256,18 +265,24 @@ public class GameEntityFactory implements EntityFactory {
         HealthIntComponent hp = new HealthIntComponent(maxHp);
         ProgressBar hpBar = new ProgressBar(false);
         hpBar.setFill(Color.LIGHTGREEN);
-        hpBar.setWidth(48);
-        hpBar.setHeight(21);
-        hpBar.setTranslateY(-5);
+
+        final int width = 48;
+        final int height = 21;
+        final int offsetY = -5;
+        hpBar.setWidth(width);
+        hpBar.setHeight(height);
+        hpBar.setTranslateY(offsetY);
         hpBar.setMaxValue(maxHp);
         hpBar.setCurrentValue(maxHp);
         hpBar.currentValueProperty().bind(hp.valueProperty());
 
+        final double sixtyFivePercent = 0.65;
+        final double quarterPercent = 0.25;
         hp.valueProperty().addListener((ob, ov, nv) -> {
             int value = nv.intValue();
-            if (value > maxHp * 0.65) {
+            if (value > maxHp * sixtyFivePercent) {
                 hpBar.setFill(Color.LIGHTGREEN);
-            } else if (value > maxHp * 0.25) {
+            } else if (value > maxHp * quarterPercent) {
                 hpBar.setFill(Color.GOLD);
             } else {
                 hpBar.setFill(Color.RED);
@@ -292,7 +307,7 @@ public class GameEntityFactory implements EntityFactory {
                 .view(hpBar)
                 .with(new EnemyComponent(hpBar))
                 .with(new CollidableComponent(true))
-                .bbox(BoundingShape.box(88, 120))
+                .bbox(BoundingShape.box(width, height))
                 .build();
     }
 }
