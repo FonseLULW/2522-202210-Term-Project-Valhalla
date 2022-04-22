@@ -13,12 +13,21 @@ import javafx.geometry.Point2D;
 
 import java.util.List;
 
+/**
+ * A ArrowTowerComponent class to manage the ArrowTower.
+ *
+ * @author kaioh08
+ * @author FonseLULW
+ * @version 1.0
+ */
 public class ArrowTowerComponent extends Component {
 
     private LocalTimer shootTimer;
     private final TowerData towerData = Config.ARROW_TOWER_DATA;
-    int MAX_BULLET = 0;
 
+    /**
+     * To add building sound.
+     */
     @Override
     public void onAdded() {
         shootTimer = FXGL.newLocalTimer();
@@ -26,14 +35,18 @@ public class ArrowTowerComponent extends Component {
         FXGL.play("building.wav");
     }
 
+    /**
+     * An onUpdate method to override tower data.
+     *
+     * @param tpf a double
+     */
     @Override
     public void onUpdate(final double tpf) {
         if (shootTimer.elapsed(towerData.getAttackDelay())) {
             List<Entity> entitiesByType = FXGL.getGameWorld().getEntitiesByType(GameType.ENEMY);
             int bulletNum = 0;
             for (Entity value : entitiesByType) {
-                int maxBullet = MAX_BULLET;
-                if (bulletNum > maxBullet) {
+                if (bulletNum > 0) {
                     break;
                 }
                 Point2D ep = value.getPosition();
@@ -49,10 +62,13 @@ public class ArrowTowerComponent extends Component {
     }
 
     private void shoot(final Entity enemy) {
+        final double twentyFive = 25.0;
+        final double five = 5.0;
         Point2D position = getEntity().getPosition();
         Point2D direction = enemy.getPosition().subtract(position);
 
-        Entity bullet = FXGL.spawn(towerData.getName() + "Bullet", new SpawnData(entity.getCenter().subtract(50 / 2.0, 10 / 2.0))
+        Entity bullet = FXGL.spawn(towerData.getName() + "Bullet",
+                new SpawnData(entity.getCenter().subtract(twentyFive, five))
                 .put("radius", towerData.getAttackRadius())
                 .put("damage", towerData.getDamage()));
 
