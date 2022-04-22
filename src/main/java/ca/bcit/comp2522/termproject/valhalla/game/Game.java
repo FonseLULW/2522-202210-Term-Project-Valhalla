@@ -21,11 +21,13 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
+import com.almasb.fxgl.texture.Texture;
 import com.almasb.fxgl.ui.Position;
 import com.almasb.fxgl.ui.ProgressBar;
 import javafx.animation.Interpolator;
 import javafx.geometry.Point2D;
 import com.almasb.fxgl.entity.component.Component;
+import javafx.scene.Node;
 import javafx.scene.effect.Effect;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -98,15 +100,6 @@ public class Game extends GameApplication {
 
     @Override
     protected void initInput() {
-        // starting scene.
-        onKeyDown(KeyCode.ENTER, () -> {
-            var lines = getAssetLoader().loadText("cutscene.txt");
-            var cutscene = new Cutscene(lines);
-            getCutsceneService().startCutscene(cutscene);
-
-            return null;
-        });
-
         // hero movement
         Input input = getInput();
         input.addAction(new UserAction("up") {
@@ -286,6 +279,26 @@ public class Game extends GameApplication {
 
         hero = FXGL.spawn("hero", 60, 60);
         FXGL.loopBGM("bensound-instinct.mp3");
+
+        var background = FXGL.texture("starting_scene1.PNG", Game.APP_WIDTH, Game.APP_HEIGHT);
+
+
+        runOnce(() -> {
+            FXGL.getGameScene().addUINode(background);
+
+//            getGameScene().setBackgroundRepeat("starting_scene2.PNG");
+            var lines = getAssetLoader().loadText("cutscene.txt");
+            var cutscene = new Cutscene(lines);
+            getCutsceneService().startCutscene(cutscene);
+            Input input = getInput();
+            input.addAction(new UserAction("cutSceneEnd") {
+                @Override
+                protected void onActionBegin() {
+                    FXGL.getGameScene().removeUINode(background);
+                }
+            }, KeyCode.ENTER);
+            return null;
+        }, Duration.seconds(1));
     }
 
     public LinkedHashMap<Integer, Pair<Point2D, String>> getPointInfos() {
