@@ -1,0 +1,8 @@
+// the narrator
+1.name = Mystery voice in your head
+
+// no images for the mystery voice
+1.image =
+
+// actual dialog
+1: It was wonderful time for the viking tribes to live

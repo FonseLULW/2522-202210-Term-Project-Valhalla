@@ -7,6 +7,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.core.collection.PropertyMap;
+import com.almasb.fxgl.cutscene.Cutscene;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
@@ -41,7 +42,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.almasb.fxgl.dsl.FXGLForKtKt.getInput;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
 
 /**
  * Game.
@@ -97,6 +98,15 @@ public class Game extends GameApplication {
 
     @Override
     protected void initInput() {
+        // starting scene.
+        onKeyDown(KeyCode.ENTER, () -> {
+            var lines = getAssetLoader().loadText("cutscene.txt");
+            var cutscene = new Cutscene(lines);
+            getCutsceneService().startCutscene(cutscene);
+
+            return null;
+        });
+
         // hero movement
         Input input = getInput();
         input.addAction(new UserAction("up") {
