@@ -41,6 +41,8 @@ LOCK TABLES `users` WRITE;
 # /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES ('chris','i was born in 1973');
 INSERT INTO `users` VALUES ('comp2522','i was born in 1973');
+INSERT INTO `users` VALUES ('chris','I was born in 1973');
+INSERT INTO `users` VALUES ('comp2522','I was born in 1973');
 INSERT INTO `users` VALUES ('test', 'thisisatest');
 INSERT INTO `users` VALUES ('fonseROFL','
    ROFL:ROFL:ROFL:ROFL

@@ -19,9 +19,8 @@ public class DatabaseManager {
     private static final String URL = "jdbc:mysql://localhost:" + PORT + "/";
     private static final String DATABASE_NAME = "comp2522";
 
-    //TODO: change username and password to chris's credentials
-    private static final String CONNECTION_USERNAME = "root";
-    private static final String CONNECTION_PASSWORD = "eggonomics";
+    private static final String CONNECTION_USERNAME = "comp2522";
+    private static final String CONNECTION_PASSWORD = "I was born in 1973";
 
     private final Connection connection;
 
