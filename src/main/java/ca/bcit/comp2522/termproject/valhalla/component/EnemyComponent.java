@@ -71,6 +71,11 @@ public class EnemyComponent extends Component {
         this.upperDamage = damageHigh;
     }
 
+    /**
+     * Spawns the new enemy.
+     * @param hp a healthIntComponent
+     * @param hpBar a progressbar
+     */
     public EnemyComponent(final HealthIntComponent hp, final ProgressBar hpBar) {
         this(hp, hpBar, DEFAULT_FILENAME, DEFAULT_LOWER_DAMAGE, DEFAULT_UPPER_DAMAGE);
     }
@@ -88,14 +93,6 @@ public class EnemyComponent extends Component {
     public boolean isDead() {
         return dead;
     }
-
-//    /**
-//     * Sets the entity status to dead.
-//     * @param dead a boolean value
-//     */
-//    public void setDead(final boolean dead) {
-//        this.dead = dead;
-//    }
 
     /**
      * Updates the hp bar of the enemy.
@@ -149,9 +146,7 @@ public class EnemyComponent extends Component {
             texture.setScaleX(1);
         }
         double speed = tpf * thirty * 2;
-        Point2D velocity = nextWaypoint.subtract(entity.getPosition())
-                .normalize()
-                .multiply(speed);
+        Point2D velocity = nextWaypoint.subtract(entity.getPosition()).normalize().multiply(speed);
         entity.translate(velocity);
         if (nextWaypoint.distance(entity.getPosition()) < speed) {
             entity.setPosition(nextWaypoint);
@@ -160,11 +155,10 @@ public class EnemyComponent extends Component {
             if (index < pointInfos.size()) {
                 nextWaypoint = pointInfos.get(index).getKey();
             } else {
-                Random rng = new Random();
                 PropertyMap vars = FXGL.getWorldProperties();
                 if (vars.getInt("baseHealth") > 0) {
-                    vars.setValue("baseHealth",
-                            vars.getInt("baseHealth") - rng.nextInt(lowerDamage, upperDamage));
+                    vars.setValue("baseHealth", vars.getInt("baseHealth")
+                            - new Random().nextInt(lowerDamage, upperDamage));
                 }
                 entity.removeFromWorld();
             }
