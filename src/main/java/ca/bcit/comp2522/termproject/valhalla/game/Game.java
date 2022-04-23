@@ -130,13 +130,7 @@ public class Game extends GameApplication {
 
     }
 
-    /**
-     * Initializes Game input.
-     */
-    @Override
-    protected void initInput() {
-        // hero movement
-        Input input = getInput();
+    private void initHeroUp(final Input input) {
         input.addAction(new UserAction("up") {
             @Override
             protected void onActionBegin() {
@@ -150,6 +144,9 @@ public class Game extends GameApplication {
                 }
             }
         }, KeyCode.W);
+    }
+
+    private void initHeroRight(final Input input) {
         input.addAction(new UserAction("right") {
             @Override
             protected void onActionBegin() {
@@ -164,6 +161,9 @@ public class Game extends GameApplication {
                 }
             }
         }, KeyCode.D);
+    }
+
+    private void initHeroDown(final Input input) {
         input.addAction(new UserAction("down") {
             @Override
             protected void onActionBegin() {
@@ -177,6 +177,9 @@ public class Game extends GameApplication {
                 }
             }
         }, KeyCode.S);
+    }
+
+    private void initHeroLeft(final Input input) {
         input.addAction(new UserAction("left") {
             @Override
             protected void onActionBegin() {
@@ -191,6 +194,9 @@ public class Game extends GameApplication {
                 }
             }
         }, KeyCode.A);
+    }
+
+    private void initHeroAttack(final Input input) {
         input.addAction(new UserAction("attack") {
             @Override
             protected void onActionBegin() {
@@ -199,6 +205,20 @@ public class Game extends GameApplication {
                 }
             }
         }, MouseButton.PRIMARY);
+    }
+
+    /**
+     * Initializes Game input.
+     */
+    @Override
+    protected void initInput() {
+        // hero movement
+        Input input = getInput();
+        initHeroUp(input);
+        initHeroDown(input);
+        initHeroLeft(input);
+        initHeroRight(input);
+        initHeroAttack(input);
 
         // towers
         FXGL.getInput().addEventHandler(MouseEvent.MOUSE_MOVED, e -> {
@@ -270,9 +290,7 @@ public class Game extends GameApplication {
         final double arrowWidth = 43.0;
         final double arrowHeight = 68.0;
         arrowBtn = FXGL.spawn("placedButton", new SpawnData(arrowX, arrowY)
-                .put("imgName", "tower/tower_image.png")
-                .put("width", arrowWidth)
-                .put("height", arrowHeight)
+                .put("imgName", "tower/tower_image.png").put("width", arrowWidth).put("height", arrowHeight)
                 .put("towerType", TowerType.ARROW));
         arrowBtn.getComponent(PlacedButtonComponent.class);
         arrowBtn.setZIndex(zIndex + 1);
@@ -285,6 +303,7 @@ public class Game extends GameApplication {
                 selectedPlaceBtn(false);
             }
         });
+
         PropertyMap vars = FXGL.getWorldProperties();
         vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
             if (nv.intValue() == FXGL.getWorldProperties().getInt("maxWaves")) {
