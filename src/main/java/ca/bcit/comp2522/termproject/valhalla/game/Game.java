@@ -313,7 +313,7 @@ public class Game extends GameApplication {
         });
         PropertyMap vars = FXGL.getWorldProperties();
         vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
-            if (nv.intValue() == 1) { //FXGL.getWorldProperties().getInt("maxWaves")
+            if (nv.intValue() == FXGL.getWorldProperties().getInt("maxWaves")) {
                 FXGL.spawn("hejo", pointInfos.get(0).getKey());
                 FXGL.getWorldProperties().setValue("bossSpawned", true);
                 MusicPlayer.getSingleton().playGameMusic();

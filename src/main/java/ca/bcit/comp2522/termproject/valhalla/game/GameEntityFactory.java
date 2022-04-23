@@ -292,11 +292,12 @@ public class GameEntityFactory implements EntityFactory {
                         () -> FXGL.getWindowService().gotoMainMenu());
             }
         });
+        final int attackDamage = 1000;
         return entityBuilder(data)
                 .type(GameType.ENEMY)
                 .with(hp)
                 .view(hpBar)
-                .with(new EnemyComponent(hp, hpBar))
+                .with(new EnemyComponent(hp, hpBar, "heejo", attackDamage, attackDamage + 1))
                 .with(new CollidableComponent(true))
                 .bbox(BoundingShape.box(width, height))
                 .build();

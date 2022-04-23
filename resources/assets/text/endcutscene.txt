@@ -6,7 +6,7 @@
 
 // no images if its left with no asset
 1.image =
-3.image = heejo_idle.png
+3.image = enemy/heejo_1.png
 4.image = enemy/slugman_1.png
 
 // actual dialog
