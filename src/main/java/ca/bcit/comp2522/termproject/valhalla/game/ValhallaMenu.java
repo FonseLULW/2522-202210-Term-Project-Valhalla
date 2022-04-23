@@ -90,8 +90,6 @@ public class ValhallaMenu extends FXGLMenu {
      */
     @Override
     public void onEnteredFrom(@NotNull final Scene prevState) {
-        System.out.println(prevState);
-        FXGL.getAudioPlayer().pauseAllMusic();
         MusicPlayer.getSingleton().playMainMenuMusic();
     }
 }
