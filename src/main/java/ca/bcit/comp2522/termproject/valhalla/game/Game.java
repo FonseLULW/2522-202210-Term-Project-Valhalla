@@ -196,7 +196,6 @@ public class Game extends GameApplication {
             protected void onActionBegin() {
                 if (hero != null) {
                     hero.getComponent(HeroComponent.class).attackArea();
-                    PropertyMap state = FXGL.getWorldProperties();
                 }
             }
         }, MouseButton.PRIMARY);
@@ -250,18 +249,14 @@ public class Game extends GameApplication {
         final int enemyLimit = 20;
         final int startDelay = 5;
         FXGL.runOnce(() -> {
-            FXGL.run(() -> {
-                FXGL.spawn("enemy", pointInfos.get(0).getKey());
-            }, Duration.seconds(1), enemyLimit);
+            FXGL.run(() -> FXGL.spawn("enemy", pointInfos.get(0).getKey()), Duration.seconds(1), enemyLimit);
             PropertyMap state = FXGL.getWorldProperties();
             state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
         }, Duration.seconds(startDelay));
 
         final int waveDelay = 30;
         FXGL.run(() -> {
-            FXGL.run(() -> {
-                FXGL.spawn("enemy", pointInfos.get(0).getKey());
-            }, Duration.seconds(1), enemyLimit);
+            FXGL.run(() -> FXGL.spawn("enemy", pointInfos.get(0).getKey()), Duration.seconds(1), enemyLimit);
             PropertyMap state = FXGL.getWorldProperties();
             state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
         }, Duration.seconds(waveDelay), FXGL.getWorldProperties().getInt("maxWaves") - 1);
@@ -322,7 +317,8 @@ public class Game extends GameApplication {
         boolean flag = false;
 
         for (Rectangle r : spaceInfos) {
-            if (r.getX() <= x && r.getWidth() + r.getX() >= x + w && r.getY() <= y && r.getHeight() + r.getY() >= y + h) {
+            if (r.getX() <= x && r.getWidth() + r.getX() >= x + w && r.getY()
+                    <= y && r.getHeight() + r.getY() >= y + h) {
                 flag = true;
                 break;
             }
@@ -381,7 +377,8 @@ public class Game extends GameApplication {
 
         boolean flag = false;
         for (Rectangle r : spaceInfos) {
-            if (r.getX() <= xCoordinate && r.getWidth() + r.getX() >= xCoordinate + widthOfTower && r.getY() <= yCoordinate && r.getHeight() + r.getY() >= yCoordinate + heightOfTower) {
+            if (r.getX() <= xCoordinate && r.getWidth() + r.getX() >= xCoordinate + widthOfTower && r.getY()
+                    <= yCoordinate && r.getHeight() + r.getY() >= yCoordinate + heightOfTower) {
                 flag = true;
                 break;
             }
@@ -435,7 +432,8 @@ public class Game extends GameApplication {
         }
         buildIndicatorComponent.resetIndicator(data.getTowerIcon(), data.getAttackRadius());
         emptyEntity.getBoundingBoxComponent().clearHitBoxes();
-        emptyEntity.getBoundingBoxComponent().addHitBox(new HitBox(BoundingShape.box(data.getWidth(), data.getHeight())));
+        emptyEntity.getBoundingBoxComponent().addHitBox(new HitBox(BoundingShape.box(data.getWidth(),
+                data.getHeight())));
         return data;
     }
 
