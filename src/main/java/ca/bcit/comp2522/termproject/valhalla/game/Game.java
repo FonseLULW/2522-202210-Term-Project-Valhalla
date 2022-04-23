@@ -11,11 +11,9 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.core.collection.PropertyMap;
-import com.almasb.fxgl.cutscene.Cutscene;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.entity.EntityWorldListener;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.components.BoundingBoxComponent;
 import ca.bcit.comp2522.termproject.valhalla.constant.GameType;
@@ -44,7 +42,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.almasb.fxgl.dsl.FXGLForKtKt.*;
+import static com.almasb.fxgl.dsl.FXGLForKtKt.getInput;
 
 /**
  * The Game class.
@@ -63,10 +61,11 @@ public class Game extends GameApplication {
     private Entity arrowBtn;
     private Entity hero;
 
-    ArrayList<Rectangle> spaceInfos = new ArrayList<>();
+    private final ArrayList<Rectangle> spaceInfos;
 
     public Game() {
         cutsceneManager = new CutsceneManager("starting_scene1.PNG");
+        spaceInfos = new ArrayList<>();
     }
 
     @Override
@@ -96,16 +95,20 @@ public class Game extends GameApplication {
     }
 
     private void hideIndicator() {
-        buildIndicator.setX(-1000);
-        buildIndicator.setY(-1000);
+        final int offscreen = -1000;
+        buildIndicator.setX(offscreen);
+        buildIndicator.setY(offscreen);
     }
 
     @Override
     protected void initGameVars(final Map<String, Object> vars) {
+        final int baseHealth = 1000;
+        final int maxWaves = 5;
         vars.put("towerType", TowerType.NONE);
         vars.put("wavesSpawned", 0);
-        vars.put("baseHealth", 1000);
+        vars.put("baseHealth", baseHealth);
         vars.put("bossSpawned", false);
+        vars.put("maxWaves", maxWaves);
 
     }
 
@@ -263,38 +266,48 @@ public class Game extends GameApplication {
         hideIndicator();
         buildIndicatorComponent = buildIndicator.getComponent(BuildingIndicatorComponent.class);
 
+        final int squareSize = 30;
+        final int emptyPos = -100;
         emptyEntity = FXGL.spawn("empty");
         emptyEntity.getBoundingBoxComponent().clearHitBoxes();
-        emptyEntity.getBoundingBoxComponent().addHitBox(new HitBox(BoundingShape.box(30, 30)));
-        emptyEntity.setX(-100);
-        emptyEntity.setY(-100);
+        emptyEntity.getBoundingBoxComponent().addHitBox(new HitBox(BoundingShape.box(squareSize, squareSize)));
+        emptyEntity.setX(emptyPos);
+        emptyEntity.setY(emptyPos);
 
+        final int enemyLimit = 20;
+        final int startDelay = 5;
         FXGL.runOnce(() -> {
             FXGL.run(() -> {
                 FXGL.spawn("enemy", pointInfos.get(0).getKey());
-            }, Duration.seconds(1), 20);
+            }, Duration.seconds(1), enemyLimit);
             PropertyMap state = FXGL.getWorldProperties();
             state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
-        }, Duration.seconds(5));
+        }, Duration.seconds(startDelay));
 
+        final int waveDelay = 30;
         FXGL.run(() -> {
             FXGL.run(() -> {
                 FXGL.spawn("enemy", pointInfos.get(0).getKey());
-            }, Duration.seconds(1), 20);
+            }, Duration.seconds(1), enemyLimit);
             PropertyMap state = FXGL.getWorldProperties();
             state.setValue("wavesSpawned", state.getInt("wavesSpawned") + 1);
-        }, Duration.seconds(30), 4);
+        }, Duration.seconds(waveDelay), FXGL.getWorldProperties().getInt("maxWaves") - 1);
 
-        FXGL.spawn("maskRectangle").setZIndex(20);
+        final int zIndex = 20;
+        FXGL.spawn("maskRectangle").setZIndex(zIndex);
         FXGL.spawn("placeBox");
 
-        arrowBtn = FXGL.spawn("placedButton", new SpawnData(1016, 360)
+        final int arrowX = 1016;
+        final int arrowY = 360;
+        final double arrowWidth = 43.0;
+        final double arrowHeight = 68.0;
+        arrowBtn = FXGL.spawn("placedButton", new SpawnData(arrowX, arrowY)
                 .put("imgName", "tower/tower_image.png")
-                .put("width", 43.0)
-                .put("height", 68.0)
+                .put("width", arrowWidth)
+                .put("height", arrowHeight)
                 .put("towerType", TowerType.ARROW));
         arrowBtn.getComponent(PlacedButtonComponent.class);
-        arrowBtn.setZIndex(21);
+        arrowBtn.setZIndex(zIndex + 1);
 
         FXGL.getop("towerType").addListener((ob, ov, nv) -> {
             if (TowerType.ARROW == nv) {
@@ -306,14 +319,15 @@ public class Game extends GameApplication {
         });
         PropertyMap vars = FXGL.getWorldProperties();
         vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
-            if (nv.intValue() == 5) {
+            if (nv.intValue() == FXGL.getWorldProperties().getInt("maxWaves")) {
                 FXGL.spawn("hejo", pointInfos.get(0).getKey());
                 FXGL.getWorldProperties().setValue("bossSpawned", true);
                 MusicPlayer.getSingleton().playGameMusic();
             }
         });
 
-        hero = FXGL.spawn("hero", 60, 60);
+        final int heroLocation = 60;
+        hero = FXGL.spawn("hero", heroLocation, heroLocation);
         cutsceneManager.playCutscene("cutscene.txt");
         MusicPlayer.getSingleton().playGameMusic();
     }
@@ -378,8 +392,9 @@ public class Game extends GameApplication {
 
     @Override
     protected void onPreInit() {
-        FXGL.getSettings().setGlobalSoundVolume(0.5);
-        FXGL.getSettings().setGlobalMusicVolume(0.5);
+        final double volume = 0.5;
+        FXGL.getSettings().setGlobalSoundVolume(volume);
+        FXGL.getSettings().setGlobalMusicVolume(volume);
     }
 
     private TowerData getTowerData(final TowerType towerType) {
@@ -418,19 +433,20 @@ public class Game extends GameApplication {
         final double barWidth = 240;
         final double barHeight = 10;
         final int x = 5;
+        final int offsetHeight = 50;
         ProgressBar wavesBar = new ProgressBar(true);
         wavesBar.setFill(Color.DEEPSKYBLUE);
         wavesBar.setLabelPosition(Position.RIGHT);
         wavesBar.setLabelVisible(true);
         wavesBar.setTranslateX(x);
-        wavesBar.setTranslateY(APP_HEIGHT - 50);
+        wavesBar.setTranslateY(APP_HEIGHT - offsetHeight);
         wavesBar.setMaxValue(x);
         wavesBar.setLabelFill(Color.DARKBLUE);
         PropertyMap state = FXGL.getWorldProperties();
         wavesBar.currentValueProperty().bind(state.intProperty("wavesSpawned"));
 
         state.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
-            if (nv.intValue() >= 5) {
+            if (nv.intValue() >= FXGL.getWorldProperties().getInt("maxWaves")) {
                 wavesBar.setFill(Color.CRIMSON);
                 FXGL.getNotificationService().setBackgroundColor(Color.CRIMSON);
                 FXGL.getNotificationService().setTextColor(Color.LIGHTSKYBLUE);
@@ -447,6 +463,8 @@ public class Game extends GameApplication {
         FXGL.addUINode(wavesText);
 
         // base health bar
+        final int translateX = 5;
+        final int translateY = 10;
         ProgressBar baseHealthBar = new ProgressBar(true);
         baseHealthBar.setMaxValue(state.getInt("baseHealth"));
         baseHealthBar.setMinValue(0);
@@ -454,19 +472,22 @@ public class Game extends GameApplication {
         baseHealthBar.setLabelFill(Color.MEDIUMVIOLETRED);
         baseHealthBar.setFill(Color.MEDIUMVIOLETRED);
         baseHealthBar.setLabelPosition(Position.RIGHT);
-        baseHealthBar.setTranslateX(5);
-        baseHealthBar.setTranslateY(APP_HEIGHT - 50 + barHeight + 10);
+        baseHealthBar.setTranslateX(translateX);
+        baseHealthBar.setTranslateY(APP_HEIGHT - offsetHeight + barHeight + translateY);
         baseHealthBar.currentValueProperty().bind(state.intProperty("baseHealth"));
+
+        final int lowHealth = 200;
         state.intProperty("baseHealth").addListener((ob, ov, nv) -> {
             if (nv.intValue() <= 0) {
                 showGameOver();
-            } else if (nv.intValue() <= 200) {
+            } else if (nv.intValue() <= lowHealth) {
                 baseHealthBar.setFill(Color.RED);
             }
         });
         FXGL.addUINode(baseHealthBar);
 
-        Text baseHealthBarText = new Text(baseHealthBar.getTranslateX() + barWidth + 50,
+        final int offsetText = 50;
+        Text baseHealthBarText = new Text(baseHealthBar.getTranslateX() + barWidth + offsetText,
                 baseHealthBar.getTranslateY() + barHeight, "base health");
         baseHealthBarText.setFill(Color.MEDIUMVIOLETRED);
         FXGL.addUINode(baseHealthBarText);
