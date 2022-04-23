@@ -252,12 +252,6 @@ public class Game extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
-
-//        FXGL.getGameScene().setBackgroundColor(Color.web("#16232B"));
-//        FXGL.image("enemy/slugman_1.png");
-//        FXGL.image("enemy/slugman_2.png");
-//        FXGL.image("enemy/slugman_3.png");
-//        FXGL.image("enemy/slugman_1.png");
         FXGL.setLevelFromMap("level1.tmx");
 
         List<Entity> tempEntities = FXGL.getGameWorld().getEntitiesByType(GameType.SPACE, GameType.POINT);
