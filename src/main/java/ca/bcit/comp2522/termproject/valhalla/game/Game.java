@@ -253,11 +253,11 @@ public class Game extends GameApplication {
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
 
-        FXGL.getGameScene().setBackgroundColor(Color.web("#16232B"));
-        FXGL.image("enemy/slugman_1.png");
-        FXGL.image("enemy/slugman_2.png");
-        FXGL.image("enemy/slugman_3.png");
-        FXGL.image("enemy/slugman_1.png");
+//        FXGL.getGameScene().setBackgroundColor(Color.web("#16232B"));
+//        FXGL.image("enemy/slugman_1.png");
+//        FXGL.image("enemy/slugman_2.png");
+//        FXGL.image("enemy/slugman_3.png");
+//        FXGL.image("enemy/slugman_1.png");
         FXGL.setLevelFromMap("level1.tmx");
 
         List<Entity> tempEntities = FXGL.getGameWorld().getEntitiesByType(GameType.SPACE, GameType.POINT);
@@ -319,7 +319,7 @@ public class Game extends GameApplication {
         });
         PropertyMap vars = FXGL.getWorldProperties();
         vars.intProperty("wavesSpawned").addListener((ob, ov, nv) -> {
-            if (nv.intValue() == FXGL.getWorldProperties().getInt("maxWaves")) {
+            if (nv.intValue() == 1) { //FXGL.getWorldProperties().getInt("maxWaves")
                 FXGL.spawn("hejo", pointInfos.get(0).getKey());
                 FXGL.getWorldProperties().setValue("bossSpawned", true);
                 MusicPlayer.getSingleton().playGameMusic();
@@ -497,7 +497,11 @@ public class Game extends GameApplication {
     public void showGameOver() {
         MusicPlayer.getSingleton().playSadMusic();
         FXGL.getGameWorld().removeEntity(hero);
-        cutsceneManager.playCutscene("badendcutscene.txt", () -> FXGL.getWindowService().gotoMainMenu());
+        cutsceneManager.setCutsceneBackgroundFilename("starting_scene2.png");
+        cutsceneManager.playCutscene("badendcutscene.txt", () -> {
+            FXGL.getWindowService().gotoMainMenu();
+            cutsceneManager.setCutsceneBackgroundFilename("starting_scene1.png");
+        });
         hero = null;
     }
 

@@ -12,15 +12,21 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.runOnce;
  * @author FonseLULW
  * @author kaioh
  * @version 1.0
- * @param cutsceneBackgroundFilename a String representing the filename of the background displayed during the cutscene.
  */
-public record CutsceneManager(String cutsceneBackgroundFilename) {
+public class CutsceneManager {
+    private String cutsceneBackgroundFilename;
+
     /**
      * Constructs a new CutsceneManager.
      *
      * @param cutsceneBackgroundFilename a String representing the filename of the cutscene background
      */
-    public CutsceneManager {
+    public CutsceneManager(final String cutsceneBackgroundFilename) {
+        this.cutsceneBackgroundFilename = cutsceneBackgroundFilename;
+    }
+
+    public void setCutsceneBackgroundFilename(final String cutsceneBackgroundFilename) {
+        this.cutsceneBackgroundFilename = cutsceneBackgroundFilename;
     }
 
     /**
