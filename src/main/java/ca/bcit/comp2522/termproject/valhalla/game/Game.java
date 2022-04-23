@@ -51,23 +51,37 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.getInput;
  * @version 1.0
  */
 public class Game extends GameApplication {
+    /**
+     * The Game window's width.
+     */
     public static final int APP_WIDTH = 1115;
+
+    /**
+     * The Game window's height.
+     */
     public static final int APP_HEIGHT = 15 * 50;
+
     private final LinkedHashMap<Integer, Pair<Point2D, String>> pointInfos = new LinkedHashMap<>();
     private final CutsceneManager cutsceneManager;
+    private final ArrayList<Rectangle> spaceInfos;
     private Entity buildIndicator;
     private BuildingIndicatorComponent buildIndicatorComponent;
     private Entity emptyEntity;
     private Entity arrowBtn;
     private Entity hero;
 
-    private final ArrayList<Rectangle> spaceInfos;
-
+    /**
+     * Creates a new Game.
+     */
     public Game() {
         cutsceneManager = new CutsceneManager("starting_scene1.PNG");
         spaceInfos = new ArrayList<>();
     }
 
+    /**
+     * Initializes settings.
+     * @param settings a GameSettings object
+     */
     @Override
     protected void initSettings(final GameSettings settings) {
         settings.setWidth(APP_WIDTH);
@@ -100,6 +114,10 @@ public class Game extends GameApplication {
         buildIndicator.setY(offscreen);
     }
 
+    /**
+     * Initializes Game variables.
+     * @param vars a Map of String and Object key value pairs
+     */
     @Override
     protected void initGameVars(final Map<String, Object> vars) {
         final int baseHealth = 1000;
@@ -112,6 +130,9 @@ public class Game extends GameApplication {
 
     }
 
+    /**
+     * Initializes Game input.
+     */
     @Override
     protected void initInput() {
         // hero movement
@@ -204,51 +225,9 @@ public class Game extends GameApplication {
 
     }
 
-    private void trackMouse(final TowerType towerType) {
-        TowerData data = getTowerData(towerType);
-        if (data == null) {
-            return;
-        }
-
-        int w = data.getWidth();
-        int h = data.getHeight();
-
-        Point2D p = FXGL.getInput().getMousePositionWorld();
-        double x = p.getX() - w / 2.0;
-        double y = p.getY() - h / 2.0;
-        buildIndicator.setX(x);
-        buildIndicator.setY(y);
-        boolean flag = false;
-
-        for (Rectangle r : spaceInfos) {
-            if (r.getX() <= x && r.getWidth() + r.getX() >= x + w && r.getY() <= y && r.getHeight() + r.getY() >= y + h) {
-                flag = true;
-                break;
-            }
-        }
-
-        if (!flag) {
-            buildIndicatorComponent.canBuild(false);
-            return;
-        }
-
-        emptyEntity.setX(x);
-        emptyEntity.setY(y);
-
-        List<Entity> towers = FXGL.getGameWorld().getEntitiesByType(GameType.TOWER);
-
-        BoundingBoxComponent emptyBox = emptyEntity.getBoundingBoxComponent();
-
-        boolean canGenerate = true;
-        for (Entity tower : towers) {
-            if (emptyBox.isCollidingWith(tower.getBoundingBoxComponent())) {
-                canGenerate = false;
-                break;
-            }
-        }
-        buildIndicatorComponent.canBuild(canGenerate);
-    }
-
+    /**
+     * Initializes Game.
+     */
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new GameEntityFactory());
@@ -326,10 +305,63 @@ public class Game extends GameApplication {
         MusicPlayer.getSingleton().playGameMusic();
     }
 
+    private void trackMouse(final TowerType towerType) {
+        TowerData data = getTowerData(towerType);
+        if (data == null) {
+            return;
+        }
+
+        int w = data.getWidth();
+        int h = data.getHeight();
+
+        Point2D p = FXGL.getInput().getMousePositionWorld();
+        double x = p.getX() - w / 2.0;
+        double y = p.getY() - h / 2.0;
+        buildIndicator.setX(x);
+        buildIndicator.setY(y);
+        boolean flag = false;
+
+        for (Rectangle r : spaceInfos) {
+            if (r.getX() <= x && r.getWidth() + r.getX() >= x + w && r.getY() <= y && r.getHeight() + r.getY() >= y + h) {
+                flag = true;
+                break;
+            }
+        }
+
+        if (!flag) {
+            buildIndicatorComponent.canBuild(false);
+            return;
+        }
+
+        emptyEntity.setX(x);
+        emptyEntity.setY(y);
+
+        List<Entity> towers = FXGL.getGameWorld().getEntitiesByType(GameType.TOWER);
+
+        BoundingBoxComponent emptyBox = emptyEntity.getBoundingBoxComponent();
+
+        boolean canGenerate = true;
+        for (Entity tower : towers) {
+            if (emptyBox.isCollidingWith(tower.getBoundingBoxComponent())) {
+                canGenerate = false;
+                break;
+            }
+        }
+        buildIndicatorComponent.canBuild(canGenerate);
+    }
+
+    /**
+     * Returns the point infos as a LinkedHashMap.
+     * @return the point infos as a LinkedHashMap
+     */
     public LinkedHashMap<Integer, Pair<Point2D, String>> getPointInfos() {
         return pointInfos;
     }
 
+    /**
+     * Returns the space infos as an ArrayList of Rectangle.
+     * @return the space infos as an ArrayList of Rectangle
+     */
     public ArrayList<Rectangle> getSpaceInfos() {
         return spaceInfos;
     }
@@ -384,6 +416,9 @@ public class Game extends GameApplication {
         arrowBtn.getComponent(PlacedButtonComponent.class).setSelected(arrow);
     }
 
+    /**
+     * Runs before the Game initialization.
+     */
     @Override
     protected void onPreInit() {
         final double volume = 0.5;
@@ -404,6 +439,9 @@ public class Game extends GameApplication {
         return data;
     }
 
+    /**
+     * Initializes the FXGL physics engine components.
+     */
     @Override
     protected void initPhysics() {
         FXGL.getPhysicsWorld().addCollisionHandler(new CollisionHandler(GameType.BULLET, GameType.ENEMY) {
@@ -421,6 +459,9 @@ public class Game extends GameApplication {
         });
     }
 
+    /**
+     * Initializes the UI.
+     */
     @Override
     protected void initUI() {
         // wave counter
@@ -488,6 +529,9 @@ public class Game extends GameApplication {
 
     }
 
+    /**
+     * Runs when game lost.
+     */
     public void showGameOver() {
         MusicPlayer.getSingleton().playSadMusic();
         FXGL.getGameWorld().removeEntity(hero);
@@ -499,6 +543,10 @@ public class Game extends GameApplication {
         hero = null;
     }
 
+    /**
+     * Drives the Game.
+     * @param args unused
+     */
     public static void main(final String[] args) {
         launch(args);
     }
