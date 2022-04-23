@@ -25,6 +25,10 @@ public class CutsceneManager {
         this.cutsceneBackgroundFilename = cutsceneBackgroundFilename;
     }
 
+    /**
+     * Sets the cutsceneBackgroundFilename of this CutsceneManager.
+     * @param cutsceneBackgroundFilename a String representing a filename
+     */
     public void setCutsceneBackgroundFilename(final String cutsceneBackgroundFilename) {
         this.cutsceneBackgroundFilename = cutsceneBackgroundFilename;
     }
